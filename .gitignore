@@ -4,3 +4,6 @@
 
 /.vs/Angular_HCharts/FileContentIndex
 *.vsidx
+*.cache
+*.txt
+/PTAngularDemo/.vs/PTAngularDemo/v17/.suo
