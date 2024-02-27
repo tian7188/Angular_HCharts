@@ -7,3 +7,5 @@
 *.cache
 *.txt
 /PTAngularDemo/.vs/PTAngularDemo/v17/.suo
+/PTAngularDemo/.vs/PTAngularDemo/v17/DocumentLayout.json
+*.config
