@@ -20,11 +20,15 @@ export class DaqChartComponent implements OnInit {
   highcharts: typeof Highcharts = Highcharts;
 
   updateFlag = false;
+  
+
+
 
   data = [2,5,7,1,2,9];
 
   chartOptions: Highcharts.Options = {
     chart: {
+      inverted: true,
       type: "spline"
     },
     title: {
@@ -57,21 +61,38 @@ export class DaqChartComponent implements OnInit {
 
 
   reload_data() {
-    this.setRandomeData();
+    var count = Math.floor(Math.random() * 1000);
+    console.log(count);
+
+    this.setRandomeData(count);
   }
 
-  setRandomeData() {
+  setRandomeData(count: number) {
     const data = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < count; i++) {
       data.push(Math.floor(Math.random() * 10));
     }
-    this.chartOptions.series = [{ type: 'line', data }];
-    this.updateFlag = true;
 
+    this.chartOptions.series = [
+      {
+        type: 'line',
+        data: data,
+      },
+    ];
+    
+    this.updateFlag = true;
+    setTimeout(() => {
+      this.updateFlag = false;
+    }, 100);
   }
 
 
 
+
+
+
+
+  
 
 
 }

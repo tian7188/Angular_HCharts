@@ -1,14 +1,14 @@
 <br />
-<h2>High chart trial </h2>
 
 
-<highcharts-chart [Highcharts]="highcharts"
+
+<highcharts-chart [Highcharts]="highcharts" [update]="updateFlag"
                   [options]="chartOptions"
-                  style="width: 100%; height: 400px; display: block;">
+                  style="width: 100%; height: 700px; display: block;">
 </highcharts-chart>
 
-
 <button (click)="reload_data()">Reload data</button>
+
 
 
 
