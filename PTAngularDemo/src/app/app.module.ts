@@ -3,16 +3,21 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DAQChartComponent } from './daqchart/daqchart.component';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { DaqChartComponent } from './daqchart/DaqChartComponent';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DAQChartComponent
+    DaqChartComponent
   ],
+
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HighchartsChartModule,
+    
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
