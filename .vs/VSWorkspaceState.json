@@ -1,6 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\PTAngularDemo",
+    "\\PTAngularDemo\\src",
+    "\\PTAngularDemo\\src\\app",
+    "\\PTAngularDemo\\src\\app\\daqchart"
   ],
+  "SelectedNode": "\\PTAngularDemo\\PTAngularDemo.sln",
   "PreviewInSolutionExplorer": false
 }

@@ -61,7 +61,7 @@ export class DaqChartComponent implements OnInit {
 
 
   reload_data() {
-    var count = Math.floor(Math.random() * 1000);
+    var count = Math.floor(Math.random() * 100);
     console.log(count);
 
     this.setRandomeData(count);
@@ -72,10 +72,10 @@ export class DaqChartComponent implements OnInit {
     for (let i = 0; i < count; i++) {
       data.push(Math.floor(Math.random() * 10));
     }
-
+     this.data = data;
     this.chartOptions.series = [
       {
-        type: 'line',
+        type: 'spline',
         data: data,
       },
     ];
