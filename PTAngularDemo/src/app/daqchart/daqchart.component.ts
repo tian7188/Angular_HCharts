@@ -3,6 +3,11 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 
+interface SeriesData {
+  x: number;
+  y: number;
+}
+
 
 @Component({
   selector: 'app-daqchart',
@@ -12,19 +17,18 @@ import * as Highcharts from 'highcharts';
 
 
 export class DaqChartComponent implements OnInit {
-    constructor() { }
+  constructor() { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.reload_data();
+  }
 
 
   highcharts: typeof Highcharts = Highcharts;
 
   updateFlag = false;
-  
 
-
-
-  data = [2,5,7,1,2,9];
+  data: SeriesData[] = [];
 
   chartOptions: Highcharts.Options = {
     chart: {
@@ -37,10 +41,10 @@ export class DaqChartComponent implements OnInit {
     subtitle: {
       text: "ptian trial"
     },
-    //xAxis: {
-    //  categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    //    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-    //},
+    xAxis: {
+      //categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      //  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    },
     yAxis: {
       title: {
         text: "m/s"
@@ -58,28 +62,33 @@ export class DaqChartComponent implements OnInit {
   };
 
 
-
-
   reload_data() {
     var count = Math.floor(Math.random() * 100);
     console.log(count);
 
-    this.setRandomeData(count);
+    const randomData: SeriesData[] = [];
+    for (let i = 0; i < count; i++) {
+      const randomX = i;
+      const randomY = Math.random() * 100; // Random y between 0 and 100
+      randomData.push({ x: randomX, y: randomY });
+    }
+
+    this.data = randomData;
+
+    if (this.chartOptions.series) {
+      this.reBindingData(this.chartOptions.series[0], this.data);
+    }
+
   }
 
-  setRandomeData(count: number) {
-    const data = [];
-    for (let i = 0; i < count; i++) {
-      data.push(Math.floor(Math.random() * 10));
+
+  reBindingData(series: Highcharts.SeriesOptionsType, data: SeriesData[]) {
+    if (this.chartOptions.series) {
+      if (series && data && data.length > 0) {
+        (series as any).data = data;
+      }
     }
-     this.data = data;
-    this.chartOptions.series = [
-      {
-        type: 'spline',
-        data: data,
-      },
-    ];
-    
+
     this.updateFlag = true;
     setTimeout(() => {
       this.updateFlag = false;
@@ -88,11 +97,6 @@ export class DaqChartComponent implements OnInit {
 
 
 
-
-
-
-
-  
 
 
 }
