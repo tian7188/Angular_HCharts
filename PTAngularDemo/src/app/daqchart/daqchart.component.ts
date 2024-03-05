@@ -12,14 +12,16 @@ interface DataPoint {
   styleUrl: './daqchart.component.css'
 })
 
-export class DaqChartComponent implements OnInit {
+export class DaqChartComponent implements OnInit, OnChanges {
 
   chartId: string = '';
-  chart!: Highcharts.Chart; //will not be null or undefined after ngOnInit
+  chart: Highcharts.Chart | undefined; 
   @Input() chartData: any;
 
+  private chartInitialized: boolean = false;
 
   constructor() { }  
+   
 
   readonly chartOptions: Highcharts.Options = {
     chart: {
@@ -54,29 +56,33 @@ export class DaqChartComponent implements OnInit {
 
   ngOnInit(): void {
     this.chartId = 'chart-' + Math.random().toString(36).substr(2, 9);
-    setTimeout(() => { this.initChart(); }, 1000);
+    setTimeout(() => { this.initChart(); }, 100);
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.chartInitialized
+      && changes['chartData']
+      && !changes['chartData'].firstChange) {
+      this.updateChart();
+    }
+  }
+
+  private updateChart(): void {
+    if (this.chart && this.chart.series && this.chart.series[0]) {
+      this.chart.series[0].setData(this.chartData, true);
+    } else {
+      console.warn('Chart is not initialized or has no series.');
+    }
+  }
+
 
   initChart() {
-    this.chart = Highcharts.chart(this.chartId, this.chartOptions);
+    this.chart = Highcharts.chart(this.chartId, this.chartOptions,
+      () => {
+        this.chartInitialized = true;
 
-    this.reload_data();
-  }
-
-  reload_data() {
-    var count = Math.floor(Math.random() * 100);
-    console.log(count);
-
-    const randomData: DataPoint[] = [];
-    for (let i = 0; i < count; i++) {
-      const randomX = i;
-      const randomY = Math.random() * 100; // Random y between 0 and 100
-      randomData.push({ x: randomX, y: randomY });
-    }
-
-    if (this.chart && this.chart.series[0]) {
-      this.chart.series[0].setData(randomData, true);
-    }
+        setTimeout  (() => { this.updateChart(); }, 200);
+      });
   }
 
 }

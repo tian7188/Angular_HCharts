@@ -3,15 +3,14 @@
 <br />
 <button (click)="reload_data()">Reload data</button>
 <br />
+<br />
 
-<!--<div class="container">
-  <div *ngFor="let data of chartSeriesList">
-    <app-daqchart [chartData]="data"></app-daqchart>
-  </div>
-</div>-->
+<div class="chart-container">
+  <app-daqchart *ngFor="let data of plotData" [chartData]="data" class="chart-item"></app-daqchart>
 
-
-<!--<app-daqchart [chartData]="plotData"></app-daqchart>-->
+  <!--<app-daqchart [chartData]="plotData[0]" class="chart-item"></app-daqchart>
+  <app-daqchart [chartData]="plotData[1]" class="chart-item"></app-daqchart>-->
+</div>
 
 
 
