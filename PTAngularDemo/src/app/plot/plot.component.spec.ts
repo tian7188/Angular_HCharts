@@ -1,19 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DaqChartComponent } from './daqchart.component';
+import { PlotComponent } from './plot.component';
 
-
-describe('DAQChartComponent', () => {
-  let component: DaqChartComponent;
-  let fixture: ComponentFixture<DaqChartComponent>;
+describe('PlotComponent', () => {
+  let component: PlotComponent;
+  let fixture: ComponentFixture<PlotComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DaqChartComponent]
+      declarations: [PlotComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(DaqChartComponent);
+    fixture = TestBed.createComponent(PlotComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

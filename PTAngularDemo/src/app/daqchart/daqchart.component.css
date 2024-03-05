@@ -1,4 +1,4 @@
-article {
+/*article {
   display: flex;
 }
 
@@ -29,4 +29,13 @@ section {
 textarea {
   border: 1px solid #E1E1E1;
   border-radius: 0.5rem;
+}
+*/
+
+.chart-container {
+  width: 100%;
+  min-width: 200px;
+  height: 700px;
+  background-color: lightgrey;
+  display: block;
 }

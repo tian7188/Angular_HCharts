@@ -1,13 +1,10 @@
-
-
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import * as Highcharts from 'highcharts';
 
-interface SeriesData {
+interface DataPoint {
   x: number;
   y: number;
 }
-
 
 @Component({
   selector: 'app-daqchart',
@@ -15,22 +12,16 @@ interface SeriesData {
   styleUrl: './daqchart.component.css'
 })
 
-
 export class DaqChartComponent implements OnInit {
-  constructor() { }
 
-  ngOnInit(): void {
-    this.reload_data();
-  }
+  chartId: string = '';
+  chart!: Highcharts.Chart; //will not be null or undefined after ngOnInit
+  @Input() chartData: any;
 
 
-  highcharts: typeof Highcharts = Highcharts;
+  constructor() { }  
 
-  updateFlag = false;
-
-  data: SeriesData[] = [];
-
-  chartOptions: Highcharts.Options = {
+  readonly chartOptions: Highcharts.Options = {
     chart: {
       inverted: true,
       type: "spline"
@@ -56,47 +47,36 @@ export class DaqChartComponent implements OnInit {
     series: [
       {
         type: 'line',
-        data: this.data,
+       // data: this.data,
       },
     ],
   };
 
+  ngOnInit(): void {
+    this.chartId = 'chart-' + Math.random().toString(36).substr(2, 9);
+    setTimeout(() => { this.initChart(); }, 1000);
+  }
+
+  initChart() {
+    this.chart = Highcharts.chart(this.chartId, this.chartOptions);
+
+    this.reload_data();
+  }
 
   reload_data() {
     var count = Math.floor(Math.random() * 100);
     console.log(count);
 
-    const randomData: SeriesData[] = [];
+    const randomData: DataPoint[] = [];
     for (let i = 0; i < count; i++) {
       const randomX = i;
       const randomY = Math.random() * 100; // Random y between 0 and 100
       randomData.push({ x: randomX, y: randomY });
     }
 
-    this.data = randomData;
-
-    if (this.chartOptions.series) {
-      this.reBindingData(this.chartOptions.series[0], this.data);
+    if (this.chart && this.chart.series[0]) {
+      this.chart.series[0].setData(randomData, true);
     }
-
   }
-
-
-  reBindingData(series: Highcharts.SeriesOptionsType, data: SeriesData[]) {
-    if (this.chartOptions.series) {
-      if (series && data && data.length > 0) {
-        (series as any).data = data;
-      }
-    }
-
-    this.updateFlag = true;
-    setTimeout(() => {
-      this.updateFlag = false;
-    }, 100);
-  }
-
-
-
-
 
 }
