@@ -36,8 +36,7 @@ export class DaqChartComponent implements OnInit, OnChanges {
       text: "ptian trial"
     },
     xAxis: {
-      //categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      //  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+      type: "datetime", // Set xAxis type as datetime
     },
     yAxis: {
       title: {
