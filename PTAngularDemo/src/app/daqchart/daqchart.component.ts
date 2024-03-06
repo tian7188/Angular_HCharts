@@ -48,7 +48,7 @@ export class DaqChartComponent implements OnInit, OnChanges {
     },
     series: [
       {
-        type: 'line',
+        type: 'spline',
        // data: this.data,
       },
     ],
@@ -67,6 +67,15 @@ export class DaqChartComponent implements OnInit, OnChanges {
     }
   }
 
+  initChart() {
+    this.chart = Highcharts.chart(this.chartId, this.chartOptions,
+      () => {
+        this.chartInitialized = true;
+
+        setTimeout(() => { this.updateChart(); }, 200);
+      });
+  }
+
   private updateChart(): void {
     if (this.chart && this.chart.series && this.chart.series[0]) {
       this.chart.series[0].setData(this.chartData, true);
@@ -76,13 +85,5 @@ export class DaqChartComponent implements OnInit, OnChanges {
   }
 
 
-  initChart() {
-    this.chart = Highcharts.chart(this.chartId, this.chartOptions,
-      () => {
-        this.chartInitialized = true;
-
-        setTimeout  (() => { this.updateChart(); }, 200);
-      });
-  }
 
 }

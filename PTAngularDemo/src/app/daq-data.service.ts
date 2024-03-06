@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
-interface DataPoint {
+export interface DataPoint {
   x: number;
   y: number;
 }
@@ -12,19 +12,22 @@ interface DataPoint {
 
 
 export class DaqDataService {
+
+  plotDataSignal = signal<DataPoint[]>([]);
+
   numOfCharts: number = 5;
   constructor() { }
 
-  reloadData(): any[] {
-    const plotData: any[] = [];
+  reloadData(){
+    const points: any[] = [];
 
     for (let i = 0; i < this.numOfCharts; i++) {
-      plotData.push(this.generateData());
+      const temp = this.generateData();
+      points.push(temp);
     }
 
-    return plotData;
+    this.plotDataSignal.set(points);
   }
-
 
   private generateData(): DataPoint[] {
     // Simulate reloading data for the first chart

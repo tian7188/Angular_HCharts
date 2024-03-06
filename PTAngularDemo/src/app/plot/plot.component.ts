@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, effect, inject } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { DaqChartComponent } from '../daqchart/daqchart.component';
 import {DaqDataService} from '../daq-data.service'; 
@@ -12,19 +12,17 @@ import {DaqDataService} from '../daq-data.service';
 })
 export class PlotComponent implements OnInit {
 
-  plotData: any[] = [];
+  dataService = inject(DaqDataService);
 
-  constructor(private dataService: DaqDataService) {
-    this.plotData = this.dataService.reloadData();
-
+  constructor() {    
   }
 
   ngOnInit(): void {
-    setTimeout(() => { this.reload_data(); }, 1000);
+    this.reload_data();
   }
 
   reload_data() {
-    this.plotData = this.dataService.reloadData();   
+    this.dataService.reloadData();   
   }
   
 }

@@ -6,7 +6,7 @@
 <br />
 
 <div class="chart-container">
-  <ng-container *ngFor="let chartData of plotData">
+  <ng-container *ngFor="let chartData of dataService.plotDataSignal()">
     <app-daqchart [chartData]="chartData"></app-daqchart>
   </ng-container>
 </div>
