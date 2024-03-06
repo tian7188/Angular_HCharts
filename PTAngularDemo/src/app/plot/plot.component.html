@@ -6,12 +6,15 @@
 <br />
 
 <div class="chart-container">
-  <app-daqchart *ngFor="let data of plotData" [chartData]="data" class="chart-item"></app-daqchart>
-
-  <!--<app-daqchart [chartData]="plotData[0]" class="chart-item"></app-daqchart>
-  <app-daqchart [chartData]="plotData[1]" class="chart-item"></app-daqchart>-->
+  <ng-container *ngFor="let chartData of plotData">
+    <app-daqchart [chartData]="chartData"></app-daqchart>
+  </ng-container>
 </div>
 
+
+<!--<div class="chart-container">
+  <app-daqchart *ngFor="let data of plotData" [chartData]="data" class="chart-item"></app-daqchart>
+</div>-->
 
 
 
