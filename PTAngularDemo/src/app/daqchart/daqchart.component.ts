@@ -18,10 +18,11 @@ export class DaqChartComponent implements OnInit, OnChanges {
   chart: Highcharts.Chart | undefined; 
   @Input() chartData: any;
 
-  private chartInitialized: boolean = false;
+  chartInitialized: boolean = false;
 
-  constructor() { }  
-   
+  constructor() {
+    this.chartId = 'chart-' + Math.random().toString(36).substr(2, 9);   
+  }     
 
   readonly chartOptions: Highcharts.Options = {
     chart: {
@@ -55,7 +56,6 @@ export class DaqChartComponent implements OnInit, OnChanges {
   };
 
   ngOnInit(): void {
-    this.chartId = 'chart-' + Math.random().toString(36).substr(2, 9);
     setTimeout(() => { this.initChart(); }, 100);
   }
 
@@ -71,8 +71,7 @@ export class DaqChartComponent implements OnInit, OnChanges {
     this.chart = Highcharts.chart(this.chartId, this.chartOptions,
       () => {
         this.chartInitialized = true;
-
-        setTimeout(() => { this.updateChart(); }, 200);
+        setTimeout(() => { this.updateChart(); }, 100);
       });
   }
 
