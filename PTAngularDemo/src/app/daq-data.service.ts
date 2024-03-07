@@ -47,82 +47,117 @@ export class DaqDataService {
     this.http.post<AdxQueryResponse>('https://localhost:7074/api/AdxDataQuery/GetData', postRequest)
       .subscribe((response: AdxQueryResponse) => {
         console.log(response);
+        
+        // Parse response and get arrays for names and data
+        const { names, dataList } = this.parseResponse(response);
 
-        // Assuming response.data is an array of objects with string keys
-        if (response.data && Array.isArray(response.data)) {
-          // Inside the handleResponse method
-          const engineTorqueData: DataPoint[] = [];
-          const engineSpeedData: DataPoint[] = [];
-          const mudPumpDischargeData: DataPoint[] = [];
-          const flowRateData: DataPoint[] = [];
-          const topDriveTorqueData: DataPoint[] = [];
-          const topDriveRPMData: DataPoint[] = [];
-          const compressorFlowRateData: DataPoint[] = [];
-          const hookLoadData: DataPoint[] = [];
-          const rateOfPenetrationData: DataPoint[] = [];
-
-          // Collect data points for each property
-          response.data.forEach((data: any) => {
-            engineTorqueData.push({
-              x: data.Time,
-              y: data.EngineTorque
-            });
-            engineSpeedData.push({
-              x: data.Time,
-              y: data.EngineSpeed
-            });
-            mudPumpDischargeData.push({
-              x: data.Time,
-              y: data.MudPumpDischarge
-            });
-            flowRateData.push({
-              x: data.Time,
-              y: data.FlowRate
-            });
-            topDriveTorqueData.push({
-              x: data.Time,
-              y: data.TopDriveTorque
-            });
-            topDriveRPMData.push({
-              x: data.Time,
-              y: data.TopDriveRPM
-            });
-            compressorFlowRateData.push({
-              x: data.Time,
-              y: data.CompressorFlowRate
-            });
-            hookLoadData.push({
-              x: data.Time,
-              y: data.HookLoad
-            });
-            rateOfPenetrationData.push({
-              x: data.Time,
-              y: data.RateOfPenetration
-            });
-          });
-
-          // Create a list to store all the collections
-          const dataList: any[] = [
-            engineTorqueData,
-            engineSpeedData,
-            mudPumpDischargeData,
-            flowRateData,
-            topDriveTorqueData,
-            topDriveRPMData,
-            compressorFlowRateData,
-            hookLoadData,
-            rateOfPenetrationData
-          ];
-
-          // Set all data points to plotDataSignal
-          this.plotDataSignal.set(dataList);
-
-
-        }
+        // Set all data points to plotDataSignal
+        this.plotDataSignal.set(dataList);
       });
   }
 
-  
+  parseResponse(response: AdxQueryResponse): { names: string[], dataList: any[] } {
+    const names: string[] = [];
+    const dataList: any[] = [];
+
+    // Assuming response.data is an array of objects with string keys
+    if (response.data && Array.isArray(response.data)) {
+      // Iterate over each data object
+      response.data.forEach((data: any) => {
+        // Iterate over each property of the data object
+        Object.keys(data).forEach(key => {
+          // Skip 'Time' property
+          if (key !== 'Time' && !names.includes(key)) {
+            names.push(key);
+            dataList.push([{ x: data.Time, y: data[key] }]);
+          } else if (key !== 'Time') {
+            // Find the index of the property in names array
+            const index = names.indexOf(key);
+            // If the property already exists in names array, push data point to its corresponding data array
+            dataList[index].push({ x: data.Time, y: data[key] });
+          }
+        });
+      });
+    }
+
+    return { names, dataList };
+  }
+
+
+
+  parseResponse2(response: AdxQueryResponse): any[] {
+    const dataList: any[] = [];
+
+    // Assuming response.data is an array of objects with string keys
+    if (response.data && Array.isArray(response.data)) {
+      // Inside the handleResponse method
+      const engineTorqueData: DataPoint[] = [];
+      const engineSpeedData: DataPoint[] = [];
+      const mudPumpDischargeData: DataPoint[] = [];
+      const flowRateData: DataPoint[] = [];
+      const topDriveTorqueData: DataPoint[] = [];
+      const topDriveRPMData: DataPoint[] = [];
+      const compressorFlowRateData: DataPoint[] = [];
+      const hookLoadData: DataPoint[] = [];
+      const rateOfPenetrationData: DataPoint[] = [];
+
+      // Collect data points for each property
+      response.data.forEach((data: any) => {
+        engineTorqueData.push({
+          x: data.Time,
+          y: data.EngineTorque
+        });
+        engineSpeedData.push({
+          x: data.Time,
+          y: data.EngineSpeed
+        });
+        mudPumpDischargeData.push({
+          x: data.Time,
+          y: data.MudPumpDischarge
+        });
+        flowRateData.push({
+          x: data.Time,
+          y: data.FlowRate
+        });
+        topDriveTorqueData.push({
+          x: data.Time,
+          y: data.TopDriveTorque
+        });
+        topDriveRPMData.push({
+          x: data.Time,
+          y: data.TopDriveRPM
+        });
+        compressorFlowRateData.push({
+          x: data.Time,
+          y: data.CompressorFlowRate
+        });
+        hookLoadData.push({
+          x: data.Time,
+          y: data.HookLoad
+        });
+        rateOfPenetrationData.push({
+          x: data.Time,
+          y: data.RateOfPenetration
+        });
+      });
+
+      // Add each data array to the dataList
+      dataList.push(
+        engineTorqueData,
+        engineSpeedData,
+        mudPumpDischargeData,
+        flowRateData,
+        topDriveTorqueData,
+        topDriveRPMData,
+        compressorFlowRateData,
+        hookLoadData,
+        rateOfPenetrationData
+      );
+    }
+
+    return dataList;
+
+  }
   
   
   reloadData_local(){
@@ -167,4 +202,8 @@ export class DaqDataService {
     return randomData;
   }
 
+}
+
+function dsfd(response: AdxQueryResponse) {
+    throw new Error('Function not implemented.');
 }
