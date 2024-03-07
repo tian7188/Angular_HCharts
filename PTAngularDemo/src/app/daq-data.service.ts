@@ -53,7 +53,7 @@ export class DaqDataService {
     for (let i = 0; i < count; i++) {
       const randomX = datatime - (count - i) * 1000000;
 
-      const randomY = Math.random() * 100; // Random y between 0 and 100
+      const randomY = Math.random() * (Math.random() * 10); // Random y between 0 and 100
       randomData.push({ x: randomX, y: randomY });
     }
 

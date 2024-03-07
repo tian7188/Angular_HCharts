@@ -1,28 +1,35 @@
 <h2>daq plot</h2>
 
 <br />
-<button (click)="reload_data()">Reload data</button>
-<br />
-<br />
 
-<div class="chart-container">
-  <!--<ng-container *ngFor="let chartData of plotData">
-    <app-daqchart [chartData]="chartData"></app-daqchart>
-  </ng-container>-->
-
-  <app-daqchart [chartData]="plotData[0]"></app-daqchart>
-  <app-daqchart [chartData]="plotData[1]"></app-daqchart>
-  <app-daqchart [chartData]="plotData[2]"></app-daqchart>
-  <app-daqchart [chartData]="plotData[3]"></app-daqchart>
-  <app-daqchart [chartData]="plotData[4]"></app-daqchart>
-
+<div class="menu-container">
+  <label class="menu-item" for="searchInput">Hole:</label>
+  <input  type="text" id="searchInput" [(ngModel)]="searchQuery" placeholder="Enter search query...">
+  <button  (click)="searchData()">Search</button>
+  <button class="menu-item"  (click)="reload_data()">Reload data</button>
 </div>
 
+  <br />
+  <br />
+
+  <div class="chart-container">
+    <!--<ng-container *ngFor="let chartData of plotData">
+      <app-daqchart [chartData]="chartData"></app-daqchart>
+    </ng-container>-->
+
+    <app-daqchart [chartData]="plotData[0]"></app-daqchart>
+    <app-daqchart [chartData]="plotData[1]"></app-daqchart>
+    <app-daqchart [chartData]="plotData[2]"></app-daqchart>
+    <app-daqchart [chartData]="plotData[3]"></app-daqchart>
+    <app-daqchart [chartData]="plotData[4]"></app-daqchart>
+
+  </div>
 
 
 
-// highchart zoon selection
-//
+
+  // highchart zoon selection
+  //
 
 
 

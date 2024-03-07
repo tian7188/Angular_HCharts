@@ -8,8 +8,21 @@
 .chart-container {
   display: flex;
   flex-direction: row; /* Horizontal layout */
+
+  align-items: center;
+  margin-right:10px; /* Adjust the value to add space between items */
+  min-width: 300px;/* Minimum width of each item */
 }
 
-.chart-item {
-  /* Additional styles for each chart item */
+.menu-container {
+  display: flex;
+  flex-direction: row; /* Horizontal layout */
+
+  margin-left: 560px; /* Adjust the value to add space between items */
+  min-width: 30px; /* Minimum width of each item */
+}
+
+
+.menu-item {
+  margin-left: 30px; /* Adjust the value to add space between items */
 }

@@ -33,7 +33,7 @@ export class DaqChartComponent implements OnInit, OnChanges {
       text: "Speed"
     },
     subtitle: {
-      text: "ptian trial"
+     // text: "ptian trial"
     },
     xAxis: {
       type: "datetime", // Set xAxis type as datetime
