@@ -14,12 +14,14 @@ export class PlotComponent implements AfterViewInit {
   plotData: any = [];
 
   @Input() searchQuery: string = '';
-  @Input() localdata: boolean = true;
+  @Input() localdata: boolean = false;
 
  
 
   constructor() {
-    effect(() => { this.plotData = this.dataService.plotDataSignal() });
+    effect(() => {
+      this.plotData = this.dataService.plotDataSignal()
+    });
   }
 
   ngAfterViewInit(): void {

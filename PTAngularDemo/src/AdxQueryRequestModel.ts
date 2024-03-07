@@ -1,6 +1,6 @@
 
 
-export interface queryRequestModel {
+export interface AdxQueryRequestModel {
     holeLookupKey: HoleLookupKey;
     queryParams: AdxQueryParams;
 }
