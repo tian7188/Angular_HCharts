@@ -1,4 +1,7 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
+import { queryRequestModel, AdxQueryResponse, FileLookupType, LoggingFileType } from '../AdxQueryRequestModel';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 export interface DataPoint {
   x: number;
@@ -13,12 +16,48 @@ export interface DataPoint {
 
 export class DaqDataService {
 
-  plotDataSignal = signal<DataPoint[]>([]);
+  http = inject(HttpClient);
 
+  plotDataSignal = signal<DataPoint[]>([]);
   numOfCharts: number = 5;
+
   constructor() { }
 
-  reloadData(){
+  //load data from daq-api
+  reloadData() {
+    const points: any[] = [];
+
+    const postRequest: queryRequestModel = {
+      holeLookupKey: {
+        holeId: 3803,
+        fileConfigLookupKey: {
+          loggingFileType: LoggingFileType.Instrumentation,
+          secondaryType: FileLookupType.DrillId,
+          secondaryValue: 96
+        }
+      },
+      queryParams: {
+        interval: 10,
+        isDepthAxis: false,
+        numOfPoints: 100
+      }
+    };
+
+
+    this.http.post<AdxQueryResponse>('https://localhost:7074/api/AdxDataQuery/GetData', postRequest)
+      .subscribe((response: AdxQueryResponse) => {
+        console.log(response);
+
+        // Assuming response.data is an array of objects with string keys
+        if (response.data && Array.isArray(response.data)) {
+          // Handle the response data here
+         // this.plotDataSignal.set(response.data);
+        }
+      });
+  }
+
+  
+  reloadData_local(){
     const points: any[] = [];
 
     const datatime = Date.now();

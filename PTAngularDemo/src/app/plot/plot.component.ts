@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, inject, Input, effect } from '@angular/core';
+import { Component, OnInit, AfterViewInit, inject, Input, effect, input } from '@angular/core';
 import {DaqDataService} from '../daq-data.service'; 
 
 
@@ -14,6 +14,7 @@ export class PlotComponent implements AfterViewInit {
   plotData: any = [];
 
   @Input() searchQuery: string = '';
+  @Input() localdata: boolean = true;
 
  
 
@@ -26,7 +27,14 @@ export class PlotComponent implements AfterViewInit {
   }
 
   reload_data() {
-    this.dataService.reloadData();
+    if (this.localdata) {
+      this.dataService.reloadData_local();
+    }
+    else {
+      this.dataService.reloadData();
+    }
+
+
   }
 
   searchData() {
@@ -36,4 +44,9 @@ export class PlotComponent implements AfterViewInit {
     // Once you have filtered data, you can update your chart data accordingly
   }
 
+  useLocalData() {
+    console.log("use local data: ", this.localdata);
+
+    this.reload_data();
+  }
 }

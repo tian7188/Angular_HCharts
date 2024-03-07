@@ -7,7 +7,10 @@
   <input  type="text" id="searchInput" [(ngModel)]="searchQuery" placeholder="Enter search query...">
   <button  (click)="searchData()">Search</button>
   <button class="menu-item"  (click)="reload_data()">Reload data</button>
-</div>
+
+    <input id="local_data" type="checkbox" [(ngModel)]="localdata" (change)="useLocalData()">
+    <label for="local_data">local data</label>
+  </div>
 
   <br />
   <br />

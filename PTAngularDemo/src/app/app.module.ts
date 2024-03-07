@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { DaqChartComponent } from './daqchart/daqchart.component';
 import { PlotComponent } from './plot/plot.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { CustomHttpInterceptor } from '../CustomHttpInterceptor';
 
 @NgModule({
   declarations: [
@@ -20,10 +22,17 @@ import { PlotComponent } from './plot/plot.component';
     FormsModule, // Import FormsModule
     AppRoutingModule,
     HighchartsChartModule,
-    
+    BrowserModule,
+    HttpClientModule
     
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomHttpInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
