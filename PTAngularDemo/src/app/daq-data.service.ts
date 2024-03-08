@@ -1,12 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { AdxQueryRequestModel, AdxQueryResponse, FileLookupType, LoggingFileType } from '../AdxQueryRequestModel';
+import { DataPoint, AdxQueryRequestModel, AdxQueryResponse, FileLookupType, LoggingFileType } from '../AdxQueryRequestModel';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export interface DataPoint {
-  x: number;
-  y: number;
-}
 
 
 @Injectable({
@@ -95,6 +90,8 @@ export class DaqDataService {
       points.push(temp);
     }
 
+    const names = ['Curve 1', 'Curve 2', 'Curve 3', 'Curve 4', 'Curve 5', 'Curve 6'];
+    this.plotNamesSignal.set(names);
     this.plotDataSignal.set(points);
   }
 

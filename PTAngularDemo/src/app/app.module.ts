@@ -22,7 +22,6 @@ import { CustomHttpInterceptor } from '../CustomHttpInterceptor';
     FormsModule, // Import FormsModule
     AppRoutingModule,
     HighchartsChartModule,
-    BrowserModule,
     HttpClientModule
     
   ],

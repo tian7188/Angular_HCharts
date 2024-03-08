@@ -39,6 +39,11 @@ export interface AdxQueryResponse {
 }
 
 
+export interface DataPoint {
+  x: number;
+  y: number;
+}
+
 export interface DaqChartProps {
   seriesName: string;
   color: string;

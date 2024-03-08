@@ -16,7 +16,7 @@ export class PlotComponent implements AfterViewInit {
   curveDatas: any = [];
 
   @Input() searchQuery: string = '';
-  @Input() localdata: boolean = false;
+  @Input() localdata: boolean = true;
 
  
 

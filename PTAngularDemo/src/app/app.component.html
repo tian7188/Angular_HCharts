@@ -70,6 +70,7 @@
     padding: 1rem;
     box-sizing: inherit;
     position: relative;
+    background-color: #828080;
   }
 
   .angular-logo {
@@ -80,8 +81,26 @@
     display: flex;
     justify-content: space-around;
     width: 100%;
-    max-width: 700px;
+    max-width: 100%;
     margin-bottom: 3rem;
+    width: 100%; /* Ensure full width */
+    max-width: 100%; /* Optional: Limit content width */
+    height: 100%; /* Ensure full height */
+    margin: 5px; /* Center content horizontally */
+    padding: 20px; /* Optional: Add padding */
+    background-color: #828080; /* Light grey background color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+    overflow: auto; /* Optional: Add scrollbar if content overflows */
+  }
+
+  .plot{
+    width: 100%;
+    height: 100%;
+    margin: 50px; /* Center content horizontally */
+    padding: 20px; /* Optional: Add padding */
+    background-color: #828080; /* Light grey background color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+    overflow: auto; /* Optional: Add scrollbar if content overflows */
   }
 
   .content h1 {
@@ -162,7 +181,7 @@
     fill: var(--gray-900);
   }
 
-  @media screen and (max-width: 650px) {
+  @media screen and (max-width: 950px) {
     .content {
       flex-direction: column;
       width: max-content;
@@ -183,9 +202,8 @@
 
       <h1> {{ title }}</h1>
 
-      <div>
+      <div class="plot">
         <app-plot></app-plot>
-        <!--<app-daqchart></app-daqchart>-->
       </div>
 
     <!--</div>-->

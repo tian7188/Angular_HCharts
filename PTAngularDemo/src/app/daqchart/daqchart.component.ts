@@ -1,48 +1,78 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
+import darkUnica from 'highcharts/themes/dark-unica'; // Import the theme file
 
-interface DataPoint {
-  x: number;
-  y: number;
-}
 
 @Component({
   selector: 'app-daqchart',
   templateUrl: './daqchart.component.html',
-  styleUrl: './daqchart.component.css'
+  styleUrl: './daqchart.component.css',
 })
 
-export class DaqChartComponent implements OnInit, OnChanges {
+export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
 
   chartId: string = '';
-  chart: Highcharts.Chart | undefined; 
+  chart: Highcharts.Chart | undefined;
+  @ViewChild('chartId') chartElement: ElementRef | undefined;
+
   @Input() chartData: any;
   @Input() seriesName: string = 'petertian';
 
   chartInitialized: boolean = false;
 
   constructor() {
+   // darkUnica(Highcharts);
     this.chartId = 'chart-' + Math.random().toString(36).substr(2, 9);   
-  }     
+  }
+  
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      if (this.chart) {
+        this.triggerSelectionEvent();
+      }
+
+    }, 1000);
+  }
 
   chartOptions: Highcharts.Options = {
     chart: {
       inverted: true,
-      type: "spline"
+      type: "spline",
+      zooming: {
+        type: "x"
+      },
+      events: {
+        selection: (event) => {
+          console.log('Selection event triggered');
+
+          if (this.chart) {
+            const xAxis = this.chart.xAxis[0];
+            xAxis.setExtremes(event.xAxis[0].min, event.xAxis[0].max);
+
+            return false;
+          }
+          return false; // Prevent default action (zooming)
+        }
+      }
+
     },
     title: {
-      text: "Speed"
+      text: ''
     },
     subtitle: {
-     // text: "ptian trial"
+      // text: "ptian trial"
     },
     xAxis: {
       type: "datetime", // Set xAxis type as datetime
+      zoomEnabled: true, // Enable zooming along the x-axis
+     
+
     },
     yAxis: {
       title: {
         text: "m/s"
-      }
+      },
+      zoomEnabled: true // Enable zooming along the x-axis
     },
     tooltip: {
       valueSuffix: " m/s"
@@ -51,10 +81,56 @@ export class DaqChartComponent implements OnInit, OnChanges {
       {
         type: 'spline',
         name: this.seriesName,
-       // data: this.data,
+        // data: this.data,
       },
     ],
+
+    // Optionally, enable the range selector
+    rangeSelector: {
+      enabled: true
+    },
+    // Optionally, enable zoom buttons
+    navigation: {
+      buttonOptions: {
+        enabled: true
+      }
+    },
+    // Optionally, enable the navigator for a more interactive zooming experience
+    navigator: {
+      enabled: true
+    },
+    plotOptions: {
+      series: {
+        allowPointSelect: true
+      }
+    },
+
+
+
   };
+
+  // Function to programmatically trigger the selection event by simulating mouse events
+  triggerSelectionEvent() {
+    if (this.chartElement)
+    {
+      const chartElement = this.chartElement.nativeElement;
+
+      const chartRect = chartElement.getBoundingClientRect();
+      const startX = chartRect.left + 100; // Start X position for mouse drag (adjust as needed)
+      const startY = chartRect.top + 100; // Start Y position for mouse drag (adjust as needed)
+      const endX = chartRect.left + 200; // End X position for mouse drag (adjust as needed)
+      const endY = chartRect.top + 100; // End Y position for mouse drag (adjust as needed)
+
+      // Trigger mouse down event
+      chartElement.dispatchEvent(new MouseEvent('mousedown', { clientX: startX, clientY: startY }));
+
+      // Trigger mouse move event
+      chartElement.dispatchEvent(new MouseEvent('mousemove', { clientX: endX, clientY: endY }));
+
+      // Trigger mouse up event
+      chartElement.dispatchEvent(new MouseEvent('mouseup', { clientX: endX, clientY: endY }));
+    }
+  }
 
   ngOnInit(): void {
     setTimeout(() => { this.initChart(); }, 100);
