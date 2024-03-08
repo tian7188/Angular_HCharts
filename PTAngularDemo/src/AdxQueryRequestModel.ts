@@ -37,3 +37,10 @@ export interface AdxQueryResponse {
   tableName?: string;
   data: { [key: string]: any }[];
 }
+
+
+export interface DaqChartProps {
+  seriesName: string;
+  color: string;
+  // Add more properties as needed
+}

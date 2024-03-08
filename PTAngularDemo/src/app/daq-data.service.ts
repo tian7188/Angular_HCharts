@@ -20,6 +20,7 @@ export class DaqDataService {
 
   plotNamesSignal = signal<string[]>([]);
   plotDataSignal = signal<DataPoint[]>([]);
+
   numOfCharts: number = 5;
 
   constructor() { }
@@ -85,83 +86,6 @@ export class DaqDataService {
     return { names, dataList };
   }
 
-
-
-  parseResponse2(response: AdxQueryResponse): any[] {
-    const dataList: any[] = [];
-
-    // Assuming response.data is an array of objects with string keys
-    if (response.data && Array.isArray(response.data)) {
-      // Inside the handleResponse method
-      const engineTorqueData: DataPoint[] = [];
-      const engineSpeedData: DataPoint[] = [];
-      const mudPumpDischargeData: DataPoint[] = [];
-      const flowRateData: DataPoint[] = [];
-      const topDriveTorqueData: DataPoint[] = [];
-      const topDriveRPMData: DataPoint[] = [];
-      const compressorFlowRateData: DataPoint[] = [];
-      const hookLoadData: DataPoint[] = [];
-      const rateOfPenetrationData: DataPoint[] = [];
-
-      // Collect data points for each property
-      response.data.forEach((data: any) => {
-        engineTorqueData.push({
-          x: data.Time,
-          y: data.EngineTorque
-        });
-        engineSpeedData.push({
-          x: data.Time,
-          y: data.EngineSpeed
-        });
-        mudPumpDischargeData.push({
-          x: data.Time,
-          y: data.MudPumpDischarge
-        });
-        flowRateData.push({
-          x: data.Time,
-          y: data.FlowRate
-        });
-        topDriveTorqueData.push({
-          x: data.Time,
-          y: data.TopDriveTorque
-        });
-        topDriveRPMData.push({
-          x: data.Time,
-          y: data.TopDriveRPM
-        });
-        compressorFlowRateData.push({
-          x: data.Time,
-          y: data.CompressorFlowRate
-        });
-        hookLoadData.push({
-          x: data.Time,
-          y: data.HookLoad
-        });
-        rateOfPenetrationData.push({
-          x: data.Time,
-          y: data.RateOfPenetration
-        });
-      });
-
-      // Add each data array to the dataList
-      dataList.push(
-        engineTorqueData,
-        engineSpeedData,
-        mudPumpDischargeData,
-        flowRateData,
-        topDriveTorqueData,
-        topDriveRPMData,
-        compressorFlowRateData,
-        hookLoadData,
-        rateOfPenetrationData
-      );
-    }
-
-    return dataList;
-
-  }
-  
-  
   reloadData_local(){
     const points: any[] = [];
 
@@ -174,19 +98,6 @@ export class DaqDataService {
     this.plotDataSignal.set(points);
   }
 
-  private generateData(): DataPoint[] {
-    // Simulate reloading data for the first chart
-    var count = Math.floor(Math.random() * 100);
-
-    const randomData: DataPoint[] = [];
-    for (let i = 0; i < count; i++) {
-      const randomX = i;
-      const randomY = Math.random() * 100; // Random y between 0 and 100
-      randomData.push({ x: randomX, y: randomY });
-    }
-
-    return randomData;
-  }
 
   private generateTimeSeriesData(datatime: number): DataPoint[] {
     // Simulate reloading data for the first chart
@@ -203,9 +114,5 @@ export class DaqDataService {
 
     return randomData;
   }
-
 }
 
-function dsfd(response: AdxQueryResponse) {
-    throw new Error('Function not implemented.');
-}

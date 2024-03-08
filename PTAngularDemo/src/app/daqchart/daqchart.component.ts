@@ -74,7 +74,7 @@ export class DaqChartComponent implements OnInit, OnChanges {
     this.chart = Highcharts.chart(this.chartId, this.chartOptions,
       () => {
         this.chartInitialized = true;
-        setTimeout(() => { this.updateChartOptions(); }, 100);
+        setTimeout(() => { this.updateChart(); }, 100);
       });
   }
 
