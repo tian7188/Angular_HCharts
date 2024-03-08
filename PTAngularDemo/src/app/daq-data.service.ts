@@ -18,6 +18,7 @@ export class DaqDataService {
 
   http = inject(HttpClient);
 
+  plotNamesSignal = signal<string[]>([]);
   plotDataSignal = signal<DataPoint[]>([]);
   numOfCharts: number = 5;
 
@@ -52,6 +53,7 @@ export class DaqDataService {
         const { names, dataList } = this.parseResponse(response);
 
         // Set all data points to plotDataSignal
+        this.plotNamesSignal.set(names);
         this.plotDataSignal.set(dataList);
       });
   }

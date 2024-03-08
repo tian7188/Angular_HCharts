@@ -11,7 +11,9 @@ import {DaqDataService} from '../daq-data.service';
 export class PlotComponent implements AfterViewInit {
 
   dataService = inject(DaqDataService);
-  plotData: any = [];
+
+  curveNames: string[] = [];
+  curveDatas: any = [];
 
   @Input() searchQuery: string = '';
   @Input() localdata: boolean = false;
@@ -20,7 +22,8 @@ export class PlotComponent implements AfterViewInit {
 
   constructor() {
     effect(() => {
-      this.plotData = this.dataService.plotDataSignal()
+      this.curveNames = this.dataService.plotNamesSignal()
+      this.curveDatas = this.dataService.plotDataSignal()
     });
   }
 

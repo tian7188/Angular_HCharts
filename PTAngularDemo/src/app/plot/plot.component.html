@@ -20,19 +20,18 @@
       <app-daqchart [chartData]="chartData"></app-daqchart>
     </ng-container>-->
 
-    <app-daqchart [chartData]="plotData[0]"></app-daqchart>
-    <app-daqchart [chartData]="plotData[1]"></app-daqchart>
-    <app-daqchart [chartData]="plotData[2]"></app-daqchart>
-    <app-daqchart [chartData]="plotData[3]"></app-daqchart>
-    <app-daqchart [chartData]="plotData[4]"></app-daqchart>
+    <app-daqchart [seriesName]="curveNames[0]"  [chartData]="curveDatas[0]"></app-daqchart>
+    <app-daqchart [seriesName]="curveNames[1]"  [chartData]="curveDatas[1]"></app-daqchart>
+    <app-daqchart [seriesName]="curveNames[2]"  [chartData]="curveDatas[2]"></app-daqchart>
+    <app-daqchart [seriesName]="curveNames[3]"  [chartData]="curveDatas[3]"></app-daqchart>
+    <app-daqchart [seriesName]="curveNames[4]"  [chartData]="curveDatas[4]"></app-daqchart>
 
   </div>
 
 
 
 
-  // highchart zoon selection
-  //
+ 
 
 
 
