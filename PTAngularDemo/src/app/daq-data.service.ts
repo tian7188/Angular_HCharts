@@ -90,7 +90,7 @@ export class DaqDataService {
       points.push(temp);
     }
 
-    const names = ['Curve 1', 'Curve 2', 'Curve 3', 'Curve 4', 'Curve 5', 'Curve 6'];
+    const names = ['Curve 1', 'Curve 2', 'Curve 3', 'Curve 4', 'Curve 5'];
     this.plotNamesSignal.set(names);
     this.plotDataSignal.set(points);
   }

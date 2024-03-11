@@ -27,7 +27,9 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
     this.chartId = 'chart-' + Math.random().toString(36).substr(2, 9);
 
     this.zoomSelectionService.zoomSelectionEvent.subscribe(selection => {
-      this.applyZoomSelection(selection);
+      if (selection.originalEvent && selection.xAxis && selection.xAxis[0]) {
+        this.applyZoomSelection(selection);
+      }
     });
   }
   
@@ -103,8 +105,9 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
     },
     plotOptions: {
       series: {
-        allowPointSelect: true
-      }
+        allowPointSelect: true,
+      },
+
     },
 
 
@@ -137,7 +140,20 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
   private applyZoomSelection(selection: Highcharts.SelectEventObject) {
     if (selection.xAxis && this.chart) {
       const xAxis = selection.xAxis[0];
-      this.chart.xAxis[0].setExtremes(xAxis.min, xAxis.max);
+      //this.chart.xAxis[0].setExtremes(xAxis.min, xAxis.max);
+
+      // Apply zoom selection to xAxis
+      let i = 0;
+      selection.xAxis.forEach(axis => {
+        if (this.chart) {
+          // Apply zoom selection to each xAxis
+          this.chart.xAxis[i].setExtremes(xAxis.min, xAxis.max);
+          i++;
+        }
+      });
+
+      console.log('Zoom selection applied - chart' + this.chart.index + '  ' + 'xAxis.min: ' + xAxis.min + '  ');
+
     }
   }
 
