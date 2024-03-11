@@ -14,7 +14,7 @@ export class PlotComponent implements AfterViewInit {
   dataService = inject(DaqDataService);
   zoomSelectionService = inject(ZoomSelectionService);
 
-  curveNames: string[] = [];
+  curveNames: string[][] = [];
   curveDatas: any = [];
 
   @Input() searchQuery: string = '';
@@ -22,8 +22,34 @@ export class PlotComponent implements AfterViewInit {
 
   constructor() {
     effect(() => {
-      this.curveNames = this.dataService.plotNamesSignal()
-      this.curveDatas = this.dataService.plotDataSignal()
+      const names = this.dataService.plotNamesSignal();
+      const datas = this.dataService.plotDataSignal();
+
+      let numOfCharts = this.dataService.numOfCharts;
+      // Clear arrays before populating them
+      this.curveNames = [];
+      this.curveDatas = [];
+
+      for (let index = 0; index < numOfCharts; index++) {
+
+        // Initialize arrays for each index
+        this.curveNames[index] = [];
+        this.curveDatas[index] = [];
+
+        // Populate with names and data for each pair of charts
+        this.curveNames[index].push(names[index], names[index + 1]);
+        this.curveDatas[index].push(datas[index], datas[index + 1]);
+
+        if (numOfCharts-1 == index) {
+          this.curveNames[index].push(names[0], names[2]);
+          this.curveDatas[index].push(datas[0], datas[2]);
+        }
+      }
+
+
+
+
+
     });
   }
 

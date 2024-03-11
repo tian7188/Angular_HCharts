@@ -10,14 +10,14 @@ import { Observable } from 'rxjs';
 
 
 export class DaqDataService {
-
+ 
   http = inject(HttpClient);
 
   plotNamesSignal = signal<string[]>([]);
   plotDataSignal = signal<DataPoint[]>([]);
 
   numOfCharts: number = 5;
-
+   pointCount = 3000;
   constructor() { }
 
   //load data from daq-api
@@ -36,7 +36,7 @@ export class DaqDataService {
       queryParams: {
         interval: 10,
         isDepthAxis: false,
-        numOfPoints: 1000
+        numOfPoints: 3000
       }
     };
 
@@ -98,12 +98,12 @@ export class DaqDataService {
 
   private generateTimeSeriesData(datatime: number): DataPoint[] {
     // Simulate reloading data for the first chart
-    var count = 100;
+    var count = 200;
 
     const randomData: DataPoint[] = []; 
 
     for (let i = 0; i < count; i++) {
-      const randomX = datatime - (count - i) * 1000000;
+      const randomX = datatime - (count - i) * 500;
 
       const randomY = Math.random() * (Math.random() * 10); // Random y between 0 and 100
       randomData.push({ x: randomX, y: randomY });

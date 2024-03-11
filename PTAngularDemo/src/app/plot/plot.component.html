@@ -6,7 +6,7 @@
   <button class="menu-item"  (click)="reload_data()">Reload data</button>
 
     <input id="local_data" type="checkbox" [(ngModel)]="localdata" (change)="useLocalData()">
-    <label for="local_data">local data</label>
+    <label for="local_data">dummy</label>
   </div>
 
   <br />
@@ -16,11 +16,11 @@
     <app-daqchart [chartData]="chartData"></app-daqchart>
   </ng-container>-->
 
-    <app-daqchart [seriesName]="curveNames[0]" [chartData]="curveDatas[0]"></app-daqchart>
-    <app-daqchart [seriesName]="curveNames[1]" [chartData]="curveDatas[1]"></app-daqchart>
-    <app-daqchart [seriesName]="curveNames[2]" [chartData]="curveDatas[2]"></app-daqchart>
-    <app-daqchart [seriesName]="curveNames[3]" [chartData]="curveDatas[3]"></app-daqchart>
-    <app-daqchart [seriesName]="curveNames[4]" [chartData]="curveDatas[4]"></app-daqchart>
+    <app-daqchart [seriesNames]="curveNames[0]" [chartDatas]="curveDatas[0]"></app-daqchart>
+    <app-daqchart [seriesNames]="curveNames[1]" [chartDatas]="curveDatas[1]"></app-daqchart>
+    <app-daqchart [seriesNames]="curveNames[2]" [chartDatas]="curveDatas[2]"></app-daqchart>
+    <app-daqchart [seriesNames]="curveNames[3]" [chartDatas]="curveDatas[3]"></app-daqchart>
+    <app-daqchart [seriesNames]="curveNames[4]" [chartDatas]="curveDatas[4]"></app-daqchart>
 
 
   </div>

@@ -17,8 +17,8 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
   chartId: string = '';
   chart: Highcharts.Chart | undefined;
 
-  @Input() chartData: any;
-  @Input() seriesName: string = 'curve';
+  @Input() chartDatas: any[] = [];
+  @Input() seriesNames: string[] = [];
 
   chartInitialized: boolean = false;
 
@@ -84,8 +84,9 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
     series: [
       {
         type: 'spline',
-        name: this.seriesName,
-        // data: this.data,
+      },
+      {
+        type: 'spline',
       },
     ],
 
@@ -121,12 +122,12 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.chartInitialized
-      && changes['chartData']
-      && !changes['chartData'].firstChange) {
+      && changes['chartDatas']
+      && !changes['chartDatas'].firstChange) {
       this.updateChart();
     }
 
-    console.log('Series Name:', this.seriesName);
+    console.log('Series Name:', this.seriesNames);
   }
 
   initChart() {
@@ -158,13 +159,14 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
   }
 
   private updateChart(): void {
-    this.updateChartData();
+   // this.updateChartData();
     this.updateChartOptions();
   }
 
   private updateChartData(): void {
     if (this.chart && this.chart.series && this.chart.series[0]) {
-      this.chart.series[0].setData(this.chartData, true);
+      this.chart.series[0].setData(this.chartDatas[0], true);
+     // this.chart.series[1].setData(this.chartData, true);
 
     } else {
       console.warn('Chart is not initialized or has no series.');
@@ -175,9 +177,27 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
     // Assuming chartOptions is an object with series array
     if (this.chart && this.chartOptions && this.chartOptions.series && this.chartOptions.series.length > 0) {
       // Update the name of the first series in the chartOptions
-      this.chartOptions.series[0].name = this.seriesName;
+      //this.chartOptions.series[0].name = this.seriesNames[0];
+    //  this.chartOptions.series[1].name = this.seriesNames[1];
+
+      //for (let i = 0; i < this.seriesNames.length; i++) {
+      //  this.chartOptions.series[i].name = this.seriesNames[i];
+      //}
+
+      // Initialize series
+      const series: Highcharts.SeriesOptionsType[] = this.chartDatas.map((data, index) => ({
+        type: 'spline', // Example type, adjust as needed
+        name: this.seriesNames && this.seriesNames.length > index ? this.seriesNames[index] : `Series ${index + 1}`,
+        visible: !!data, // Hide the series if no data
+        data: data || []
+      }));
+      
+      this.chartOptions = {
+        series: series
+      };
 
       //more...
+
 
       // Create a new object reference to trigger change detection
       this.chart.update(this.chartOptions, true);
