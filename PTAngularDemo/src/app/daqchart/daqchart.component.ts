@@ -159,7 +159,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
   }
 
   private updateChart(): void {
-   // this.updateChartData();
+    this.updateChartData();
     this.updateChartOptions();
   }
 
@@ -193,6 +193,44 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
       }));
       
       this.chartOptions = {
+        chart: {
+          inverted: true,
+          type: "spline",
+          zooming: {
+            type: "x"
+          },
+          events: {
+            selection: (event) => {
+              console.log('Selection event triggered');
+
+              this.zoomSelectionService.sendZoomSelection(event);
+
+              return false;
+            }
+          }
+
+        },
+        title: {
+          text: ''
+        },
+        subtitle: {
+          // text: "ptian trial"
+        },
+        xAxis: {
+          type: "datetime", // Set xAxis type as datetime
+          zoomEnabled: true, // Enable zooming along the x-axis
+
+
+        },
+        yAxis: {
+          title: {
+            text: "m/s"
+          },
+          zoomEnabled: true // Enable zooming along the x-axis
+        },
+        tooltip: {
+          valueSuffix: " m/s"
+        },
         series: series
       };
 

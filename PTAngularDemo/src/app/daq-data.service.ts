@@ -21,12 +21,12 @@ export class DaqDataService {
   constructor() { }
 
   //load data from daq-api
-  reloadData() {
+  reloadData(holeId: number) {
     const points: any[] = [];
 
     const postRequest: AdxQueryRequestModel = {
       holeLookupKey: {
-        holeId: 3803,
+        holeId: holeId,
         fileConfigLookupKey: {
           loggingFileType: LoggingFileType.Instrumentation,
           secondaryType: FileLookupType.DrillId,
@@ -44,14 +44,31 @@ export class DaqDataService {
     this.http.post<AdxQueryResponse>('https://localhost:7074/api/AdxDataQuery/GetData', postRequest)
       .subscribe((response: AdxQueryResponse) => {
         console.log(response);
-        
+
         // Parse response and get arrays for names and data
         const { names, dataList } = this.parseResponse(response);
 
         // Set all data points to plotDataSignal
         this.plotNamesSignal.set(names);
         this.plotDataSignal.set(dataList);
-      });
+      },
+        (error) => {
+          if (error.status === 404) {
+            console.log('Not found error:', error);
+            // Handle the "Not found" error here
+
+            //cleanup log from previous data
+
+            //const names = ['Curve 1', 'Curve 2', 'Curve 3', 'Curve 4', 'Curve 5'];
+            //const dataList: any[] = [];
+            //this.plotNamesSignal.set(names);
+            //this.plotDataSignal.set(dataList);
+
+          } else {
+            console.error('Server error:', error);
+            // Handle other errors here
+          }
+        });
   }
 
   parseResponse(response: AdxQueryResponse): { names: string[], dataList: any[] } {

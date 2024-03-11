@@ -17,8 +17,8 @@ export class PlotComponent implements AfterViewInit {
   curveNames: string[][] = [];
   curveDatas: any = [];
 
-  @Input() searchQuery: string = '';
-  @Input() localdata: boolean = true;
+  @Input() holeId: number = 3803;
+  @Input() useDummy: boolean = true;
 
   constructor() {
     effect(() => {
@@ -45,11 +45,6 @@ export class PlotComponent implements AfterViewInit {
           this.curveDatas[index].push(datas[index]);
         }
       }
-
-
-
-
-
     });
   }
 
@@ -58,11 +53,11 @@ export class PlotComponent implements AfterViewInit {
   }
 
   reload_data() {
-    if (this.localdata) {
+    if (this.useDummy) {
       this.dataService.reloadData_local();
     }
     else {
-      this.dataService.reloadData();
+      this.dataService.reloadData(this.holeId);
     }
 
 
@@ -70,14 +65,15 @@ export class PlotComponent implements AfterViewInit {
 
   searchData() {
     // Method to handle search functionality
-    console.log("Search query:", this.searchQuery);
+
+
     // Perform your search logic here, such as filtering data based on the search query
     // Once you have filtered data, you can update your chart data accordingly
+
+    this.reload_data();
   }
 
   useLocalData() {
-    console.log("use local data: ", this.localdata);
-
     this.reload_data();
   }
 }
