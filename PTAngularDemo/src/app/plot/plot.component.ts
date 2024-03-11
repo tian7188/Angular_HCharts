@@ -1,5 +1,6 @@
-import { Component, OnInit, AfterViewInit, inject, Input, effect, input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, inject, Input, effect, input, EventEmitter, Output } from '@angular/core';
 import {DaqDataService} from '../daq-data.service'; 
+import { ZoomSelectionService } from '../zoom-selection.service';
 
 
 @Component({
@@ -11,14 +12,13 @@ import {DaqDataService} from '../daq-data.service';
 export class PlotComponent implements AfterViewInit {
 
   dataService = inject(DaqDataService);
+  zoomSelectionService = inject(ZoomSelectionService);
 
   curveNames: string[] = [];
   curveDatas: any = [];
 
   @Input() searchQuery: string = '';
   @Input() localdata: boolean = true;
-
- 
 
   constructor() {
     effect(() => {

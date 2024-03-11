@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit, inject } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import darkUnica from 'highcharts/themes/dark-unica'; // Import the theme file
+import { ZoomSelectionService } from '../zoom-selection.service';
 
 
 @Component({
@@ -11,24 +12,29 @@ import darkUnica from 'highcharts/themes/dark-unica'; // Import the theme file
 
 export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
 
+  zoomSelectionService = inject(ZoomSelectionService);
+
   chartId: string = '';
   chart: Highcharts.Chart | undefined;
-  @ViewChild('chartId') chartElement: ElementRef | undefined;
 
   @Input() chartData: any;
-  @Input() seriesName: string = 'petertian';
+  @Input() seriesName: string = 'curve';
 
   chartInitialized: boolean = false;
 
   constructor() {
    // darkUnica(Highcharts);
-    this.chartId = 'chart-' + Math.random().toString(36).substr(2, 9);   
+    this.chartId = 'chart-' + Math.random().toString(36).substr(2, 9);
+
+    this.zoomSelectionService.zoomSelectionEvent.subscribe(selection => {
+      this.applyZoomSelection(selection);
+    });
   }
   
   ngAfterViewInit(): void {
     setTimeout(() => {
       if (this.chart) {
-        this.triggerSelectionEvent();
+        
       }
 
     }, 1000);
@@ -45,13 +51,9 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
         selection: (event) => {
           console.log('Selection event triggered');
 
-          if (this.chart) {
-            const xAxis = this.chart.xAxis[0];
-            xAxis.setExtremes(event.xAxis[0].min, event.xAxis[0].max);
+          this.zoomSelectionService.sendZoomSelection(event);
 
-            return false;
-          }
-          return false; // Prevent default action (zooming)
+          return false;
         }
       }
 
@@ -108,29 +110,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
 
 
   };
-
-  // Function to programmatically trigger the selection event by simulating mouse events
-  triggerSelectionEvent() {
-    if (this.chartElement)
-    {
-      const chartElement = this.chartElement.nativeElement;
-
-      const chartRect = chartElement.getBoundingClientRect();
-      const startX = chartRect.left + 100; // Start X position for mouse drag (adjust as needed)
-      const startY = chartRect.top + 100; // Start Y position for mouse drag (adjust as needed)
-      const endX = chartRect.left + 200; // End X position for mouse drag (adjust as needed)
-      const endY = chartRect.top + 100; // End Y position for mouse drag (adjust as needed)
-
-      // Trigger mouse down event
-      chartElement.dispatchEvent(new MouseEvent('mousedown', { clientX: startX, clientY: startY }));
-
-      // Trigger mouse move event
-      chartElement.dispatchEvent(new MouseEvent('mousemove', { clientX: endX, clientY: endY }));
-
-      // Trigger mouse up event
-      chartElement.dispatchEvent(new MouseEvent('mouseup', { clientX: endX, clientY: endY }));
-    }
-  }
+    
 
   ngOnInit(): void {
     setTimeout(() => { this.initChart(); }, 100);
@@ -154,6 +134,12 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
       });
   }
 
+  private applyZoomSelection(selection: Highcharts.SelectEventObject) {
+    if (selection.xAxis && this.chart) {
+      const xAxis = selection.xAxis[0];
+      this.chart.xAxis[0].setExtremes(xAxis.min, xAxis.max);
+    }
+  }
 
   private updateChart(): void {
     this.updateChartData();
