@@ -41,8 +41,8 @@ export class PlotComponent implements AfterViewInit {
         this.curveDatas[index].push(datas[index], datas[index + 1]);
 
         if (numOfCharts-1 == index) {
-          this.curveNames[index].push(names[0], names[2]);
-          this.curveDatas[index].push(datas[0], datas[2]);
+          this.curveNames[index].push(names[index]);
+          this.curveDatas[index].push(datas[index]);
         }
       }
 
