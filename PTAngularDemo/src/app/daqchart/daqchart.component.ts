@@ -159,19 +159,19 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
   }
 
   private updateChart(): void {
-    this.updateChartData();
+   // this.updateChartData();
     this.updateChartOptions();
   }
 
-  private updateChartData(): void {
-    if (this.chart && this.chart.series && this.chart.series[0]) {
-      this.chart.series[0].setData(this.chartDatas[0], true);
-     // this.chart.series[1].setData(this.chartData, true);
+  //private updateChartData(): void {
+  //  if (this.chart && this.chart.series && this.chart.series[0]) {
+  //    this.chart.series[0].setData(this.chartDatas[0], true);
+  //   // this.chart.series[1].setData(this.chartData, true);
 
-    } else {
-      console.warn('Chart is not initialized or has no series.');
-    }
-  }
+  //  } else {
+  //    console.warn('Chart is not initialized or has no series.');
+  //  }
+  //}
 
   private updateChartOptions() {
     // Assuming chartOptions is an object with series array
