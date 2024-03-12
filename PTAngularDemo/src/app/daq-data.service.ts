@@ -57,12 +57,7 @@ export class DaqDataService {
             console.log('Not found error:', error);
             // Handle the "Not found" error here
 
-            //cleanup log from previous data
-
-            //const names = ['Curve 1', 'Curve 2', 'Curve 3', 'Curve 4', 'Curve 5'];
-            //const dataList: any[] = [];
-            //this.plotNamesSignal.set(names);
-            //this.plotDataSignal.set(dataList);
+            this.reloadData_local(1);
 
           } else {
             console.error('Server error:', error);
@@ -98,25 +93,24 @@ export class DaqDataService {
     return { names, dataList };
   }
 
-  reloadData_local(){
+  reloadData_local(count: number = 200){
     const points: any[] = [];
+    const names = ['Curve 1', 'Curve 2', 'Curve 3', 'Curve 4', 'Curve 5'];
 
     const datatime = Date.now();
     for (let i = 0; i < this.numOfCharts; i++) {
-      const temp = this.generateTimeSeriesData(datatime);
+      const temp = this.generateTimeSeriesData(datatime, count);
       points.push(temp);
     }
 
-    const names = ['Curve 1', 'Curve 2', 'Curve 3', 'Curve 4', 'Curve 5'];
+
     this.plotNamesSignal.set(names);
     this.plotDataSignal.set(points);
   }
 
 
-  private generateTimeSeriesData(datatime: number): DataPoint[] {
+  private generateTimeSeriesData(datatime: number, count: number): DataPoint[] {
     // Simulate reloading data for the first chart
-    var count = 200;
-
     const randomData: DataPoint[] = []; 
 
     for (let i = 0; i < count; i++) {
