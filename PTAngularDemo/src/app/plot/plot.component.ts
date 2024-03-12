@@ -1,6 +1,7 @@
-import { Component, OnInit, AfterViewInit, inject, Input, effect, input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, AfterViewInit, inject, Input, effect, input, EventEmitter, Output, ViewChild } from '@angular/core';
 import {DaqDataService} from '../daq-data.service'; 
 import { ZoomSelectionService } from '../zoom-selection.service';
+import { DaqChartComponent } from '../daqchart/daqchart.component';
 
 
 @Component({
@@ -10,6 +11,8 @@ import { ZoomSelectionService } from '../zoom-selection.service';
 })
 
 export class PlotComponent implements AfterViewInit {
+
+  @ViewChild(DaqChartComponent) firstDaqchartComponent: DaqChartComponent | undefined;
 
   dataService = inject(DaqDataService);
   zoomSelectionService = inject(ZoomSelectionService);
@@ -75,5 +78,25 @@ export class PlotComponent implements AfterViewInit {
 
   useLocalData() {
     this.reload_data();
+  }
+
+  zoomIn(): void {
+    // Call the zoomIn method on the first child component
+    if (this.firstDaqchartComponent) {
+      this.firstDaqchartComponent.zoomIn();
+    }
+  }
+
+  zoomOut(): void {
+    // Call the zoomIn method on the first child component
+    if (this.firstDaqchartComponent) {
+      this.firstDaqchartComponent.zoomOut();
+    }
+  }
+
+  restoreOrignal() {
+    if (this.firstDaqchartComponent) {
+      this.firstDaqchartComponent.restoreOrignal();
+    }
   }
 }

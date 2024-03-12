@@ -1,13 +1,18 @@
 
 <div class="menu-container">
-  <label class="menu-item" for="searchInput">Hole:</label>
-  <input  type="text" id="searchInput" [(ngModel)]="holeId" placeholder="Enter search query...">
-  <button  (click)="searchData()">Search</button>
-  <button class="menu-item"  (click)="reload_data()">Reload data</button>
+  <!-- zooming menu -->
+  <button (click)="zoomIn()"> + </button>
+  <button (click)="zoomOut()"> - </button>
+  <button (click)="restoreOrignal()"> restore Orignal </button>
 
-    <input id="local_data" type="checkbox" [(ngModel)]="useDummy" (change)="useLocalData()">
-    <label for="local_data">dummy</label>
-  </div>
+  <label class="menu-item" for="searchInput">Hole:</label>
+  <input type="text" id="searchInput" [(ngModel)]="holeId" placeholder="Enter search query...">
+  <button (click)="searchData()">Search</button>
+  <button class="menu-item" (click)="reload_data()">Reload data</button>
+
+  <input id="local_data" type="checkbox" [(ngModel)]="useDummy" (change)="useLocalData()">
+  <label for="local_data">dummy</label>
+</div>
 
   <br />
 

@@ -26,3 +26,11 @@
 .menu-item {
   margin-left: 30px; /* Adjust the value to add space between items */
 }
+
+button:first-of-type {
+  margin-right: 1rem;
+}
+
+.buttons-wrapper {
+  margin-top: 1.5rem;
+}

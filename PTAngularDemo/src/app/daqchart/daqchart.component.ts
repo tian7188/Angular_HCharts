@@ -204,8 +204,40 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
     }
   }
 
+  restoreOrignal() {
+    if (this.chart) {
+      //this.chart.zoomOut(); // Zoom out
+      this.chart.xAxis[0].setExtremes(undefined, undefined);
+    }
+  }
 
+  zoom(factor: number): void {
+    if (this.chart) {
+      // Get the current minimum and maximum values of the visible range on the x-axis
+      const min = this.chart.xAxis[0].getExtremes().min;
+      const max = this.chart.xAxis[0].getExtremes().max;
 
+      // Calculate the middle point of the visible range
+      const middle = (min + max) / 2;
 
+      // Calculate the new range based on the zoom factor
+      const newMin = middle - (middle - min) * factor;
+      const newMax = middle + (max - middle) * factor;
+
+      // Set the new range to zoom in or out
+      this.chart.xAxis[0].setExtremes(newMin, newMax);
+
+    }
+  }
+
+  zoomIn(): void {
+    this.zoom(1 - 0.3); // Zoom in by reducing the range to 50% of the current range
+  }
+
+  zoomOut(): void {
+    this.zoom(1 + 0.3); // Zoom out by expanding the range to 150% of the current range
+  }
+
+  
 
 }
