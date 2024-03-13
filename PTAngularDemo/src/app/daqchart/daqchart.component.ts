@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit, inject } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import darkUnica from 'highcharts/themes/dark-unica'; // Import the theme file
-import { ZoomSelectionService } from '../zoom-selection.service';
+import { ZoomEventObject, ZoomSelectionService } from '../zoom-selection.service';
 
 
 @Component({
@@ -23,7 +23,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
   chartInitialized: boolean = false;
 
   constructor() {
-   // darkUnica(Highcharts);
+    // darkUnica(Highcharts);
     this.chartId = 'chart-' + Math.random().toString(36).substr(2, 9);
 
     this.zoomSelectionService.zoomSelectionEvent.subscribe(selection => {
@@ -31,7 +31,24 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
         this.applyZoomSelection(selection);
       }
     });
+
+
+    this.zoomSelectionService.zoomEvent.subscribe(event => {
+      if (event && event.chartIndex != this.chart?.index)
+      {
+        if (event.factor) {
+          this.zoom(event.factor, false);
+        }
+        if (event.xAxisMin && event.xAxisMax) {
+          if (this.chart) {
+            this.chart.xAxis[0].setExtremes(event.xAxisMin, event.xAxisMax);
+          }
+        }
+      }
+    });
+
   }
+
   
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -138,7 +155,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
       });
   }
 
-  private applyZoomSelection(selection: Highcharts.SelectEventObject) {
+    private applyZoomSelection(selection: Highcharts.SelectEventObject) {
     if (selection.xAxis && this.chart) {
       const xAxis = selection.xAxis[0];
       //this.chart.xAxis[0].setExtremes(xAxis.min, xAxis.max);
@@ -204,14 +221,8 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
     }
   }
 
-  restoreOrignal() {
-    if (this.chart) {
-      //this.chart.zoomOut(); // Zoom out
-      this.chart.xAxis[0].setExtremes(undefined, undefined);
-    }
-  }
 
-  zoom(factor: number): void {
+  zoom(factor: number, isUserAction: boolean = false): void {
     if (this.chart) {
       // Get the current minimum and maximum values of the visible range on the x-axis
       const min = this.chart.xAxis[0].getExtremes().min;
@@ -227,17 +238,31 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
       // Set the new range to zoom in or out
       this.chart.xAxis[0].setExtremes(newMin, newMax);
 
+      if (isUserAction) {
+        this.zoomSelectionService.sendZoomEvent({
+          chartIndex: this.chart.index,
+          factor: factor,
+          xAxisMin: newMin,
+          xAxisMax: newMax
+        });
+      }
     }
   }
 
   zoomIn(): void {
-    this.zoom(1 - 0.3); // Zoom in by reducing the range to 50% of the current range
+    this.zoom(1 - 0.3, true); // Zoom in by reducing the range to 50% of the current range
   }
 
   zoomOut(): void {
-    this.zoom(1 + 0.3); // Zoom out by expanding the range to 150% of the current range
+    this.zoom(1 + 0.3, true); // Zoom out by expanding the range to 150% of the current range
   }
 
-  
+  restoreOrignal() {
+    if (this.chart) {
+      //this.chart.zoomOut(); // Zoom out
+      this.chart.xAxis[0].setExtremes(undefined, undefined);
+      this.zoom(1, true)
+    }
+  }
 
 }

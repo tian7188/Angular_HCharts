@@ -8,8 +8,20 @@ import { Subject } from 'rxjs';
 
 export class ZoomSelectionService {
   zoomSelectionEvent = new EventEmitter<Highcharts.SelectEventObject>();
-
   sendZoomSelection(selection: Highcharts.SelectEventObject) {
     this.zoomSelectionEvent.emit(selection);
   }
+
+  zoomEvent: EventEmitter<ZoomEventObject> = new EventEmitter<ZoomEventObject>();
+
+  sendZoomEvent(event: ZoomEventObject) {
+    this.zoomEvent.emit(event);
+  }
+}
+
+export class ZoomEventObject {
+  chartIndex: number = 0;
+  factor: number = 0.5;
+  xAxisMin: number = 0;
+  xAxisMax: number = 0;
 }
