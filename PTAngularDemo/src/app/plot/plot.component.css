@@ -1,18 +1,13 @@
 
-/*.chart-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));*/ /* Horizontal layout with minimum item width of 300px */
-  /*grid-gap: 20px;*/ /* Gap between items */
-/*}*/
 
 .chart-container {
   display: flex;
   flex-direction: row; /* Horizontal layout */
-
-  align-items: center;
-  margin-right:10px; /* Adjust the value to add space between items */
-  min-width: 300px;/* Minimum width of each item */
 }
+  .chart-container app-daqchart {    
+    border-right: 2px solid #ccc; /* Add your desired border style */
+    /* You can also use border-bottom if you want the border below each chart */
+  }
 
 .menu-container {
   display: flex;
