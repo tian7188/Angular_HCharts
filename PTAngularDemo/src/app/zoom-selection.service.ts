@@ -21,7 +21,6 @@ export class ZoomSelectionService {
 
 export class ZoomEventObject {
   chartIndex: number = 0;
-  factor: number = 0.5;
   xAxisMin: number = 0;
   xAxisMax: number = 0;
 }
