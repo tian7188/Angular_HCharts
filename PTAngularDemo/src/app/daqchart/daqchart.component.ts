@@ -136,7 +136,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
     if (this.chartInitialized
       && changes['chartDatas']
       && !changes['chartDatas'].firstChange) {
-      this.updateChart();
+      this.updateChartOptions();
     }
 
     console.log('Series Name:', this.seriesNames);
@@ -146,36 +146,14 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
     this.chart = Highcharts.chart(this.chartId, this.chartOptions,
       () => {
         this.chartInitialized = true;
-        setTimeout(() => { this.updateChart(); }, 100);
+        setTimeout(() => { this.updateChartOptions(); }, 100);
       });
   }
-
-  private updateChart(): void {
-   // this.updateChartData();
-    this.updateChartOptions();
-  }
-
-  //private updateChartData(): void {
-  //  if (this.chart && this.chart.series && this.chart.series[0]) {
-  //    this.chart.series[0].setData(this.chartDatas[0], true);
-  //   // this.chart.series[1].setData(this.chartData, true);
-
-  //  } else {
-  //    console.warn('Chart is not initialized or has no series.');
-  //  }
-  //}
-
+  
   private updateChartOptions() {
     // Assuming chartOptions is an object with series array
     if (this.chart && this.chartOptions && this.chartOptions.series && this.chartOptions.series.length > 0) {
-      // Update the name of the first series in the chartOptions
-      //this.chartOptions.series[0].name = this.seriesNames[0];
-    //  this.chartOptions.series[1].name = this.seriesNames[1];
-
-      //for (let i = 0; i < this.seriesNames.length; i++) {
-      //  this.chartOptions.series[i].name = this.seriesNames[i];
-      //}
-
+      
       // Initialize series
       const series: Highcharts.SeriesOptionsType[] = this.chartDatas.map((data, index) => ({
         type: 'spline', // Example type, adjust as needed
