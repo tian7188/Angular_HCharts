@@ -63,7 +63,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
       },
       events: {
         selection: (event) => {
-          console.log('Selection event triggered');
+          console.log('Selection event triggered by chart ' + this.chart?.index);
 
           this.zoomSelectionService.sendZoomSelection(event);
 
@@ -81,7 +81,8 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
     xAxis: {
       type: "datetime", // Set xAxis type as datetime
       zoomEnabled: true, // Enable zooming along the x-axis
-     
+
+      visible: this.isFirstChart(), // Hide X-axis except for the first chart    
 
     },
     yAxis: {
@@ -158,11 +159,18 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
       const series: Highcharts.SeriesOptionsType[] = this.chartDatas.map((data, index) => ({
         type: 'spline', // Example type, adjust as needed
         name: this.seriesNames && this.seriesNames.length > index ? this.seriesNames[index] : `Series ${index + 1}`,
-        visible: !!data, // Hide the series if no data
-        data: data || []
+        visible:  !!data , // Hide the series if no data
+        data: this.isFirstChart() ? [] : ( data || []) // Empty data for the first series
       }));
       
-      this.chartOptions = {        
+      this.chartOptions = {
+        xAxis: {
+          type: "datetime", // Set xAxis type as datetime
+          zoomEnabled: true, // Enable zooming along the x-axis
+
+          visible: this.isFirstChart(), // Hide X-axis except for the first chart    
+
+        },
         series: series
       };
 
@@ -213,5 +221,14 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
       this.zoom(1, true)
     }
   }
+
+  isFirstChart(): boolean | undefined {
+    if (this.chart) {
+      return this.chart.index === 0;
+    }
+
+    return true;
+  }
+
 
 }
