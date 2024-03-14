@@ -57,7 +57,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
   chartOptions: Highcharts.Options = {
     chart: {
       inverted: true,
-      type: "spline",
+      type: "spline",     
       zooming: {
         type: "x"
       },
@@ -160,15 +160,19 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
         type: 'spline', // Example type, adjust as needed
         name: this.seriesNames && this.seriesNames.length > index ? this.seriesNames[index] : `Series ${index + 1}`,
         visible:  !!data , // Hide the series if no data
-        data: this.isFirstChart() ? [] : ( data || []) // Empty data for the first series
+        data: this.isFirstChart() ? this.getAxisData(data) : ( data || []) // Empty data for the first series
       }));
-      
+          
+
       this.chartOptions = {
+        chart: {
+          backgroundColor: this.isFirstChart()? '#a6aaaa' : '#ffffff' // Set the background color of the chart
+        },
         xAxis: {
           type: "datetime", // Set xAxis type as datetime
           zoomEnabled: true, // Enable zooming along the x-axis
 
-          visible: this.isFirstChart(), // Hide X-axis except for the first chart    
+          visible: this.isFirstChart(), // Hide X-axis except for the first chart
 
         },
         series: series
@@ -181,6 +185,16 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
       this.chart.update(this.chartOptions, true);
     }
   }
+
+    getAxisData(data: any): any {
+      //assign data.y to be 1
+       return data.map((d: any) => {
+          return {
+            x: d.x,
+            y: 0
+          };
+        });
+    }
 
 
   zoom(factor: number, isUserAction: boolean = false): void {

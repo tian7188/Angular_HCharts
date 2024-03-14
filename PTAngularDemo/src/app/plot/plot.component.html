@@ -18,13 +18,13 @@
 
   <br />
 
-  <div class="chart-container">
-    <app-daqchart [seriesNames]="curveNames[0]" [chartDatas]="curveDatas[0]"></app-daqchart>
-    <app-daqchart [seriesNames]="curveNames[1]" [chartDatas]="curveDatas[1]"></app-daqchart>
-    <app-daqchart [seriesNames]="curveNames[2]" [chartDatas]="curveDatas[2]"></app-daqchart>
-    <app-daqchart [seriesNames]="curveNames[3]" [chartDatas]="curveDatas[3]"></app-daqchart>
-    <app-daqchart [seriesNames]="curveNames[4]" [chartDatas]="curveDatas[4]"></app-daqchart>
-
+  <div class="plot-container">
+    <app-daqchart class="chart-axis" [seriesNames]="curveNames[0]" [chartDatas]="curveDatas[0]"></app-daqchart>
+    <app-daqchart class="chart-item" [seriesNames]="curveNames[1]" [chartDatas]="curveDatas[1]"></app-daqchart>
+    <app-daqchart class="chart-item" [seriesNames]="curveNames[2]" [chartDatas]="curveDatas[2]"></app-daqchart>
+    <app-daqchart class="chart-item" [seriesNames]="curveNames[3]" [chartDatas]="curveDatas[3]"></app-daqchart>
+    <app-daqchart class="chart-item" [seriesNames]="curveNames[4]" [chartDatas]="curveDatas[4]"></app-daqchart>
+    <app-daqchart class="chart-item" [seriesNames]="curveNames[4]" [chartDatas]="curveDatas[4]"></app-daqchart>
   </div>
 
 
