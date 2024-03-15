@@ -123,9 +123,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
       },
 
     },
-
-
-
+  
   };
     
 

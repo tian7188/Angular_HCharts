@@ -17,7 +17,7 @@
 </div>
 
 
-  <div class="plot-container">
+  <div class="plot-container" (wheel)="onMouseWheel($event)">
     <!-- xAxis -->
     <app-daqchart class="chart-axis" [seriesNames]="curveNames[0]" [chartDatas]="curveDatas[0]"></app-daqchart>
 

@@ -21,27 +21,27 @@ export class DaqDataService {
   constructor() { }
 
   //load data from daq-api
-  reloadData(holeId: number) {
+  reloadData(adxQueryRequest: AdxQueryRequestModel) {
     const points: any[] = [];
 
-    const postRequest: AdxQueryRequestModel = {
-      holeLookupKey: {
-        holeId: holeId,
-        fileConfigLookupKey: {
-          loggingFileType: LoggingFileType.Instrumentation,
-          secondaryType: FileLookupType.DrillId,
-          secondaryValue: 96
-        }
-      },
-      queryParams: {
-        interval: 10,
-        isDepthAxis: false,
-        numOfPoints: 3000
-      }
-    };
+    //const postRequest: AdxQueryRequestModel = {
+    //  holeLookupKey: {
+    //    holeId: holeId,
+    //    fileConfigLookupKey: {
+    //      loggingFileType: LoggingFileType.Instrumentation,
+    //      secondaryType: FileLookupType.DrillId,
+    //      secondaryValue: 96
+    //    }
+    //  },
+    //  queryParams: {
+    //    interval: 10,
+    //    isDepthAxis: false,
+    //    numOfPoints: 3000
+    //  }
+    //};
 
 
-    this.http.post<AdxQueryResponse>('https://localhost:7074/api/AdxDataQuery/GetData', postRequest)
+    this.http.post<AdxQueryResponse>('https://localhost:7074/api/AdxDataQuery/GetData', adxQueryRequest)
       .subscribe((response: AdxQueryResponse) => {
         console.log(response);
 
