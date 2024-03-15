@@ -17,7 +17,7 @@ export class DaqDataService {
   plotDataSignal = signal<DataPoint[]>([]);
 
   numOfCharts: number = 5;
-   pointCount = 3000;
+  pointCount = 3000;
   constructor() { }
 
   //load data from daq-api

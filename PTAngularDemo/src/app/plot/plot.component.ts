@@ -20,7 +20,7 @@ export class PlotComponent implements AfterViewInit {
   curveNames: string[][] = [];
   curveDatas: any = [];
 
-  @Input() holeId: number = 3803;
+  @Input() holeId: number = 36821;
   @Input() useDummy: boolean = true;
 
   constructor() {
@@ -33,19 +33,23 @@ export class PlotComponent implements AfterViewInit {
       this.curveNames = [];
       this.curveDatas = [];
 
-      for (let index = 0; index < numOfCharts; index++) {
+      //set axis names and data
+      this.curveNames[0] = [];
+      this.curveDatas[0] = [];
+      this.curveNames[0].push('Time');
+      this.curveDatas[0].push(datas[0]);
+
+
+      //set curve names and data
+      for (let index = 1; index <= numOfCharts; index++) {
 
         // Initialize arrays for each index
         this.curveNames[index] = [];
         this.curveDatas[index] = [];
 
         // Populate with names and data for each pair of charts
-        this.curveNames[index].push(names[index], names[index + 1]);
-        this.curveDatas[index].push(datas[index], datas[index + 1]);
-
-        if (numOfCharts-1 == index) {
-          this.curveNames[index].push(names[index]);
-          this.curveDatas[index].push(datas[index]);
+          this.curveNames[index].push(names[index], names[index + 1]);
+          this.curveDatas[index].push(datas[index], datas[index + 1]);
         }
       }
     });

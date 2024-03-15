@@ -160,7 +160,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
         type: 'spline', // Example type, adjust as needed
         name: this.seriesNames && this.seriesNames.length > index ? this.seriesNames[index] : `Series ${index + 1}`,
         visible:  !!data , // Hide the series if no data
-        data: this.isFirstChart() ? this.getAxisData(data) : ( data || []) // Empty data for the first series
+        data:  data || [],// Empty data for the first series
       }));
           
 
