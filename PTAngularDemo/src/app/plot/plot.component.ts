@@ -89,7 +89,6 @@ export class PlotComponent implements AfterViewInit {
       this.dataService.reloadData_local();
     }
     else {
-
       const adxQueryRequest: AdxQueryRequestModel = {
         holeLookupKey: {
           holeId: this.holeId,
@@ -108,21 +107,11 @@ export class PlotComponent implements AfterViewInit {
 
       adxQueryRequest.holeLookupKey.holeId = this.holeId;
       adxQueryRequest.holeLookupKey.fileConfigLookupKey.secondaryValue = 96;
-
       adxQueryRequest.queryParams.interval = 120;
       adxQueryRequest.queryParams.isDepthAxis = false;
-      adxQueryRequest.queryParams.numOfPoints = 3000;
+      adxQueryRequest.queryParams.numOfPoints = 3000;      
 
-       
-      
-
-
-
-
-
-
-
-
+      //load data from daq-api
       this.dataService.reloadData(adxQueryRequest);
     }
 
