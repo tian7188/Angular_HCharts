@@ -78,13 +78,37 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
     subtitle: {
       // text: "ptian trial"
     },
-    xAxis: {
-      type: "datetime", // Set xAxis type as datetime
+    xAxis: [{
+     /* type: "datetime",*/ // Set xAxis type as datetime
       zoomEnabled: true, // Enable zooming along the x-axis
 
-      visible: this.isFirstChart(), // Hide X-axis except for the first chart    
+      visible: this.isFirstChart(), // Hide X-axis except for the first chart
+
+      minPadding: 0,
+      maxPadding: 0,
+      lineColor: '#7E7D83',
+      lineWidth: 1,
+      tickColor: '#7E7D83',
+
+      //crosshair: crosshairOptions,
+      //events: {
+      //  setExtremes: syncExtremes,
+      //  afterSetExtremes: afterSetExtremes
+      //},
+
+      scrollbar: {
+        enabled: true
+      },
+      title: {
+        text: "Time",
+        style: {
+          fontSize: '15px'
+        }
+      },
 
     },
+
+    ],
     yAxis: {
       title: {
         text: "m/s"
