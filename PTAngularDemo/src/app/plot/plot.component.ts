@@ -84,6 +84,10 @@ export class PlotComponent implements AfterViewInit {
     this.reload_data();
   }
 
+  onInputChange(value: string): void {
+    this.holeId = parseInt(value, 10); // Parse the input value to a number
+  }
+
   reload_data() {
     if (this.useDummy) {
       this.dataService.reloadData_local();
@@ -107,9 +111,16 @@ export class PlotComponent implements AfterViewInit {
 
       adxQueryRequest.holeLookupKey.holeId = this.holeId;
       adxQueryRequest.holeLookupKey.fileConfigLookupKey.secondaryValue = 96;
-      adxQueryRequest.queryParams.interval = 120;
       adxQueryRequest.queryParams.isDepthAxis = false;
-      adxQueryRequest.queryParams.numOfPoints = 3000;      
+      adxQueryRequest.queryParams.numOfPoints = 3000;
+
+      adxQueryRequest.queryParams.interval = 120;
+
+      //temp code to set interval
+      if (this.holeId !== 3803) {
+        adxQueryRequest.queryParams.interval = 0.5;
+        adxQueryRequest.holeLookupKey.fileConfigLookupKey.secondaryValue = 739;
+      }
 
       //load data from daq-api
       this.dataService.reloadData(adxQueryRequest);

@@ -8,7 +8,7 @@
   <button (click)="restoreOrignal()">Orignal</button>
 
   <label class="menu-item" for="searchInput">Hole:</label>
-  <input type="text" id="searchInput" [(ngModel)]="holeId" placeholder="Enter search query...">
+  <input type="text" id="searchInput" [(ngModel)]="holeId" (ngModelChange)="onInputChange($event)"  placeholder="Enter search query...">
   <button (click)="searchData()">Search</button>
   <button class="menu-item" (click)="reload_data()">Reload data</button>
 
