@@ -8,14 +8,20 @@ import { Subject } from 'rxjs';
 
 export class ZoomSelectionService {
   zoomSelectionEvent = new EventEmitter<Highcharts.SelectEventObject>();
+  zoomEvent: EventEmitter<ZoomEventObject> = new EventEmitter<ZoomEventObject>();
+  crosshairPositionChange: EventEmitter<DAQPointerEventObject> = new EventEmitter<DAQPointerEventObject>();
+
+
   sendZoomSelection(selection: Highcharts.SelectEventObject) {
     this.zoomSelectionEvent.emit(selection);
   }
 
-  zoomEvent: EventEmitter<ZoomEventObject> = new EventEmitter<ZoomEventObject>();
-
   sendZoomEvent(event: ZoomEventObject) {
     this.zoomEvent.emit(event);
+  }
+
+  sendCrosshairPositionChange(event: DAQPointerEventObject) {
+    this.crosshairPositionChange.emit(event);
   }
 }
 
@@ -23,4 +29,9 @@ export class ZoomEventObject {
   chartIndex: number = 0;
   xAxisMin: number = 0;
   xAxisMax: number = 0;
+}
+
+export interface DAQPointerEventObject {
+  chartIndex: number,
+  pointerEventObject: Highcharts.PointerEventObject | undefined
 }
