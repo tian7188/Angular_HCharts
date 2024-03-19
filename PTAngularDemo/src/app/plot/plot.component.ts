@@ -21,8 +21,8 @@ export class PlotComponent implements AfterViewInit {
   curveNames: string[][] = [];
   curveDatas: any = [];
 
-  @Input() holeId: number = 36821;
-  @Input() useDummy: boolean = true;
+  @Input() holeId: number = 3803;
+  @Input() useDummy: boolean = false;
 
   constructor() {
     effect(() => {
