@@ -114,7 +114,7 @@ export class PlotComponent implements AfterViewInit {
       adxQueryRequest.queryParams.isDepthAxis = false;
       adxQueryRequest.queryParams.numOfPoints = 3000;
 
-      adxQueryRequest.queryParams.interval = 2000;
+      adxQueryRequest.queryParams.interval = 1000;
 
       //temp code to set interval
       if (this.holeId !== 3803) {

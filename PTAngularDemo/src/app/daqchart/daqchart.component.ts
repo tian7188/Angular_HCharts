@@ -241,12 +241,11 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
 
       this.chartOptions = {
         chart: {
-          backgroundColor: this.isFirstChart() ? '#a6aaaa' : '#ebeff7' // Set the background color of the chart
+          backgroundColor: this.isFirstChart() ? '#a6aaaa' : '#ebeff1' // Set the background color of the chart
         },
         xAxis: {
           type: "datetime", // Set xAxis type as datetime
           zoomEnabled: true, // Enable zooming along the x-axis
-
           visible: this.isFirstChart(), // Hide X-axis except for the first chart
 
         },
