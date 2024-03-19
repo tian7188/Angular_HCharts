@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit, inject } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit, inject, ElementRef } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import darkUnica from 'highcharts/themes/dark-unica'; // Import the theme file
-import { ZoomEventObject, ZoomSelectionService } from '../zoom-selection.service';
+import { DAQPointerEventObject, ZoomEventObject,  ZoomSelectionService } from '../zoom-selection.service';
 
 
 @Component({
@@ -22,7 +22,15 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
 
   chartInitialized: boolean = false;
 
-  constructor() {
+  crosshairOptions: any = {
+    width: 3,
+    color: '#6C4DFF',
+    dashStyle: 'longdashdot'
+  }
+
+
+
+  constructor(private elementRef: ElementRef) {
     // darkUnica(Highcharts);
     this.chartId = 'chart-' + Math.random().toString(36).substr(2, 9);
 
@@ -41,9 +49,50 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
         this.chart.xAxis[0].setExtremes(event.xAxisMin, event.xAxisMax);
       }
     });
+
+    this.zoomSelectionService.crosshairPositionChange.subscribe(event => {
+      if (this.chart && event.chartIndex !== this.chart.index) {
+        if (event.pointerEventObject) {
+          // Normalize event coordinates
+          const normalizedEvent = this.chart.pointer.normalize(event.pointerEventObject);
+
+          // Highlight the hovered point
+          const point = this.chart.series[0].searchPoint(normalizedEvent, true);
+          if (point && event) {
+            point.onMouseOver(); // Show the hover marker
+            this.chart.xAxis[0].drawCrosshair(event.pointerEventObject, point); // Show the crosshair
+          }
+        }
+      }
+    });
+
+    // Attach mousemove event listener to the chart container element
+    this.elementRef.nativeElement.addEventListener('mousemove', this.onChartMouseMove.bind(this));
   }
 
 
+  // Method to handle mousemove event
+  onChartMouseMove(event: MouseEvent) {
+    if (!this.chart) return;
+
+    // Type assertion to cast MouseEvent to PointerEventObject
+    const pointerEvent = event as Highcharts.PointerEventObject;
+
+    this.zoomSelectionService.crosshairPositionChange.emit({
+      chartIndex: this.chart.index,
+      pointerEventObject: pointerEvent
+    });
+
+    //// Normalize event coordinates
+    //const normalizedEvent = this.chart.pointer.normalize(pointerEvent);
+
+    //// Highlight the hovered point
+    //const point = this.chart.series[0].searchPoint(normalizedEvent, true);
+    //if (point && event) {
+    //  point.onMouseOver(); // Show the hover marker
+    //  this.chart.xAxis[0].drawCrosshair(pointerEvent, point); // Show the crosshair
+    //}
+  }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -53,6 +102,8 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
 
     }, 1000);
   }
+
+
 
   chartOptions: Highcharts.Options = {
     chart: {
@@ -68,9 +119,8 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
           this.zoomSelectionService.sendZoomSelection(event);
 
           return false;
-        }
+        },
       }
-
     },
     title: {
       text: ''
@@ -90,7 +140,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
       lineWidth: 1,
       tickColor: '#7E7D83',
 
-      //crosshair: crosshairOptions,
+      crosshair: this.crosshairOptions,
       //events: {
       //  setExtremes: syncExtremes,
       //  afterSetExtremes: afterSetExtremes
@@ -147,6 +197,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
       },
 
     },
+
   
   };
     
