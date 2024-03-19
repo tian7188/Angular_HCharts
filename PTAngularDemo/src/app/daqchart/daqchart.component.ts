@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit, inje
 import * as Highcharts from 'highcharts';
 import darkUnica from 'highcharts/themes/dark-unica'; // Import the theme file
 import { DAQPointerEventObject, ZoomEventObject,  ZoomSelectionService } from '../zoom-selection.service';
+import { daqColors } from '../plot/plot.component';
 
 
 @Component({
@@ -10,7 +11,8 @@ import { DAQPointerEventObject, ZoomEventObject,  ZoomSelectionService } from '.
   styleUrl: './daqchart.component.css',
 })
 
-export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
+export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
+
 
   zoomSelectionService = inject(ZoomSelectionService);
 
@@ -114,7 +116,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
       },
       events: {
         selection: (event) => {
-          console.log('Selection event triggered by chart ' + this.chart?.index);
+          //console.log('Selection event triggered by chart ' + this.chart?.index);
 
           this.zoomSelectionService.sendZoomSelection(event);
 
@@ -195,7 +197,6 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
       series: {
         allowPointSelect: true,
       },
-
     },
 
   
@@ -213,7 +214,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
       this.updateChartOptions();
     }
 
-    console.log('Series Name:', this.seriesNames);
+    //console.log('Series Name:', this.seriesNames);
   }
 
   initChart() {
@@ -231,6 +232,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
       // Initialize series
       const series: Highcharts.SeriesOptionsType[] = this.chartDatas.map((data, index) => ({
         type: 'spline', // Example type, adjust as needed
+        color: this.getColor(index),
         name: this.seriesNames && this.seriesNames.length > index ? this.seriesNames[index] : `Series ${index + 1}`,
         visible:  !!data , // Hide the series if no data
         data:  data || [],// Empty data for the first series
@@ -317,5 +319,21 @@ export class DaqChartComponent implements OnInit, AfterViewInit , OnChanges {
     return true;
   }
 
+  getColor(seriesIndex: number): string | Highcharts.GradientColorObject | Highcharts.PatternObject | undefined {
+    if (this.chart) {
+      const chartIndex = this.chart.index;
+      const numCharts = 5;
+
+      // Use a formula to generate a unique index for each series
+      const uniqueSeriesIndex = chartIndex * numCharts + seriesIndex;
+
+      console.log('color index:', uniqueSeriesIndex, uniqueSeriesIndex % daqColors.length);
+
+      return daqColors[uniqueSeriesIndex % daqColors.length];
+
+    }
+
+    return 'black';
+  }
 
 }

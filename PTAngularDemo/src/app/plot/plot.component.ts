@@ -163,3 +163,19 @@ export class PlotComponent implements AfterViewInit {
     }
   }
 }
+
+
+
+export const daqColors: string[] = [
+  '#7cb5ec', // blue
+  '#434348', // dark gray
+  '#90ed7d', // green
+  '#f7a35c', // orange
+  '#8085e9', // purple
+  '#f15c80', // pink
+  '#e4d354', // yellow
+  '#2b908f', // teal
+  //'#f45b5b', // red
+  '#91e8e1', // light teal
+  // Add more colors as needed
+];
