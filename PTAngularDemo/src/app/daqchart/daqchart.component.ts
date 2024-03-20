@@ -161,12 +161,23 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
     },
 
     ],
-    yAxis: {
-      title: {
-        text: "m/s"
+    yAxis: [
+      {
+        title: {
+          text: ""
+        },
+        opposite: true,
+        zoomEnabled: true // Enable zooming along the x-axis
       },
-      zoomEnabled: true // Enable zooming along the x-axis
-    },
+      {
+        title: {
+          text: ""
+        },
+        opposite: true,
+        zoomEnabled: true // Enable zooming along the x-axis
+      },
+    ],
+
     tooltip: {
       valueSuffix: " m/s"
     },
@@ -228,14 +239,15 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
   private updateChartOptions() {
     // Assuming chartOptions is an object with series array
     if (this.chart && this.chartOptions && this.chartOptions.series && this.chartOptions.series.length > 0) {
-      
+
       // Initialize series
       const series: Highcharts.SeriesOptionsType[] = this.chartDatas.map((data, index) => ({
         type: 'spline', // Example type, adjust as needed
         color: this.getColor(index),
         name: this.seriesNames && this.seriesNames.length > index ? this.seriesNames[index] : `Series ${index + 1}`,
         visible:  !!data , // Hide the series if no data
-        data:  data || [],// Empty data for the first series
+        data: data || [],// Empty data for the first series
+       // yAxis: index % 2 === 0 ? 0 : 1, // Assign the first half of the series to the first y-axis and the second half to the second y-axis
       }));
           
 

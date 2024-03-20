@@ -50,6 +50,8 @@ export class DaqDataService {
 
         // Set all data points to plotDataSignal
         this.plotNamesSignal.set(names);
+
+        //dataList.sort((a, b) => a.time - b.time);
         this.plotDataSignal.set(dataList);
       },
         (error) => {
@@ -80,7 +82,8 @@ export class DaqDataService {
           if (key !== 'Time' && !names.includes(key)) {
             names.push(key);
             dataList.push([{ x: data.Time, y: data[key] }]);
-          } else if (key !== 'Time') {
+          }
+          else if (key !== 'Time') {
             // Find the index of the property in names array
             const index = names.indexOf(key);
             // If the property already exists in names array, push data point to its corresponding data array
