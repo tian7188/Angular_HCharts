@@ -18,13 +18,30 @@ export class PlotComponent implements AfterViewInit {
   dataService = inject(DaqDataService);
   zoomSelectionService = inject(ZoomSelectionService);
 
+  adxQueryRequest: AdxQueryRequestModel | undefined;
   curveNames: string[][] = [];
   curveDatas: any = [];
 
   @Input() holeId: number = 3803;
-  @Input() useDummy: boolean = false;
+  @Input() useDummy: boolean = true;
 
   constructor() {
+    this.adxQueryRequest = {
+      holeLookupKey: {
+        holeId: this.holeId,
+        fileConfigLookupKey: {
+          loggingFileType: LoggingFileType.Instrumentation,
+          secondaryType: FileLookupType.DrillId,
+          secondaryValue: 96
+        }
+      },
+      queryParams: {
+        interval: 10,
+        isDepthAxis: false,
+        numOfPoints: 100
+      }
+    };
+
     effect(() => {
       const names = this.dataService.plotNamesSignal();
       const datas = this.dataService.plotDataSignal();
@@ -57,6 +74,15 @@ export class PlotComponent implements AfterViewInit {
           this.curveDatas[index].push(datas[index], datas[index + 1]);
         }
       }
+
+
+      //temp code 
+      if (this.adxQueryRequest  && this.adxQueryRequest.holeLookupKey.fileConfigLookupKey.secondaryValue === 739) {
+        this.curveNames[1].push(names[2]);
+        this.curveDatas[1].push(datas[2]);
+      }
+
+
     });
   }
 
@@ -93,37 +119,24 @@ export class PlotComponent implements AfterViewInit {
       this.dataService.reloadData_local();
     }
     else {
-      const adxQueryRequest: AdxQueryRequestModel = {
-        holeLookupKey: {
-          holeId: this.holeId,
-          fileConfigLookupKey: {
-            loggingFileType: LoggingFileType.Instrumentation,
-            secondaryType: FileLookupType.DrillId,
-            secondaryValue: 96
-          }
-        },
-        queryParams: {
-            interval: 0,
-            isDepthAxis: false,
-            numOfPoints: 0
-        }
-      };
+      let request = this.adxQueryRequest;
+      if (request === undefined) {
+        return;
+      }     
 
-      adxQueryRequest.holeLookupKey.holeId = this.holeId;
-      adxQueryRequest.holeLookupKey.fileConfigLookupKey.secondaryValue = 96;
-      adxQueryRequest.queryParams.isDepthAxis = false;
-      adxQueryRequest.queryParams.numOfPoints = 3000;
-
-      adxQueryRequest.queryParams.interval = 1000;
+      request.holeLookupKey.holeId = this.holeId;
+      request.holeLookupKey.fileConfigLookupKey.secondaryValue = 96;
+      request.queryParams.numOfPoints = 3000;
+      request.queryParams.interval = 100;
 
       //temp code to set interval
-      if (this.holeId !== 3803) {
-        adxQueryRequest.queryParams.interval = 0.5;
-        adxQueryRequest.holeLookupKey.fileConfigLookupKey.secondaryValue = 739;
+      if (this.holeId === 36821) {
+        request.queryParams.interval = 0.5;
+        request.holeLookupKey.fileConfigLookupKey.secondaryValue = 739;
       }
 
       //load data from daq-api
-      this.dataService.reloadData(adxQueryRequest);
+      this.dataService.reloadData(request);
     }
 
 
