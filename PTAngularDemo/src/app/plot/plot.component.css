@@ -9,7 +9,7 @@
 }
 
   .chart-item {
-    flex: 1;  Each chart item occupies equal space 
+    flex: 1;  /*Each chart item occupies equal space */
   }
 
 .chart-axis {

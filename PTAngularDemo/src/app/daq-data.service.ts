@@ -96,7 +96,7 @@ export class DaqDataService {
     return { names, dataList };
   }
 
-  reloadData_local(count: number = 200){
+  reloadData_local(count: number = 100){
     const points: any[] = [];
     const names = ['Curve 1', 'Curve 2', 'Curve 3', 'Curve 4', 'Curve 5'];
 
@@ -105,7 +105,6 @@ export class DaqDataService {
       const temp = this.generateTimeSeriesData(datatime, count);
       points.push(temp);
     }
-
 
     this.plotNamesSignal.set(names);
     this.plotDataSignal.set(points);
@@ -116,10 +115,13 @@ export class DaqDataService {
     // Simulate reloading data for the first chart
     const randomData: DataPoint[] = []; 
 
+    //get max y value;
+    const maxY = Math.floor(Math.random() * 100) + 1;
+
     for (let i = 0; i < count; i++) {
       const randomX = datatime - (count - i) * 500;
 
-      const randomY = Math.random() * (Math.random() * 10); // Random y between 0 and 100
+      const randomY = Math.random() * maxY; // Random y between 0 and 100
       randomData.push({ x: randomX, y: randomY });
     }
 

@@ -26,7 +26,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
 
   crosshairOptions: any = {
     width: 3,
-    color: '#6C4DFF',
+    color: 'grey',
     dashStyle: 'longdashdot'
   }
 
@@ -179,7 +179,18 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
     ],
 
     tooltip: {
-      valueSuffix: " m/s"
+      valueSuffix: " m/s",
+      shared: true,
+      //formatter: function () {
+      //  let tooltip = '';
+      //  if (this.points && this.points.length > 0 && this.points[0].point) {
+      //    tooltip += '<b>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.points[0].point.x) + '</b><br/>';
+      //    this.points.forEach(function (point) {
+      //      tooltip += '<span style="color:' + point.series.color + '">\u25CF</span> ' + point.series.name + ': <b>' + point.point.y + '</b><br/>';
+      //    });
+      //  }
+      //  return tooltip;
+      //},
     },
     series: [
       {
