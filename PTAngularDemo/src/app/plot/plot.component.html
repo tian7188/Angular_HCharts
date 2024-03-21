@@ -62,9 +62,9 @@
   </div>
 
 
-  <!--<div class="menu-container">-->
-   <!--zooming menu--> 
-  <!--<button (click)="zoomIn()"> + </button>
+  <div class="menu-container">
+   zooming menu 
+  <button (click)="zoomIn()"> + </button>
     <button (click)="zoomOut()"> -- </button>
     <button (click)="restoreOrignal()">Orignal</button>
 
@@ -75,7 +75,7 @@
 
     <input id="local_data" type="checkbox" [(ngModel)]="useDummy" (change)="useLocalData()">
     <label for="local_data">dummy</label>
-  </div>-->
+  </div>
 
 
   <div class="daq-track-container" id="plots" (wheel)="onMouseWheel($event)">

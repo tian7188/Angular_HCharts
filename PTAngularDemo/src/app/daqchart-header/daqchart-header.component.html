@@ -1,22 +1,13 @@
 
 
 <div class="daq-chart-header" *ngIf="chartProp">
-  <div class="header-row">
-    <div class="header-value">{{ chartProp?.title }}</div>
-  </div>
-
+  <div class="title">{{ chartProp?.title }}</div>
   <div class="track-line-style" [style.color]="chartProp?.color"></div>
 
   <div class="header-range-unit">
-    <div class="header-row">
-      <div class="header-value">{{ chartProp?.minValue }}</div>
-    </div>
-    <div class="header-row">
-      <div class="header-value">{{ chartProp?.unit }}</div>
-    </div>
-    <div class="header-row">
-      <div class="header-value">{{ chartProp?.maxValue }}</div>
-    </div>
+      <div class="trackHeaderColumn min-tag">{{ chartProp?.minValue }}</div>
+      <div class="trackHeaderColumn unit-tag">{{ chartProp?.unit }}</div>
+      <div class="trackHeaderColumn max-tag">{{ chartProp?.maxValue }}</div>
   </div>
 </div>
 
