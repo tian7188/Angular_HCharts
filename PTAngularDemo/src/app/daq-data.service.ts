@@ -98,9 +98,9 @@ export class DaqDataService {
 
   reloadData_local(count: number = 100){
     const points: any[] = [];
-    const names = ['Curve 1', 'Curve 2', 'Curve 3', 'Curve 4', 'Curve 5'];
+    const names = ['Torque', 'GR', 'Motor-Speed', 'Resis', 'Compr'];
 
-    const datatime = Date.now();
+    const datatime = new Date(2024, 3, 20).getUTCMilliseconds();  // Date.now();
     for (let i = 0; i < this.numOfCharts; i++) {
       const temp = this.generateTimeSeriesData(datatime, count);
       points.push(temp);
@@ -119,7 +119,7 @@ export class DaqDataService {
     const maxY = Math.floor(Math.random() * 100) + 1;
 
     for (let i = 0; i < count; i++) {
-      const randomX = datatime - (count - i) * 500;
+      const randomX = datatime - (count - i) * 10000;
 
       const randomY = Math.random() * maxY; // Random y between 0 and 100
       randomData.push({ x: randomX, y: randomY });

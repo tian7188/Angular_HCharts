@@ -181,6 +181,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
     tooltip: {
       valueSuffix: " m/s",
       shared: true,
+
       //formatter: function () {
       //  let tooltip = '';
       //  if (this.points && this.points.length > 0 && this.points[0].point) {
@@ -255,7 +256,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
       const series: Highcharts.SeriesOptionsType[] = this.chartDatas.map((data, index) => ({
         type: 'spline', // Example type, adjust as needed
         color: this.getColor(index),
-        name: this.seriesNames && this.seriesNames.length > index ? this.seriesNames[index] : `Series ${index + 1}`,
+        name: this.seriesNames && this.seriesNames.length >= index ? this.seriesNames[index] : `Seriesqq ${index + 1}`,
         visible:  !!data , // Hide the series if no data
         data: data || [],// Empty data for the first series
        // yAxis: index % 2 === 0 ? 0 : 1, // Assign the first half of the series to the first y-axis and the second half to the second y-axis
@@ -271,6 +272,9 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
           zoomEnabled: true, // Enable zooming along the x-axis
           visible: this.isFirstChart(), // Hide X-axis except for the first chart
 
+        },
+        tooltip: {
+          enabled: !this.isFirstChart() // Disable tooltip for this chart
         },
         series: series
       };
