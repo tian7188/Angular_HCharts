@@ -1,5 +1,10 @@
+.header-container {
+  display: flex;
+}
+
 .daq-chart-header {
   align-content: center;
+  min-height: 80px;
   margin: 0px;
   padding: 7px;
   border-width: thin;
@@ -12,6 +17,8 @@
   border: 0.5px solid #7E7D83;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.1);
   text-align: center;
+
+  flex-grow: 1;
 }
 
   .daq-chart-header .title {
@@ -32,17 +39,20 @@
 
 /********************/
 
-
 .empty-header {
   align-content: center;
-  margin: 1px;
+  margin: 0px;
   padding: 4px;
   border-width: thin;
-  border-radius: 7px;
+  border-radius: 5px;
   background-color: #ffffff;
   cursor: pointer;
-  border: 2px dashed #7E7D83;
+  border: 1.5px dashed #7E7D83;
+
+  flex-grow: 1;
 }
+
+/********************/
 
 .track-header-ui {
   display: none;

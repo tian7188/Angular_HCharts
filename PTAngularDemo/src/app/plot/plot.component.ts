@@ -87,7 +87,7 @@ export class PlotComponent implements AfterViewInit {
 
       //set chartProps[] values
       this.chartProps = [];
-      for (let index = 0; index <= numOfCharts; index++) {
+      for (let index = 0; index < numOfCharts; index++) {
         this.chartProps.push(new ChartProp({ title: names[index], color: daqColors[index] }));
       }
 
