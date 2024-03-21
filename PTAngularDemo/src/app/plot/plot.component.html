@@ -4,7 +4,7 @@
 <div class="daq-container">
 
 
-  <!--<div class="daq-zoom-button-container">
+  <div class="daq-zoom-button-container">
 
     <div class="zoom-buttons">
       <div class="zoom-button" onClick="zoomIn()"><i class="fa fa-search-plus" aria-hidden="true"></i></div>
@@ -48,9 +48,9 @@
       <input type="button" class="btn btn-sm" value="Reset templates" onclick="resetTemplateSettings()" />
     </div>
 
-  </div>-->
+  </div>
 
-  <!--<div class="axis-toggle-container">
+  <div class="axis-toggle-container">
     <div class="toggle-button">
       <input type="radio" id="daq-toggle-depth" name="axis-select" value="depth" onchange="toggleTime_Depth(this)" />
       <label for="daq-toggle-depth">Depth</label>
@@ -59,12 +59,12 @@
       <input type="radio" id="daq-toggle-time" name="axis-select" value="time" onchange="toggleTime_Depth(this)" />
       <label for="daq-toggle-time">Time</label>
     </div>
-  </div>-->
+  </div>
 
 
-  <div class="menu-container">
+  <!--<div class="menu-container">-->
    <!--zooming menu--> 
-  <button (click)="zoomIn()"> + </button>
+  <!--<button (click)="zoomIn()"> + </button>
     <button (click)="zoomOut()"> -- </button>
     <button (click)="restoreOrignal()">Orignal</button>
 
@@ -75,7 +75,7 @@
 
     <input id="local_data" type="checkbox" [(ngModel)]="useDummy" (change)="useLocalData()">
     <label for="local_data">dummy</label>
-  </div>
+  </div>-->
 
 
   <div class="daq-track-container" id="plots" (wheel)="onMouseWheel($event)">

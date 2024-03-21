@@ -1,4 +1,15 @@
 
+/*.daq-container {*/
+/*  Grid layout for zoom buttons and tracks*/
+      /*display: grid;
+  grid-template-rows: 50px calc($header-height * 2) 1fr;
+  grid-template-columns: 210px 1fr;
+  width: 70vw;
+  margin-bottom: 50px;
+  *
+        Zoom buttons ---------------------------- * Header & Header Edit UI ---------------------------- * Graph Tracks -------------------------
+}*/
+
 
 .daq-track-container {
   display: flex;
@@ -7,13 +18,15 @@
   margin-top: 1rem; 
 }
 
-  .chart-item {
-    flex: 1; 
-  }
+.chart-item {
+  flex: 1;
+ 
+}
 
 .chart-axis {
-  width: 200px;  
-  margin-top: 90px
+  width: 200px;
+  align-self: end; /* Align the chart-axis to the end (bottom) of its grid cell */
+  /*  margin-top: 90px*/
 }
 
 
@@ -42,6 +55,111 @@ button:first-of-type {
   display: inline-block; /* or display: block; */
 }
 
-.chart-placeholder {
-  height: 100px; /* Set the height to your desired value */
+
+
+.daq-container .axis-toggle-container {
+  display: flex;
+  margin-left: 50px;
+  margin-bottom: 1px;
+  gap: 16px;
+  padding-right: 4px;
+  align-self: auto
 }
+
+.daq-container .toggle-button label {
+  margin-left: 2px;
+  margin-bottom: 19px;
+  font-weight: 500;
+}
+
+
+/********d aq-zoom-button-container ***********/
+
+  .daq-container .daq-zoom-button-container {
+    display: flex;
+    grid-column-start: 2;
+    align-self: end;
+    margin-left: 200px;
+  }
+
+    .daq-container .daq-zoom-button-container label {
+      font-weight: 500;
+    }
+
+    .daq-container .daq-zoom-button-container .zoom-buttons {
+      display: flex;
+      margin-right: 40px;
+    }
+
+    .daq-container .daq-zoom-button-container .zoom-button {
+      align-self: end;
+      width: 30px;
+      height: 30px;
+      margin-right: 5px;
+      border: 0.5px solid #47454E;
+      border-radius: 2px;
+      background-color: white;
+      font-size: 14px;
+      color: #47454E;
+      text-align: center;
+      cursor: pointer;
+    }
+
+      .daq-container .daq-zoom-button-container .zoom-button i {
+        vertical-align: bottom;
+        font-size: 14px;
+      }
+
+    .daq-container .daq-zoom-button-container .zoom-interval-container {
+      display: flex;
+      display: flex;
+      flex-direction: column;
+      align-self: end;
+      margin-left: 5px;
+    }
+
+      .daq-container .daq-zoom-button-container .zoom-interval-container label {
+        margin-bottom: 2px;
+      }
+
+      .daq-container .daq-zoom-button-container .zoom-interval-container select#zoom-interval, .daq-container .daq-zoom-button-container .zoom-interval-container select#time-interval {
+        height: 30px;
+        border-radius: 2px;
+      }
+
+    .daq-container .daq-zoom-button-container .points-interval-input {
+      display: flex;
+      margin-right: 40px;
+    }
+
+      .daq-container .daq-zoom-button-container .points-interval-input .input-group {
+        align-self: end;
+        margin-right: 5px;
+      }
+
+        .daq-container .daq-zoom-button-container .points-interval-input .input-group .input-group-text {
+          align-self: center;
+        }
+
+      .daq-container .daq-zoom-button-container .points-interval-input .refresh {
+        margin-right: 10px;
+      }
+
+    .daq-container .daq-zoom-button-container .toggle-chart-elements {
+      display: flex;
+      align-items: center;
+      align-self: end;
+      margin-right: 20px;
+    }
+
+      .daq-container .daq-zoom-button-container .toggle-chart-elements input {
+        margin-right: 5px;
+      }
+
+      .daq-container .daq-zoom-button-container .toggle-chart-elements label[for="daq-toggle-tooltip"] {
+        margin-right: 10px;
+      }
+
+    .daq-container .daq-zoom-button-container #change-dash-style {
+      align-self: end;
+    }
