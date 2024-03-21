@@ -1,0 +1,36 @@
+
+
+<div class="daq-chart-header" *ngIf="chartProp">
+  <div class="header-row">
+    <div class="header-value">{{ chartProp?.title }}</div>
+  </div>
+
+  <div class="track-line-style" [style.color]="chartProp?.color"></div>
+
+  <div class="header-range-unit">
+    <div class="header-row">
+      <div class="header-value">{{ chartProp?.minValue }}</div>
+    </div>
+    <div class="header-row">
+      <div class="header-value">{{ chartProp?.unit }}</div>
+    </div>
+    <div class="header-row">
+      <div class="header-value">{{ chartProp?.maxValue }}</div>
+    </div>
+  </div>
+</div>
+
+
+<!--<div id=@id class="track-header">
+  @Html.Partial("Tabs/TrackHeaderInput", @Model)
+
+  <div class="title"> @Model.Title</div>
+
+  <div class="track-line-style" style="color:@Model.Color; background:@Model.Color"></div>
+
+  <div class="header-range-unit">
+    <div class="trackHeaderColumn min-tag"> @Model.MinValue</div>
+    <div class="trackHeaderColumn unit-tag"> @Model.Unit</div>
+    <div class="trackHeaderColumn max-tag"> @Model.MaxValue</div>
+  </div>
+</div>-->

@@ -1,9 +1,42 @@
-
+/*
 .chart-container {
   width: 100%;
   min-width: 75px;
   height: 700px;
   background-color: lightgrey;
   display: block;
-  border-right: 2px solid #ccc; /* Add your desired border style */
+  border-right: 2px solid #ccc;  Add your desired border style 
+}
+*/
+
+.daq-chart {
+  position: relative;
+}
+
+/*.app-daqchart-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;*/  /*Ensure header is on top of chart*/
+  /*background-color: red;
+}*/
+
+.chart-container {
+  width: 100%;
+  min-width: 75px;
+  height: 650px;
+  background-color: lightgrey;
+  display: block;
+  margin-top: 5px; 
+}
+
+
+.daq-chart-container {
+  border: 1px solid #ccc; /* Border around the entire daqchart */
+  background-color: #c8d7b2; /* Set header background color to white */
+  border-right: 2px solid #ccc; /* Add border to the right of the chart */
+
+.chart-content {
+  border-top: 2px solid #ccc; /* Optional: Add border between header and chart content */
 }

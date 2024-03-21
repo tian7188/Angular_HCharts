@@ -98,7 +98,7 @@ export class DaqDataService {
 
   reloadData_local(count: number = 100){
     const points: any[] = [];
-    const names = ['Torque', 'GR', 'Motor-Speed', 'Resis', 'Compr'];
+    const names = ['Depth', 'Torque', 'GR', 'Motor-Speed', 'Resis', 'Compr'];
 
     const datatime = new Date(2024, 3, 20).getUTCMilliseconds();  // Date.now();
     for (let i = 0; i < this.numOfCharts; i++) {

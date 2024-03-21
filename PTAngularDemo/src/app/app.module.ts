@@ -9,12 +9,14 @@ import { DaqChartComponent } from './daqchart/daqchart.component';
 import { PlotComponent } from './plot/plot.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CustomHttpInterceptor } from '../CustomHttpInterceptor';
+import { DaqchartHeaderComponent } from './daqchart-header/daqchart-header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DaqChartComponent,
-    PlotComponent
+    PlotComponent,
+    DaqchartHeaderComponent
   ],
 
   imports: [

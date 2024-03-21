@@ -1,6 +1,9 @@
-<div [id]="chartId" class="chart-container" ></div>
-
-
-
-
-
+<div class="daq-chart-container">
+  <div class="daq-chart">
+    <!-- Your chart implementation here -->
+    <app-daqchart-header [chartProp]="chartProp"></app-daqchart-header>
+    <div class="chart-content">
+      <div [id]="chartId" class="chart-container"></div>
+    </div>
+  </div>
+</div>

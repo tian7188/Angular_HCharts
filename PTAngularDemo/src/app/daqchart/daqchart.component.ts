@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit, inje
 import * as Highcharts from 'highcharts';
 import darkUnica from 'highcharts/themes/dark-unica'; // Import the theme file
 import { DAQPointerEventObject, ZoomEventObject,  ZoomSelectionService } from '../zoom-selection.service';
-import { daqColors } from '../plot/plot.component';
+import { ChartProp, daqColors } from '../plot/plot.component';
 
 
 @Component({
@@ -21,6 +21,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() chartDatas: any[] = [];
   @Input() seriesNames: string[] = [];
+  @Input() chartProp: ChartProp | undefined;
 
   chartInitialized: boolean = false;
 
@@ -154,13 +155,37 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
       title: {
         text: "Time",
         style: {
-          fontSize: '15px'
+          fontSize: '14px'
         }
       },
-
     },
 
+      {
+
+        visible: false,
+        minPadding: 0,
+        maxPadding: 0,
+        lineColor: '#7E7D83',
+        lineWidth: 1,
+        tickColor: '#7E7D83',
+
+        
+
+        title: {
+          text: "Depth (m)",
+          style: {
+            fontSize: '14px'
+          }
+        },       
+
+        scrollbar: {
+          enabled: true
+        },
+       /* linkedTo: 0,*/
+      }
+
     ],
+
     yAxis: [
       {
         title: {
@@ -259,6 +284,8 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
         name: this.seriesNames && this.seriesNames.length >= index ? this.seriesNames[index] : `Seriesqq ${index + 1}`,
         visible:  !!data , // Hide the series if no data
         data: data || [],// Empty data for the first series
+        xAxis: index % 2 === 0 ? 0 : 1, // Assign the first half of the series to the first x-axis and the second half to the second x-axis
+        
        // yAxis: index % 2 === 0 ? 0 : 1, // Assign the first half of the series to the first y-axis and the second half to the second y-axis
       }));
           
@@ -267,12 +294,21 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
         chart: {
           backgroundColor: this.isFirstChart() ? '#a6aaaa' : '#ebeff1' // Set the background color of the chart
         },
-        xAxis: {
-          type: "datetime", // Set xAxis type as datetime
-          zoomEnabled: true, // Enable zooming along the x-axis
-          visible: this.isFirstChart(), // Hide X-axis except for the first chart
+        xAxis: [
+          {
+            type: "datetime", // Set xAxis type as datetime
+            zoomEnabled: true, // Enable zooming along the x-axis
+            visible: this.isFirstChart() ? true : false, // Hide X-axis except for the first chart
 
-        },
+          },
+          {
+            //type: "datetime", // Set xAxis type as datetime
+            zoomEnabled: true, // Enable zooming along the x-axis
+            visible: this.isFirstChart() ? true : false, // Hide X-axis except for the first chart
+           // linkedTo: 0
+          },
+        ],
+
         tooltip: {
           enabled: !this.isFirstChart() // Disable tooltip for this chart
         },

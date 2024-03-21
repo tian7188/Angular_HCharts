@@ -1,29 +1,29 @@
 
 
-.plot-container {
+.daq-track-container {
   display: flex;
-  flex-direction: row; /* Horizontal layout */
-  justify-content: space-between; /* Align items with space between them */
-  margin-top: 1rem; /* Add space between the chart and the menu */
-
+  flex-direction: row;  
+  justify-content: space-between; 
+  margin-top: 1rem; 
 }
 
   .chart-item {
-    flex: 1;  /*Each chart item occupies equal space */
+    flex: 1; 
   }
 
 .chart-axis {
-  width: 150px; /* Set the height of each chart item */
+  width: 200px;  
+  margin-top: 90px
 }
 
 
-/*.menu-container {
+.menu-container {
   display: flex;
-  flex-direction: row;*/ /* Horizontal layout */
+  flex-direction: row;  /*Horizontal layout */
 
-  /*margin-left: 500px;*/ /* Adjust the value to add space between items */
-  /*min-width: 30px;*/ /* Minimum width of each item */
-/*}*/
+  margin-left: 500px; /* Adjust the value to add space between items */
+  min-width: 30px; /* Minimum width of each item */
+}
 
 
 .menu-item {
@@ -36,4 +36,12 @@ button:first-of-type {
 
 .buttons-wrapper {
   margin-top: 1.5rem;
+}
+
+.chart-placeholder-container {
+  display: inline-block; /* or display: block; */
+}
+
+.chart-placeholder {
+  height: 100px; /* Set the height to your desired value */
 }

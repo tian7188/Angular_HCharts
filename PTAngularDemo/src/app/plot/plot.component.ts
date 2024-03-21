@@ -19,8 +19,9 @@ export class PlotComponent implements AfterViewInit {
   zoomSelectionService = inject(ZoomSelectionService);
 
   adxQueryRequest: AdxQueryRequestModel | undefined;
-  curveNames: string[][] = [];
-  curveDatas: any = [];
+  @Input()  curveNames: string[][] = [];
+  @Input()  curveDatas: any = [];
+  @Input()  chartProps: ChartProp[] = [];
 
   @Input() holeId: number = 3803;
   @Input() useDummy: boolean = true;
@@ -56,6 +57,8 @@ export class PlotComponent implements AfterViewInit {
       this.curveDatas[0] = [];
       this.curveNames[0].push('Time');
       this.curveDatas[0].push(datas[0]);
+      this.curveNames[0].push('Depth');
+      this.curveDatas[0].push(datas[0]);
 
 
       //set curve names and data
@@ -82,6 +85,11 @@ export class PlotComponent implements AfterViewInit {
         this.curveDatas[1].push(datas[2]);
       }
 
+      //set chartProps[] values
+      this.chartProps = [];
+      for (let index = 0; index <= numOfCharts; index++) {
+        this.chartProps.push(new ChartProp({ title: names[index], color: daqColors[index] }));
+      }
 
     });
   }
@@ -192,3 +200,16 @@ export const daqColors: string[] = [
   '#91e8e1', // light teal
   // Add more colors as needed
 ];
+
+// chart-props.ts
+export class ChartProp {
+  title: string = 'GR';
+  color: string = 'red';
+  minValue: number = 0;
+  unit: string = 'm';
+  maxValue: number = 100;
+
+  constructor(props: Partial<ChartProp> = {}) {
+    Object.assign(this, props);
+  }
+}
