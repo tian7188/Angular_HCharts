@@ -20,7 +20,7 @@
 
 .chart-item {
   flex: 1;
- 
+  align-self: end; /* Align the chart-axis to the end (bottom) of its grid cell */
 }
 
 .chart-axis {

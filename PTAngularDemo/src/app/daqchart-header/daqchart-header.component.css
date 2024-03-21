@@ -4,11 +4,11 @@
 
 .daq-chart-header {
   align-content: center;
-  min-height: 80px;
+  min-height: 30px;
   margin: 0px;
   padding: 7px;
   border-width: thin;
-  border-radius: 5px;
+  border-radius: 7px;
   background-color: #c7d3c9;
   cursor: pointer;
   display: flex;
@@ -17,7 +17,6 @@
   border: 0.5px solid #7E7D83;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.1);
   text-align: center;
-
   flex-grow: 1;
 }
 
@@ -27,7 +26,7 @@
 
   .daq-chart-header .track-line-style {
     margin-top: 10px;
-    margin-bottom: 19px;
+    margin-bottom: 10px;
     border: 1px solid;
     color: blue;
   }
@@ -44,12 +43,12 @@
   margin: 0px;
   padding: 4px;
   border-width: thin;
-  border-radius: 5px;
+  border-radius: 7px;
   background-color: #ffffff;
   cursor: pointer;
   border: 1.5px dashed #7E7D83;
-
   flex-grow: 1;
+  height:68px;
 }
 
 /********************/
@@ -80,52 +79,52 @@
     text-align: left;
   }
 
-. .track-header-ui .data-selection-container {
-  margin-bottom: 20px;
-}
-
-.track-header-ui .range-selection-container {
-  display: flex;
-  margin-bottom: 20px;
-}
-
-  .track-header-ui .range-selection-container label {
-    font-weight: 400;
+  .track-header-ui .data-selection-container {
+    margin-bottom: 20px;
   }
 
-  .track-header-ui .range-selection-container input {
-    width: 80px;
+  .track-header-ui .range-selection-container {
+    display: flex;
+    margin-bottom: 20px;
   }
 
-  .track-header-ui .range-selection-container select {
-    width: 102px;
-  }
+    .track-header-ui .range-selection-container label {
+      font-weight: 400;
+    }
 
-  .track-header-ui .range-selection-container .from-to {
+    .track-header-ui .range-selection-container input {
+      width: 80px;
+    }
+
+    .track-header-ui .range-selection-container select {
+      width: 102px;
+    }
+
+    .track-header-ui .range-selection-container .from-to {
+      display: flex;
+    }
+
+    .track-header-ui .range-selection-container .unit-display {
+      font-size: 14px;
+      align-self: end;
+      padding-bottom: 3px;
+    }
+
+    .track-header-ui .range-selection-container .header-reset-button-container {
+      border: 1px solid #A3A2A7;
+      padding: 3px;
+      align-self: end;
+      margin-left: 10px;
+    }
+
+  .track-header-ui .line-style-container {
     display: flex;
   }
 
-  .track-header-ui .range-selection-container .unit-display {
-    font-size: 14px;
-    align-self: end;
-    padding-bottom: 3px;
-  }
+    .track-header-ui .line-style-container label {
+      font-weight: 400;
+    }
 
-  .track-header-ui .range-selection-container .header-reset-button-container {
-    border: 1px solid #A3A2A7;
-    padding: 3px;
-    align-self: end;
-    margin-left: 10px;
-  }
-
-.track-header-ui .line-style-container {
-  display: flex;
-}
-
-  .track-header-ui .line-style-container label {
-    font-weight: 400;
-  }
-
-  .track-header-ui .line-style-container select {
-    width: 80px;
-  }
+    .track-header-ui .line-style-container select {
+      width: 80px;
+    }

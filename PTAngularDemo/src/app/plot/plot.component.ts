@@ -20,8 +20,8 @@ export class PlotComponent implements AfterViewInit {
 
   adxQueryRequest: AdxQueryRequestModel | undefined;
   @Input()  curveNames: string[][] = [];
-  @Input()  curveDatas: any = [];
-  @Input()  chartProps: ChartProp[] = [];
+  @Input() curveDatas: any = [];
+  @Input() chartProps: ChartProp[][] = [];
 
   @Input() holeId: number = 3803;
   @Input() useDummy: boolean = true;
@@ -49,6 +49,7 @@ export class PlotComponent implements AfterViewInit {
 
       let numOfCharts = this.dataService.numOfCharts;
       // Clear arrays before populating them
+      this.chartProps = [];
       this.curveNames = [];
       this.curveDatas = [];
 
@@ -67,28 +68,22 @@ export class PlotComponent implements AfterViewInit {
         // Initialize arrays for each index
         this.curveNames[index] = [];
         this.curveDatas[index] = [];
+        this.chartProps[index] = [];
 
         // Populate with names and data for each pair of charts
         this.curveNames[index].push(names[index - 1]);
         this.curveDatas[index].push(datas[index - 1]);
 
+        // Push a ChartProp object
+        this.chartProps[index].push(new ChartProp({ title: names[index - 1], color: daqColors[index - 1], minValue: 0, maxValue:50 }));
+     
+
         if (index === 2 || index === 4) {
-          this.curveNames[index].push(names[index], names[index + 1]);
-          this.curveDatas[index].push(datas[index], datas[index + 1]);
+          this.curveNames[index].push(names[index]);
+          this.curveDatas[index].push(datas[index]);
+
+          this.chartProps[index].push(new ChartProp({ title: names[index+1], color: daqColors[index+1] }));
         }
-      }
-
-
-      //temp code 
-      if (this.adxQueryRequest  && this.adxQueryRequest.holeLookupKey.fileConfigLookupKey.secondaryValue === 739) {
-        this.curveNames[1].push(names[2]);
-        this.curveDatas[1].push(datas[2]);
-      }
-
-      //set chartProps[] values
-      this.chartProps = [];
-      for (let index = 0; index < numOfCharts; index++) {
-        this.chartProps.push(new ChartProp({ title: names[index], color: daqColors[index] }));
       }
 
     });

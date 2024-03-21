@@ -1,11 +1,13 @@
 <div class="daq-chart-container">
   <div class="daq-chart">
-    <!-- Your chart implementation here -->
-    <app-daqchart-header class="daq-chart-header" [chartProp]="chartProp"></app-daqchart-header>
-    <app-daqchart-header class="empty-header" [chartProp]="chartProp"></app-daqchart-header>
+    <div id="header" *ngIf="chartProps && chartProps.length > 0">
+      <app-daqchart-header [chartProp]="chartProps[0]"></app-daqchart-header>
+      <app-daqchart-header [chartProp]="chartProps[1]"></app-daqchart-header>
+    </div>
 
     <div class="chart-content">
       <div [id]="chartId" class="chart-container"></div>
     </div>
+
   </div>
 </div>

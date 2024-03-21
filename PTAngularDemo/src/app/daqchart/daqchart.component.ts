@@ -21,7 +21,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
 
   @Input() chartDatas: any[] = [];
   @Input() seriesNames: string[] = [];
-  @Input() chartProp: ChartProp | undefined;
+  @Input() chartProps: ChartProp[] = [];
 
   chartInitialized: boolean = false;
 
