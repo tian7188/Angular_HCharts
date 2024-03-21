@@ -281,7 +281,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
       const series: Highcharts.SeriesOptionsType[] = this.chartDatas.map((data, index) => ({
         type: 'spline', // Example type, adjust as needed
         color: this.getColor(index),
-        name: this.seriesNames && this.seriesNames.length >= index ? this.seriesNames[index] : `Seriesqq ${index + 1}`,
+      /*  name: this.seriesNames && this.seriesNames.length >= index ? this.seriesNames[index] : `Seriesqq ${index + 1}`,*/
         visible:  !!data , // Hide the series if no data
         data: data || [],// Empty data for the first series
         xAxis: index % 2 === 0 ? 0 : 1, // Assign the first half of the series to the first x-axis and the second half to the second x-axis

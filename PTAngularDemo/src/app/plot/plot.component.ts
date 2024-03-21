@@ -82,7 +82,7 @@ export class PlotComponent implements AfterViewInit {
           this.curveNames[index].push(names[index]);
           this.curveDatas[index].push(datas[index]);
 
-          this.chartProps[index].push(new ChartProp({ title: names[index+1], color: daqColors[index+1] }));
+          this.chartProps[index].push(new ChartProp({ title: names[index], color: daqColors[index] }));
         }
       }
 
