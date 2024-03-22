@@ -87,7 +87,7 @@
 
   <div class="daq-track-container" id="plots" (wheel)="onMouseWheel($event)">
     <!-- xAxis -->
-    <app-daqchart class="chart-axis" [seriesNames]="curveNames[0]" [chartDatas]="curveDatas[0]"></app-daqchart>
+    <app-daqchart class="chart-axis" [chartDatas]="curveDatas[0]"></app-daqchart>
 
     <!-- charts -->
     <app-daqchart class="chart-item" [chartProps]="chartProps[1]" [chartDatas]="curveDatas[1]"></app-daqchart>

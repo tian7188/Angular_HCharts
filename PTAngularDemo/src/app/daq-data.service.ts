@@ -101,7 +101,13 @@ export class DaqDataService {
     const names = ['Depth', 'Torque', 'GR', 'Motor-Speed', 'Resis', 'Compr'];
 
     const datatime = new Date(2024, 3, 20).getUTCMilliseconds();  // Date.now();
-    for (let i = 0; i < this.numOfCharts; i++) {
+
+    //depth data
+    const depth = this.generateTimeSeriesDepth(datatime, count);
+    points.push(depth);
+
+    //curve data
+    for (let i = 1; i < this.numOfCharts; i++) {
       const temp = this.generateTimeSeriesData(datatime, count);
       points.push(temp);
     }
@@ -117,12 +123,25 @@ export class DaqDataService {
 
     //get max y value;
     const maxY = Math.floor(Math.random() * 100) + 1;
-
-    for (let i = 0; i < count; i++) {
+    for (let i = 1; i < count; i++) {
       const randomX = datatime - (count - i) * 10000;
 
       const randomY = Math.random() * maxY; // Random y between 0 and 100
       randomData.push({ x: randomX, y: randomY });
+    }
+
+    return randomData;
+  }
+
+  private generateTimeSeriesDepth(datatime: number, count: number): DataPoint[] {
+    // Simulate reloading data for the first chart
+    const randomData: DataPoint[] = [];
+
+    for (let i = 0; i < count; i++) {
+      const randomX = datatime - (count - i) * 10000;
+
+      const depth = 100 + i * 10;
+      randomData.push({ x: randomX, y: depth });
     }
 
     return randomData;
