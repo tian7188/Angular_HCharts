@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, inject, Input, effect, input, EventEm
 import {DaqDataService} from '../daq-data.service'; 
 import { ZoomSelectionService } from '../zoom-selection.service';
 import { DaqChartComponent } from '../daqchart/daqchart.component';
-import { AdxQueryRequestModel, FileLookupType, LoggingFileType } from '../../AdxQueryRequestModel';
+import { AdxQueryRequestModel, DataPoint, FileLookupType, LoggingFileType } from '../../AdxQueryRequestModel';
 
 
 @Component({
@@ -47,6 +47,17 @@ export class PlotComponent implements AfterViewInit {
       const names = this.dataService.plotNamesSignal();
       const datas = this.dataService.plotDataSignal();
 
+      //find min and max values
+      const minVs: number[] = [];
+      const maxVs: number[] = [];
+      for (var i = 0; i < datas.length; i++) {
+       // const data =  datas[i] as DataPoint[]
+        minVs[i] = datas[i].reduce((min: number, p: DataPoint) => p.y < min ? p.y : min, datas[i][0].y);
+        minVs[i] = Math.floor(minVs[i]);
+        maxVs[i] = datas[i].reduce((max: number, p: DataPoint) => p.y > max ? p.y : max, datas[i][0].y);
+        maxVs[i] = Math.ceil(maxVs[i]);
+      }
+
       let numOfCharts = this.dataService.numOfCharts;
       // Clear arrays before populating them
       this.chartProps = [];
@@ -75,14 +86,14 @@ export class PlotComponent implements AfterViewInit {
         this.curveDatas[index].push(datas[index - 1]);
 
         // Push a ChartProp object
-        this.chartProps[index].push(new ChartProp({ title: names[index - 1], color: daqColors[index - 1], minValue: 0, maxValue:50 }));
+        this.chartProps[index].push(new ChartProp({ title: names[index - 1], color: daqColors[index - 1], minValue: minVs[index-1], maxValue: maxVs[index-1] }));
      
 
         if (index === 2 || index === 4) {
           this.curveNames[index].push(names[index]);
           this.curveDatas[index].push(datas[index]);
 
-          this.chartProps[index].push(new ChartProp({ title: names[index], color: daqColors[index] }));
+          this.chartProps[index].push(new ChartProp({ title: names[index], color: daqColors[index], minValue: minVs[index ], maxValue: maxVs[index] }));
         }
       }
 

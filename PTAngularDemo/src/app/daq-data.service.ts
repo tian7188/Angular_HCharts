@@ -14,7 +14,7 @@ export class DaqDataService {
   http = inject(HttpClient);
 
   plotNamesSignal = signal<string[]>([]);
-  plotDataSignal = signal<DataPoint[]>([]);
+  plotDataSignal = signal<DataPoint[][]>([]);
 
   numOfCharts: number = 5;
   pointCount = 3000;

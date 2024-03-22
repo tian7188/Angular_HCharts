@@ -292,7 +292,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
 
       this.chartOptions = {
         chart: {
-          backgroundColor: this.isFirstChart() ? '#a6aaaa' : '#ebeff1' // Set the background color of the chart
+          backgroundColor: this.isFirstChart() ? '#ccc' : '#ebeff1' // Set the background color of the chart
         },
         xAxis: [
           {
