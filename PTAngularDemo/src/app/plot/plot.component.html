@@ -7,10 +7,10 @@
   <div class="daq-zoom-button-container">
 
     <div class="zoom-buttons">
-      <div class="zoom-button" onClick="zoomIn()"><i class="fa fa-search-plus" aria-hidden="true"></i></div>
-      <div class="zoom-button" onClick="zoomOut()"><i class="fa fa-search-minus" aria-hidden="true"></i></div>
-      <span class="zoom-button" data-tooltip="Reset to default 12 hour view" data-tooltip-position="top" onClick="zoomOriginal()">
-        <i class="fa fa-undo" aria-hidden="true"></i>
+      <div class="zoom-button" (click)="zoomIn()"><i class="fa fa-search-plus" aria-hidden="true"></i>+</div>
+      <div class="zoom-button" (click)="zoomOut()"><i class="fa fa-search-minus" aria-hidden="true">--</i></div>
+      <span class="zoom-button" data-tooltip="Reset to default 12 hour view" data-tooltip-position="top" (click)="restoreOrignal()">
+        <i class="fa fa-undo" aria-hidden="true"></i>Undo
       </span>
 
       <div class="zoom-interval-container">
@@ -36,6 +36,26 @@
       </div>
     </div>
 
+    <div class="zoom-interval-container">
+      <label for="searchInput">Hole:</label>
+      <input type="text" id="searchInput" [(ngModel)]="holeId" (ngModelChange)="onInputChange($event)" placeholder="Enter search query...">
+    </div>
+
+    <div style="margin-left: 5px" class="toggle-chart-elements">
+      <input type="button" class="btn btn-sm" value="Search" (click)="searchData()" />
+    </div>
+
+    <div  class="toggle-chart-elements">
+      <button (click)="reload_data()">Reload</button>
+    </div>
+
+    <div  class="toggle-chart-elements">
+      <input id="local_data" type="checkbox" [(ngModel)]="useDummy" (change)="useLocalData()" />
+      <label for="local_data">dummy</label>
+    </div>
+
+ 
+
     <div class="toggle-chart-elements">
       <input type="checkbox" id="daq-toggle-tooltip" class="toggle-tooltip" onchange="toggleTooltips(this)" />
       <label for="daq-toggle-tooltip">Lock Data Box</label>
@@ -44,13 +64,17 @@
       <label for="daq-toggle-crosshairs">Show Reference Line</label>
     </div>
 
-    <div style="margin-left: 100px" class="toggle-chart-elements">
+    <div style="margin-left: 1px" class="toggle-chart-elements">
       <input type="button" class="btn btn-sm" value="Reset templates" onclick="resetTemplateSettings()" />
     </div>
 
+
   </div>
 
-  <div class="axis-toggle-container">
+
+
+
+  <!--<div class="axis-toggle-container">
     <div class="toggle-button">
       <input type="radio" id="daq-toggle-depth" name="axis-select" value="depth" onchange="toggleTime_Depth(this)" />
       <label for="daq-toggle-depth">Depth</label>
@@ -59,23 +83,9 @@
       <input type="radio" id="daq-toggle-time" name="axis-select" value="time" onchange="toggleTime_Depth(this)" />
       <label for="daq-toggle-time">Time</label>
     </div>
-  </div>
+  </div>-->
 
 
-  <div class="menu-container">
-   zooming menu 
-  <button (click)="zoomIn()"> + </button>
-    <button (click)="zoomOut()"> -- </button>
-    <button (click)="restoreOrignal()">Orignal</button>
-
-    <label class="menu-item" for="searchInput">Hole:</label>
-    <input type="text" id="searchInput" [(ngModel)]="holeId" (ngModelChange)="onInputChange($event)" placeholder="Enter search query...">
-    <button (click)="searchData()">Search</button>
-    <button class="menu-item" (click)="reload_data()">Reload data</button>
-
-    <input id="local_data" type="checkbox" [(ngModel)]="useDummy" (change)="useLocalData()">
-    <label for="local_data">dummy</label>
-  </div>
 
 
   <div class="daq-track-container" id="plots" (wheel)="onMouseWheel($event)">
@@ -83,11 +93,11 @@
     <app-daqchart class="chart-axis" [seriesNames]="curveNames[0]" [chartDatas]="curveDatas[0]"></app-daqchart>
 
     <!-- charts -->
-    <app-daqchart class="chart-item" [chartProps]="chartProps[1]"  [chartDatas]="curveDatas[1]"></app-daqchart>
-    <app-daqchart class="chart-item" [chartProps]="chartProps[2]"  [chartDatas]="curveDatas[2]"></app-daqchart>
-    <app-daqchart class="chart-item" [chartProps]="chartProps[3]"  [chartDatas]="curveDatas[3]"></app-daqchart>
-    <app-daqchart class="chart-item" [chartProps]="chartProps[4]"  [chartDatas]="curveDatas[4]"></app-daqchart>
-    <app-daqchart class="chart-item" [chartProps]="chartProps[5]"  [chartDatas]="curveDatas[5]"></app-daqchart>
+    <app-daqchart class="chart-item" [chartProps]="chartProps[1]" [chartDatas]="curveDatas[1]"></app-daqchart>
+    <app-daqchart class="chart-item" [chartProps]="chartProps[2]" [chartDatas]="curveDatas[2]"></app-daqchart>
+    <app-daqchart class="chart-item" [chartProps]="chartProps[3]" [chartDatas]="curveDatas[3]"></app-daqchart>
+    <app-daqchart class="chart-item" [chartProps]="chartProps[4]" [chartDatas]="curveDatas[4]"></app-daqchart>
+    <app-daqchart class="chart-item" [chartProps]="chartProps[5]" [chartDatas]="curveDatas[5]"></app-daqchart>
   </div>
 
 

@@ -10,6 +10,8 @@
         Zoom buttons ---------------------------- * Header & Header Edit UI ---------------------------- * Graph Tracks -------------------------
 }*/
 
+/*@import '~@fortawesome/fontawesome-free/css/all.css';*/
+
 
 .daq-track-container {
   display: flex;
@@ -30,12 +32,13 @@
 }
 
 
-.menu-container {
+.hole-search {
   display: flex;
   flex-direction: row;  /*Horizontal layout */
 
-  margin-left: 500px; /* Adjust the value to add space between items */
+  margin-left: 5px; /* Adjust the value to add space between items */
   min-width: 30px; /* Minimum width of each item */
+  height: 100%; /* Height of each item */
 }
 
 

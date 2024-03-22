@@ -10,6 +10,8 @@ import { PlotComponent } from './plot/plot.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CustomHttpInterceptor } from '../CustomHttpInterceptor';
 import { DaqchartHeaderComponent } from './daqchart-header/daqchart-header.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { DaqchartHeaderComponent } from './daqchart-header/daqchart-header.compo
     FormsModule, // Import FormsModule
     AppRoutingModule,
     HighchartsChartModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
     
   ],
   providers: [
