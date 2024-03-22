@@ -136,11 +136,12 @@ export class DaqDataService {
   private generateTimeSeriesDepth(datatime: number, count: number): DataPoint[] {
     // Simulate reloading data for the first chart
     const randomData: DataPoint[] = [];
+    const startDepth = Math.random() * 1000;
 
     for (let i = 0; i < count; i++) {
       const randomX = datatime - (count - i) * 10000;
 
-      const depth = 100 + i * 10;
+      const depth = startDepth + 10 + i;
       randomData.push({ x: randomX, y: depth });
     }
 

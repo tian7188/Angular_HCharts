@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit, inject, ElementRef } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import darkUnica from 'highcharts/themes/dark-unica'; // Import the theme file
-import { DAQPointerEventObject, ZoomEventObject,  ZoomSelectionService } from '../zoom-selection.service';
+import { DAQPointerEventObject, ZoomEventObject, ZoomSelectionService } from '../zoom-selection.service';
 import { ChartProp, daqColors } from '../plot/plot.component';
 
 
@@ -100,7 +100,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
   ngAfterViewInit(): void {
     setTimeout(() => {
       if (this.chart) {
-        
+
       }
 
     }, 1000);
@@ -111,7 +111,8 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
   chartOptions: Highcharts.Options = {
     chart: {
       inverted: true,
-      type: "spline",     
+      type: "spline",
+      backgroundColor: '#ebeff1',
       zooming: {
         type: "x"
       },
@@ -132,10 +133,10 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
       // text: "ptian trial"
     },
     xAxis: [{
-     /* type: "datetime",*/ // Set xAxis type as datetime
+      /* type: "datetime",*/ // Set xAxis type as datetime
       zoomEnabled: true, // Enable zooming along the x-axis
 
-      visible: this.isFirstChart(), // Hide X-axis except for the first chart
+      visible: false,
 
       minPadding: 0,
       maxPadding: 0,
@@ -160,29 +161,27 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
       },
     },
 
-      {
+    {
 
-        visible: false,
-        minPadding: 0,
-        maxPadding: 0,
-        lineColor: '#7E7D83',
-        lineWidth: 1,
-        tickColor: '#7E7D83',
+      visible: false,
+      minPadding: 0,
+      maxPadding: 0,
+      lineColor: '#7E7D83',
+      lineWidth: 1,
+      tickColor: '#7E7D83',
 
-        
+      title: {
+        text: "Depth (m)",
+        style: {
+          fontSize: '14px'
+        }
+      },
 
-        title: {
-          text: "Depth (m)",
-          style: {
-            fontSize: '14px'
-          }
-        },       
-
-        scrollbar: {
-          enabled: true
-        },
-       /* linkedTo: 0,*/
-      }
+      scrollbar: {
+        enabled: true
+      },
+      /* linkedTo: 0,*/
+    }
 
     ],
 
@@ -247,9 +246,9 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
       },
     },
 
-  
+
   };
-    
+
 
   ngOnInit(): void {
     setTimeout(() => { this.initChart(); }, 100);
@@ -272,48 +271,61 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
         setTimeout(() => { this.updateChartOptions(); }, 500);
       });
   }
-  
+
   private updateChartOptions() {
     // Assuming chartOptions is an object with series array
     if (this.chart && this.chartOptions && this.chartOptions.series && this.chartOptions.series.length > 0) {
 
-      // Initialize series
-      const series: Highcharts.SeriesOptionsType[] = this.chartDatas.map((data, index) => ({
-        type: 'spline', // Example type, adjust as needed
-        color: this.getColor(index),
-      /*  name: this.seriesNames && this.seriesNames.length >= index ? this.seriesNames[index] : `Seriesqq ${index + 1}`,*/
-        visible:  !!data , // Hide the series if no data
-        data: data || [],// Empty data for the first series
-        xAxis: index % 2 === 0 ? 0 : 1, // Assign the first half of the series to the first x-axis and the second half to the second x-axis
-        
-       // yAxis: index % 2 === 0 ? 0 : 1, // Assign the first half of the series to the first y-axis and the second half to the second y-axis
-      }));
-          
+      if (!this.isFirstChart()) {
+        const series: Highcharts.SeriesOptionsType[] = this.chartDatas.map((data, index) => ({
+          type: 'spline',
+          color: this.getColor(index),
+          visible: !!data,
+          data: data || [],// Empty data for the first series
+          // yAxis: index % 2 === 0 ? 0 : 1, // Assign the first half of the series to the first y-axis and the second half to the second y-axis
+        }));
 
-      this.chartOptions = {
-        chart: {
-          backgroundColor: this.isFirstChart() ? '#ccc' : '#ebeff1' // Set the background color of the chart
-        },
-        xAxis: [
-          {
-            type: "datetime", // Set xAxis type as datetime
-            zoomEnabled: true, // Enable zooming along the x-axis
-            visible: this.isFirstChart() ? true : false, // Hide X-axis except for the first chart
+        this.chartOptions = {
+          series: series
+        };
+      }
+      else { // for axis chart....
 
+        // Initialize series
+        const series: Highcharts.SeriesOptionsType[] = this.chartDatas.map((data, index) => ({
+          type: 'spline', // Example type, adjust as needed
+          visible: !!data, // Hide the series if no data
+          data: data || [],// Empty data for the first series
+          xAxis: index === 0 ? 0 : 1, // Assign the first half of the series to the first x-axis and the second half to the second x-axis
+        }));
+
+        this.chartOptions = {
+          chart: {
+            backgroundColor: '#ccc'
           },
-          {
-            //type: "datetime", // Set xAxis type as datetime
-            zoomEnabled: true, // Enable zooming along the x-axis
-            visible: this.isFirstChart() ? true : false, // Hide X-axis except for the first chart
-           // linkedTo: 0
-          },
-        ],
+          xAxis: [
+            {
+              type: "datetime", // Set xAxis type as datetime
+              zoomEnabled: true, // Enable zooming along the x-axis
+              visible: true
 
-        tooltip: {
-          enabled: !this.isFirstChart() // Disable tooltip for this chart
-        },
-        series: series
-      };
+            },
+            {
+              //type: "datetime", // Set xAxis type as datetime
+              zoomEnabled: true, // Enable zooming along the x-axis
+              visible: true,
+              //linkedTo: 0
+            },
+          ],
+
+          tooltip: {
+            enabled: false
+          },
+          series: series
+        };
+
+      }
+     
 
       //more...
 
@@ -323,15 +335,15 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
     }
   }
 
-    getAxisData(data: any): any {
-      //assign data.y to be 1
-       return data.map((d: any) => {
-          return {
-            x: d.x,
-            y: 0
-          };
-        });
-    }
+  getAxisData(data: any): any {
+    //assign data.y to be 1
+    return data.map((d: any) => {
+      return {
+        x: d.x,
+        y: 0
+      };
+    });
+  }
 
 
   zoom(factor: number, isUserAction: boolean = false): void {
