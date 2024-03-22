@@ -6,8 +6,8 @@
 
 .chart-container {
   width: 100%;
-  min-width: 75px;
-  height: 550px;
+  min-width: 150px;
+  height: 600px;
   background-color: #ccc;
   display: block;
   margin-top: 2px; 
@@ -15,7 +15,6 @@
 
 
 .daq-chart-container {
-  border: 1px solid #ccc; /* Border around the entire daqchart */
   background-color: #ccc; /* Set header background color to white */
   border-right: 2px solid #ccc; /* Add border to the right of the chart */
 

@@ -1,16 +1,14 @@
 
-/*.daq-container {*/
-/*  Grid layout for zoom buttons and tracks*/
-      /*display: grid;
+/*@import '~@fortawesome/fontawesome-free/css/all.css';*/
+
+.daq-container {
+ 
   grid-template-rows: 50px calc($header-height * 2) 1fr;
   grid-template-columns: 210px 1fr;
-  width: 70vw;
-  margin-bottom: 50px;
-  *
-        Zoom buttons ---------------------------- * Header & Header Edit UI ---------------------------- * Graph Tracks -------------------------
-}*/
-
-/*@import '~@fortawesome/fontawesome-free/css/all.css';*/
+  width: 100%;
+  margin-bottom: 5px;
+  background-color: #ccc; 
+}
 
 
 .daq-track-container {
