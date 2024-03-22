@@ -25,7 +25,7 @@
 }
 
 .chart-axis {
-  width: 200px;
+  width: 280px;
   align-self: end; /* Align the chart-axis to the end (bottom) of its grid cell */
   /*  margin-top: 90px*/
 }

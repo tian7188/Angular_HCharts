@@ -305,16 +305,22 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
           },
           xAxis: [
             {
-              type: "datetime", // Set xAxis type as datetime
-              zoomEnabled: true, // Enable zooming along the x-axis
-              visible: true
-
-            },
-            {
-              //type: "datetime", // Set xAxis type as datetime
               zoomEnabled: true, // Enable zooming along the x-axis
               visible: true,
-              //linkedTo: 0
+              labels: {
+                formatter: function () {
+                  return formatDateTime(this.value as string);
+                },
+                style: {
+                  fontSize: '12px',
+                  whiteSpace: 'nowrap'
+                }
+              },
+            },
+            {
+              zoomEnabled: true, // Enable zooming along the x-axis
+              visible: true,
+              linkedTo: 0
             },
           ],
 
@@ -334,6 +340,8 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
       this.chart.update(this.chartOptions, true);
     }
   }
+
+
 
   getAxisData(data: any): any {
     //assign data.y to be 1
@@ -410,4 +418,17 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
     return 'black';
   }
 
+}
+
+
+function formatDateTime(value: string): string {
+  const timestamp = parseFloat(value as string);
+
+  if (!isNaN(timestamp)) {
+    const date = Highcharts.dateFormat('%Y-%m-%d', timestamp);
+    const time = Highcharts.dateFormat('%H:%M:%S', timestamp);
+    return `<div>${date} <br/> ${time}</div>`;
+  } else {
+    return 'NA';
+  }
 }
