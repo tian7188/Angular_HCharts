@@ -22,3 +22,18 @@
   border-top: 1px solid #ccc; /* Optional: Add border between header and chart content */
 }
 
+
+.axis-toggle-container {
+  display: flex;
+  margin-left: 50px;
+  margin-bottom: 20px;
+  gap: 16px;
+  padding-right: 4px;
+  align-self: auto
+}
+
+ .toggle-button label {
+  margin-left: 2px;
+  margin-bottom: 19px;
+  font-weight: 500;
+}
