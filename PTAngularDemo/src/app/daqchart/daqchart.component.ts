@@ -3,6 +3,7 @@ import * as Highcharts from 'highcharts';
 import darkUnica from 'highcharts/themes/dark-unica'; // Import the theme file
 import { DAQPointerEventObject, ZoomEventObject, ZoomSelectionService } from '../zoom-selection.service';
 import { ChartProp, daqColors } from '../plot/plot.component';
+import { DataPoint } from '../../AdxQueryRequestModel';
 
 
 @Component({
@@ -291,6 +292,8 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
       }
       else { // for axis chart....
 
+        const data = this.chartDatas[0] as DataPoint[]; // Assuming data is defined within the component
+
         // Initialize series
         const series: Highcharts.SeriesOptionsType[] = this.chartDatas.map((data, index) => ({
           type: 'spline', // Example type, adjust as needed
@@ -320,6 +323,23 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
             {
               zoomEnabled: true, // Enable zooming along the x-axis
               visible: true,
+              labels: {
+                formatter: function () {
+                  // Get the time
+                  const time = this.value;
+
+                  // Find the corresponding depth for the given time
+                  const dataPoint = data.find(p => p.x === time);
+                  const depth = dataPoint ? dataPoint.y.toFixed(2) : 'N/A';
+
+                  return depth;
+
+                },
+                style: {
+                  fontSize: '12px',
+                  whiteSpace: 'nowrap'
+                }
+              },
               linkedTo: 0
             },
           ],
@@ -432,3 +452,15 @@ function formatDateTime(value: string): string {
     return 'NA';
   }
 }
+
+//function formatDepth(timeValue: number): string {
+//  const data = chartDatas[0];
+//  //find the first data point that x is greater than timeValue
+//  const index = data.findIndex(d => d.x > timeValue);
+//  if (index > 0) {
+//    const depth = data[index].y;
+//    return `<div>${depth} m</div>`;
+//  }
+
+//  return `<div>${timeValue} ma</div>`;
+//}
