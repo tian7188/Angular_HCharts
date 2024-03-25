@@ -1,24 +1,28 @@
 <div class="daq-chart-container">
   <div class="daq-chart">
+
+    <!--chart header-->
     <div id="header" *ngIf="chartProps && chartProps.length > 0">
       <app-daqchart-header [chartProp]="chartProps[0]"></app-daqchart-header>
       <app-daqchart-header [chartProp]="chartProps[1]"></app-daqchart-header>
     </div>
 
+    <!--axis toggle-->
     <div *ngIf="!chartProps || chartProps.length === 0">
-
       <div class="axis-toggle-container">
         <div class="toggle-button">
-          <input type="radio" id="daq-toggle-depth" name="axis-select" value="depth" onchange="toggleTime_Depth(this)" />
-          <label for="daq-toggle-depth">Depth</label>
+          <input type="radio"  name="axis-select" value="depth" (change) ="onAxisToggle('depth')" />
+          <label>Depth</label>
         </div>
         <div class="toggle-button">
-          <input type="radio" id="daq-toggle-time" name="axis-select" value="time" onchange="toggleTime_Depth(this)" />
-          <label for="daq-toggle-time">Time</label>
+          <input type="radio" name="axis-select" value="time" (change)="onAxisToggle('time')" checked/>
+          <label>Time</label>
         </div>
       </div>
     </div>
 
+
+    <!--chart body-->
     <div class="chart-content">
       <div [id]="chartId" class="chart-container"></div>
     </div>

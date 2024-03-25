@@ -27,6 +27,7 @@ export class PlotComponent implements AfterViewInit {
   @Input() useDummy: boolean = true;
 
   constructor() {
+
     this.adxQueryRequest = {
       holeLookupKey: {
         holeId: this.holeId,
@@ -127,6 +128,16 @@ export class PlotComponent implements AfterViewInit {
   onInputChange(value: string): void {
     this.holeId = parseInt(value, 10); // Parse the input value to a number
   }
+
+  onAxisToggle(selectValue: string) {
+    if (this.adxQueryRequest === undefined) {
+      return;
+    }
+
+    this.adxQueryRequest.queryParams.isDepthAxis = selectValue === 'depth';
+    //this.reload_data();
+  }
+
 
   reload_data() {
     if (this.useDummy) {

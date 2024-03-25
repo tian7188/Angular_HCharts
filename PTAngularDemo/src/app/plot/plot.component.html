@@ -1,75 +1,77 @@
 
 <div class="daq-container">
 
-  <div class="daq-zoom-button-container">
+  <div id="menu-container">
 
-    <div class="zoom-buttons">
-      <div class="zoom-button" (click)="zoomIn()"><i class="fa fa-search-plus" aria-hidden="true"></i>+</div>
-      <div class="zoom-button" (click)="zoomOut()"><i class="fa fa-search-minus" aria-hidden="true">--</i></div>
-      <span class="zoom-button" data-tooltip="Reset to default 12 hour view" data-tooltip-position="top" (click)="restoreOrignal()">
-        <i class="fa fa-undo" aria-hidden="true"></i>Undo
-      </span>
+    <div class="daq-zoom-button-container">
 
-      <div class="zoom-interval-container">
-        <label for="time-interval">Time Interval</label>
-        <select id="time-interval">
-          <option value="1">1 hour</option>
-          <option value="6">6 hours</option>
-          <option value="12">12 hours</option>
-          <option value="24">24 hours</option>
-          <option value="36">36 hours</option>
-          <option value="99" hidden>custom</option>
-        </select>
+      <div class="zoom-buttons">
+        <div class="zoom-button" (click)="zoomIn()"><i class="fa fa-search-plus" aria-hidden="true"></i>+</div>
+        <div class="zoom-button" (click)="zoomOut()"><i class="fa fa-search-minus" aria-hidden="true">--</i></div>
+        <span class="zoom-button" data-tooltip="Reset to default 12 hour view" data-tooltip-position="top" (click)="restoreOrignal()">
+          <i class="fa fa-undo" aria-hidden="true"></i>Undo
+        </span>
+
+        <div class="zoom-interval-container">
+          <label for="time-interval">Time Interval</label>
+          <select id="time-interval">
+            <option value="1">1 hour</option>
+            <option value="6">6 hours</option>
+            <option value="12">12 hours</option>
+            <option value="24">24 hours</option>
+            <option value="36">36 hours</option>
+            <option value="99" hidden>custom</option>
+          </select>
+        </div>
+
+        <div class="zoom-interval-container">
+          <label for="zoom-interval">Data Frequency</label>
+          <select id="zoom-interval">
+            <option value="1">1s</option>
+            <option value="5">5s</option>
+            <option value="10">10s</option>
+            <option value="30">30s</option>
+          </select>
+        </div>
       </div>
 
       <div class="zoom-interval-container">
-        <label for="zoom-interval">Data Frequency</label>
-        <select id="zoom-interval">
-          <option value="1">1s</option>
-          <option value="5">5s</option>
-          <option value="10">10s</option>
-          <option value="30">30s</option>
-        </select>
+        <label for="searchInput">Hole:</label>
+        <input type="text" id="searchInput" [(ngModel)]="holeId" (ngModelChange)="onInputChange($event)" placeholder="Enter search query...">
       </div>
-    </div>
 
-    <div class="zoom-interval-container">
-      <label for="searchInput">Hole:</label>
-      <input type="text" id="searchInput" [(ngModel)]="holeId" (ngModelChange)="onInputChange($event)" placeholder="Enter search query...">
-    </div>
+      <div style="margin-left: 5px" class="toggle-chart-elements">
+        <input class="zoom-button" type="button" class="btn btn-sm" value="Search" (click)="searchData()"/>
+      </div>
 
-    <div style="margin-left: 5px" class="toggle-chart-elements">
-      <input class="zoom-button" type="button" class="btn btn-sm" value="Search" (click)="searchData()" />
-    </div>
+      <div class="toggle-chart-elements">
+        <button (click)="reload_data()">Reload</button>
+      </div>
 
-    <div  class="toggle-chart-elements">
-      <button (click)="reload_data()">Reload</button>
-    </div>
+      <div class="toggle-chart-elements">
+        <input id="local_data" type="checkbox" [(ngModel)]="useDummy" (change)="useLocalData()"/>
+        <label for="local_data">dummy</label>
+      </div>
 
-    <div  class="toggle-chart-elements">
-      <input id="local_data" type="checkbox" [(ngModel)]="useDummy" (change)="useLocalData()" />
-      <label for="local_data">dummy</label>
-    </div>
 
- 
 
-    <div class="toggle-chart-elements">
-      <input type="checkbox" id="daq-toggle-tooltip" class="toggle-tooltip" onchange="toggleTooltips(this)" />
-      <label for="daq-toggle-tooltip">Lock Data Box</label>
+      <div class="toggle-chart-elements">
+        <input type="checkbox" id="daq-toggle-tooltip" class="toggle-tooltip" onchange="toggleTooltips(this)"/>
+        <label for="daq-toggle-tooltip">Lock Data Box</label>
 
-      <input type="checkbox" id="daq-toggle-crosshair" class="toggle-crosshair" onchange="toggleCrosshairs(this)" checked />
-      <label for="daq-toggle-crosshairs">Show Reference Line</label>
-    </div>
+        <input type="checkbox" id="daq-toggle-crosshair" class="toggle-crosshair" onchange="toggleCrosshairs(this)" checked/>
+        <label for="daq-toggle-crosshairs">Show Reference Line</label>
+      </div>
 
-    <div style="margin-left: 1px" class="toggle-chart-elements">
-      <input type="button" class="btn btn-sm" value="Reset templates" onclick="resetTemplateSettings()" />
+      <div style="margin-left: 1px" class="toggle-chart-elements">
+        <input type="button" class="btn btn-sm" value="Reset templates" onclick="resetTemplateSettings()"/>
+      </div>
+
+
     </div>
 
 
   </div>
-
-
-
 
   <!--<div class="axis-toggle-container">
     <div class="toggle-button">
@@ -87,7 +89,7 @@
 
   <div class="daq-track-container" id="plots" (wheel)="onMouseWheel($event)">
     <!-- xAxis -->
-    <app-daqchart class="chart-axis" [chartDatas]="curveDatas[0]"></app-daqchart>
+    <app-daqchart class="chart-axis" [chartDatas]="curveDatas[0]"  (axisToggleEvent)="onAxisToggle($event)"></app-daqchart>
 
     <!-- charts -->
     <app-daqchart class="chart-item" [chartProps]="chartProps[1]" [chartDatas]="curveDatas[1]"></app-daqchart>

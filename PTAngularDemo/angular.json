@@ -70,6 +70,7 @@
               "buildTarget": "PTAngularDemo:build:production"
             },
             "development": {
+              "port": 9000,
               "buildTarget": "PTAngularDemo:build:development"
             }
           },
