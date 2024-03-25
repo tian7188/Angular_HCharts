@@ -103,6 +103,7 @@ export class DaqDataService {
     const datatime = new Date(2024, 3, 20).getUTCMilliseconds();  // Date.now();
 
     //depth data
+    count = 100;
     const depth = this.generateTimeSeriesDepth(datatime, count);
     points.push(depth);
 

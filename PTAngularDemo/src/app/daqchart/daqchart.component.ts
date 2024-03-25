@@ -4,6 +4,7 @@ import darkUnica from 'highcharts/themes/dark-unica'; // Import the theme file
 import { DAQPointerEventObject, ZoomEventObject, ZoomSelectionService } from '../zoom-selection.service';
 import { ChartProp, daqColors } from '../plot/plot.component';
 import { DataPoint } from '../../AdxQueryRequestModel';
+import { formatDateTime, formatDepthLabel } from './formatDateTime';
 
 
 @Component({
@@ -292,7 +293,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
       }
       else { // for axis chart....
 
-        const data = this.chartDatas[0] as DataPoint[]; // Assuming data is defined within the component
+        const seriesData = this.chartDatas[0] as DataPoint[]; // Assuming data is defined within the component
 
         // Initialize series
         const series: Highcharts.SeriesOptionsType[] = this.chartDatas.map((data, index) => ({
@@ -325,15 +326,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
               visible: true,
               labels: {
                 formatter: function () {
-                  // Get the time
-                  const time = this.value;
-
-                  // Find the corresponding depth for the given time
-                  const dataPoint = data.find(p => p.x === time);
-                  const depth = dataPoint ? dataPoint.y.toFixed(2) : 'N/A';
-
-                  return depth;
-
+                  return formatDepthLabel(this.value, seriesData);
                 },
                 style: {
                   fontSize: '12px',
@@ -360,8 +353,6 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
       this.chart.update(this.chartOptions, true);
     }
   }
-
-
 
   getAxisData(data: any): any {
     //assign data.y to be 1
@@ -441,26 +432,8 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
 }
 
 
-function formatDateTime(value: string): string {
-  const timestamp = parseFloat(value as string);
 
-  if (!isNaN(timestamp)) {
-    const date = Highcharts.dateFormat('%Y-%m-%d', timestamp);
-    const time = Highcharts.dateFormat('%H:%M:%S', timestamp);
-    return `<div>${date} <br/> ${time}</div>`;
-  } else {
-    return 'NA';
-  }
-}
 
-//function formatDepth(timeValue: number): string {
-//  const data = chartDatas[0];
-//  //find the first data point that x is greater than timeValue
-//  const index = data.findIndex(d => d.x > timeValue);
-//  if (index > 0) {
-//    const depth = data[index].y;
-//    return `<div>${depth} m</div>`;
-//  }
 
-//  return `<div>${timeValue} ma</div>`;
-//}
+
+
