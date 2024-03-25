@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HighchartsChartModule } from 'highcharts-angular';
@@ -11,7 +10,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CustomHttpInterceptor } from '../CustomHttpInterceptor';
 import { DaqchartHeaderComponent } from './daqchart-header/daqchart-header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import {ButtonsModule} from "@progress/kendo-angular-buttons";
+import { InputsModule } from '@progress/kendo-angular-inputs';
 
 @NgModule({
   declarations: [
@@ -27,8 +27,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AppRoutingModule,
     HighchartsChartModule,
     HttpClientModule,
-    FontAwesomeModule
-    
+    FontAwesomeModule,
+    ButtonsModule,
+    InputsModule,
+
   ],
   providers: [
     {
