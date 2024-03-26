@@ -49,8 +49,6 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
     dashStyle: 'longdashdot'
   }
 
-
-
   constructor(private elementRef: ElementRef) {
     // darkUnica(Highcharts);
     this.chartId = 'chart-' + Math.random().toString(36).substr(2, 9);
@@ -436,19 +434,9 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   getColor(seriesIndex: number): string | Highcharts.GradientColorObject | Highcharts.PatternObject | undefined {
-    if (this.chart) {
-      const chartIndex = this.chart.index;
-      const numCharts = 5;
-
-      // Use a formula to generate a unique index for each series
-      const uniqueSeriesIndex = chartIndex * numCharts + seriesIndex;
-
-      console.log('color index:', uniqueSeriesIndex, uniqueSeriesIndex % daqColors.length);
-
-      return daqColors[uniqueSeriesIndex % daqColors.length];
-
+    if (this.chart && this.chartProps[seriesIndex]) {
+      return this.chartProps[seriesIndex].color;
     }
-
     return 'black';
   }
 
