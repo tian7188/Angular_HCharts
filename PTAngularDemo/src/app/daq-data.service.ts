@@ -10,36 +10,20 @@ import { Observable } from 'rxjs';
 
 
 export class DaqDataService {
- 
+
   http = inject(HttpClient);
 
   plotNamesSignal = signal<string[]>([]);
   plotDataSignal = signal<DataPoint[][]>([]);
 
   numOfCharts: number = 5;
-  pointCount = 3000;
+  pointCount = 1000;
   constructor() { }
 
   //load data from daq-api
   reloadData(adxQueryRequest: AdxQueryRequestModel) {
-    const points: any[] = [];
 
-    //const postRequest: AdxQueryRequestModel = {
-    //  holeLookupKey: {
-    //    holeId: holeId,
-    //    fileConfigLookupKey: {
-    //      loggingFileType: LoggingFileType.Instrumentation,
-    //      secondaryType: FileLookupType.DrillId,
-    //      secondaryValue: 96
-    //    }
-    //  },
-    //  queryParams: {
-    //    interval: 10,
-    //    isDepthAxis: false,
-    //    numOfPoints: 3000
-    //  }
-    //};
-
+    //this.reloadData_local();
 
     this.http.post<AdxQueryResponse>('https://localhost:7074/api/AdxDataQuery/GetData', adxQueryRequest)
       .subscribe((response: AdxQueryResponse) => {
@@ -99,8 +83,7 @@ export class DaqDataService {
   reloadData_local(count: number = 100){
     const points: any[] = [];
     const names = ['Depth', 'Torque', 'GR', 'Motor-Speed', 'Resis', 'Compr'];
-
-    const datatime = new Date(2024, 3, 20).getUTCMilliseconds();  // Date.now();
+    const datatime =  new Date(2024, 2, 1).getTime();
 
     //depth data
     count = 100;
@@ -120,12 +103,12 @@ export class DaqDataService {
 
   private generateTimeSeriesData(datatime: number, count: number): DataPoint[] {
     // Simulate reloading data for the first chart
-    const randomData: DataPoint[] = []; 
+    const randomData: DataPoint[] = [];
 
     //get max y value;
     const maxY = Math.floor(Math.random() * 100) + 1;
     for (let i = 1; i < count; i++) {
-      const randomX = datatime - (count - i) * 10000;
+      const randomX = datatime *i  * 10000;
 
       const randomY = Math.random() * maxY; // Random y between 0 and 100
       randomData.push({ x: randomX, y: randomY });

@@ -23,5 +23,5 @@ export function formatDepthLabel(value: string | number, seriesData: DataPoint[]
         return `<div>${depth} m</div>`;
     }
 
-    return `<div>${value} ma</div>`;
+    return `<div>'na'</div>`;
 }

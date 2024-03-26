@@ -164,7 +164,6 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
     xAxis: [{
       /* type: "datetime",*/ // Set xAxis type as datetime
       zoomEnabled: true, // Enable zooming along the x-axis
-
       visible: false,
 
       minPadding: 0,
@@ -346,7 +345,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
               visible: true,
               labels: {
                 formatter: function () {
-                  return formatDepthLabel(this.value, seriesData);
+                  return formatDepthLabel(this.value as string, seriesData);
                 },
                 style: {
                   fontSize: '12px',

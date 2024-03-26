@@ -3,7 +3,7 @@
 
 .daq-container {
 
-  grid-template-rows: 50px calc($header-height * 2) 1fr;
+ /* grid-template-rows: 50px calc($header-height * 2) 1fr;*/
   grid-template-columns: 210px 1fr;
   width: 100%;
   margin-bottom: 5px;

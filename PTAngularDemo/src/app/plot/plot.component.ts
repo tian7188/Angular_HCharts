@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, inject, Input, effect, input, EventEmitter, Output, ViewChild, DEFAULT_CURRENCY_CODE, HostListener } from '@angular/core';
-import {DaqDataService} from '../daq-data.service'; 
+import {DaqDataService} from '../daq-data.service';
 import { ZoomSelectionService } from '../zoom-selection.service';
 import { DaqChartComponent } from '../daqchart/daqchart.component';
 import { AdxQueryRequestModel, DataPoint, FileLookupType, LoggingFileType } from '../../AdxQueryRequestModel';
@@ -88,7 +88,7 @@ export class PlotComponent implements AfterViewInit {
 
         // Push a ChartProp object
         this.chartProps[index].push(new ChartProp({ title: names[index - 1], color: daqColors[index - 1], minValue: minVs[index-1], maxValue: maxVs[index-1] }));
-     
+
 
         if (index === 2 || index === 4) {
           this.curveNames[index].push(names[index]);
@@ -147,11 +147,11 @@ export class PlotComponent implements AfterViewInit {
       let request = this.adxQueryRequest;
       if (request === undefined) {
         return;
-      }     
+      }
 
       request.holeLookupKey.holeId = this.holeId;
       request.holeLookupKey.fileConfigLookupKey.secondaryValue = 96;
-      request.queryParams.numOfPoints = 3000;
+      request.queryParams.numOfPoints = 1000;
       request.queryParams.interval = 100;
 
       //temp code to set interval
