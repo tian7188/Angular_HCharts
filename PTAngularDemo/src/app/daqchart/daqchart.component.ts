@@ -217,20 +217,25 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
     yAxis: [
       {
         title: {
-          text: ""
+          text: "First Y Axis"
         },
-        opposite: true,
+        visible: false,
         zoomEnabled: true // Enable zooming along the x-axis
       },
       {
         title: {
-          text: ""
+          text: "Second Y Axis"
         },
-        opposite: true,
+        visible: false,
         zoomEnabled: true // Enable zooming along the x-axis
       },
     ],
-
+    legend: {
+      enabled: false,
+    },
+    credits: {
+      enabled: false
+    },
     tooltip: {
       valueSuffix: " m/s",
       shared: true,
@@ -300,7 +305,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
           color: this.getColor(index),
           visible: !!data,
           data: data || [],// Empty data for the first series
-          // yAxis: index % 2 === 0 ? 0 : 1, // Assign the first half of the series to the first y-axis and the second half to the second y-axis
+          yAxis: index === 0 ? 0 : 1, // Assign the first half of the series to the first y-axis and the second half to the second y-axis
         }));
 
         this.chartOptions = {
