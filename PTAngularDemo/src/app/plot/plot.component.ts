@@ -24,7 +24,7 @@ export class PlotComponent implements AfterViewInit {
   @Input() chartProps: ChartProp[][] = [];
 
   @Input() holeId: number = 3803;
-  @Input() useDummy: boolean = true;
+  @Input() useDummy: boolean = false;
 
   constructor() {
 
@@ -40,7 +40,7 @@ export class PlotComponent implements AfterViewInit {
       queryParams: {
         interval: 10,
         isDepthAxis: false,
-        numOfPoints: 100
+        numOfPoints: 1000
       }
     };
 
@@ -134,8 +134,15 @@ export class PlotComponent implements AfterViewInit {
       return;
     }
 
-    this.adxQueryRequest.queryParams.isDepthAxis = selectValue === 'depth';
-    //this.reload_data();
+    const isDepthAxis = selectValue === 'depth';
+    this.adxQueryRequest.queryParams.isDepthAxis = isDepthAxis;
+    if(isDepthAxis){
+      this.adxQueryRequest.queryParams.interval = 0.5;
+    }
+    else{
+      this.adxQueryRequest.queryParams.interval = 10;
+    }
+    this.reload_data();
   }
 
 
@@ -148,7 +155,7 @@ export class PlotComponent implements AfterViewInit {
       if (request === undefined) {
         return;
       }
-
+/*
       request.holeLookupKey.holeId = this.holeId;
       request.holeLookupKey.fileConfigLookupKey.secondaryValue = 96;
       request.queryParams.numOfPoints = 1000;
@@ -159,6 +166,7 @@ export class PlotComponent implements AfterViewInit {
         request.queryParams.interval = 0.5;
         request.holeLookupKey.fileConfigLookupKey.secondaryValue = 739;
       }
+*/
 
       //load data from daq-api
       this.dataService.reloadData(request);
