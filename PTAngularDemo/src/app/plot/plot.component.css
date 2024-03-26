@@ -2,21 +2,21 @@
 /*@import '~@fortawesome/fontawesome-free/css/all.css';*/
 
 .daq-container {
- 
+
   grid-template-rows: 50px calc($header-height * 2) 1fr;
   grid-template-columns: 210px 1fr;
   width: 100%;
   margin-bottom: 5px;
-  background-color:#ccc; 
+  background-color:#ccc;
 }
 
 
 
 .daq-track-container {
   display: flex;
-  flex-direction: row;  
-  justify-content: space-between; 
-  margin-top: 1rem; 
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 1rem;
 }
 
 .chart-item {
@@ -25,7 +25,7 @@
 }
 
 .chart-axis {
-  width: 230px;
+  width: 210px;
   align-self: end; /* Align the chart-axis to the end (bottom) of its grid cell */
   /*  margin-top: 90px*/
 }

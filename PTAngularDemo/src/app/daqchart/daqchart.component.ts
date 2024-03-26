@@ -313,7 +313,6 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
         };
       }
       else { // for axis chart....
-
         const seriesData = this.chartDatas[0] as DataPoint[]; // Assuming data is defined within the component
 
         // Initialize series
@@ -359,7 +358,20 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
           ],
 
           tooltip: {
-            enabled: false
+            enabled: true,
+            //show both xAxis values
+            formatter: function () {
+              let tooltip = '';
+              if (this.points && this.points.length > 0 && this.points[0].point) {
+                if(this.points[0].point.y){
+                  tooltip += '<b>' + 'Depth:     ' + this.points[0].point.y.toFixed(2)+ '</b><br/>';
+                }
+                tooltip += '<b>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.points[0].point.x) + '</b><br/>';
+              }
+              return tooltip;
+            },
+
+
           },
           series: series
         };
