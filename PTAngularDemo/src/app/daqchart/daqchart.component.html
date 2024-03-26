@@ -9,17 +9,31 @@
 
     <!--axis toggle-->
     <div *ngIf="!chartProps || chartProps.length === 0">
-      <div class="axis-toggle-container">
+      <div class="axis-toggle-container" >
         <div class="toggle-button">
-          <input type="radio"  name="axis-select" value="depth" (change) ="onAxisToggle('depth')" />
+          <input type="radio"
+                 kendoRadioButton
+                 name="axis-select"
+                 value="depth"
+                 [formControl]="axisToggle"
+                 (change) ="onAxisToggle('depth')"
+          />
           <label>Depth</label>
         </div>
         <div class="toggle-button">
-          <input type="radio" name="axis-select" value="time" (change)="onAxisToggle('time')" checked/>
+          <input type="radio"
+                 kendoRadioButton
+                 name="axis-select"
+                 value="time"
+                 [formControl]="axisToggle"
+                 (change)="onAxisToggle('time')"
+          />
           <label>Time</label>
         </div>
       </div>
+
     </div>
+
 
 
     <!--chart body-->

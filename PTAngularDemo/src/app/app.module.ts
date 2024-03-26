@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { FormsModule , ReactiveFormsModule} from '@angular/forms'; // Import FormsModule
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HighchartsChartModule } from 'highcharts-angular';
@@ -24,6 +24,7 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
   imports: [
     BrowserModule,
     FormsModule, // Import FormsModule
+    ReactiveFormsModule,
     AppRoutingModule,
     HighchartsChartModule,
     HttpClientModule,

@@ -1,10 +1,23 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, AfterViewInit, inject, ElementRef, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  AfterViewInit,
+  inject,
+  ElementRef,
+  EventEmitter,
+  Output,
+  input, ChangeDetectorRef
+} from '@angular/core';
 import * as Highcharts from 'highcharts';
 import darkUnica from 'highcharts/themes/dark-unica'; // Import the theme file
 import { DAQPointerEventObject, ZoomEventObject, ZoomSelectionService } from '../zoom-selection.service';
 import { ChartProp, daqColors } from '../plot/plot.component';
 import { DataPoint } from '../../AdxQueryRequestModel';
 import { formatDateTime, formatDepthLabel } from './formatDateTime';
+import {FormControl, FormGroup} from "@angular/forms";
 
 
 @Component({
@@ -16,6 +29,8 @@ import { formatDateTime, formatDepthLabel } from './formatDateTime';
 export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
 
   zoomSelectionService = inject(ZoomSelectionService);
+
+  axisToggle = new FormControl('depth');
 
   chartId: string = '';
   chart: Highcharts.Chart | undefined;
@@ -100,12 +115,25 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
     //}
   }
 
+  ngOnInit(): void {
+    setTimeout(() => { this.initChart(); }, 100);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.chartInitialized
+      && changes['chartDatas']
+      && !changes['chartDatas'].firstChange) {
+      this.updateChartOptions();
+    }
+
+    //console.log('Series Name:', this.seriesNames);
+  }
+
   ngAfterViewInit(): void {
     setTimeout(() => {
       if (this.chart) {
-        this.onAxisToggle('time');
-      }
 
+      }
     }, 1000);
   }
 
@@ -253,26 +281,12 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
   };
 
 
-  ngOnInit(): void {
-    setTimeout(() => { this.initChart(); }, 100);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.chartInitialized
-      && changes['chartDatas']
-      && !changes['chartDatas'].firstChange) {
-      this.updateChartOptions();
-    }
-
-    //console.log('Series Name:', this.seriesNames);
-  }
 
   initChart() {
     this.chart = Highcharts.chart(this.chartId, this.chartOptions,
       () => {
         this.chartInitialized = true;
         setTimeout(() => {
-          this.onAxisToggle('time');
           this.updateChartOptions();
         }, 500);
       });
@@ -348,7 +362,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
         };
 
       }
-     
+
 
       //more...
 
