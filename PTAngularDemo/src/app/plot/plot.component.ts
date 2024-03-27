@@ -50,7 +50,7 @@ export class PlotComponent implements AfterViewInit {
       const minVs: number[] = [];
       const maxVs: number[] = [];
       for (var i = 0; i < datas.length; i++) {
-       // const data =  datas[i] as DataPoint[]
+        const data =  datas[i] as DataPoint[]
         minVs[i] = datas[i].reduce((min: number, p: DataPoint) => p.y < min ? p.y : min, datas[i][0].y);
         minVs[i] = Math.floor(minVs[i]);
         maxVs[i] = datas[i].reduce((max: number, p: DataPoint) => p.y > max ? p.y : max, datas[i][0].y);
@@ -120,12 +120,7 @@ export class PlotComponent implements AfterViewInit {
 
     const isDepthAxis = selectValue === 'depth';
     this.adxQueryRequest.queryParams.isDepthAxis = isDepthAxis;
-    if(isDepthAxis){
-      this.adxQueryRequest.queryParams.interval = 0.5;
-    }
-    else{
-      this.adxQueryRequest.queryParams.interval = 120;
-    }
+   
     this.reload_data();
   }
 
@@ -140,6 +135,17 @@ export class PlotComponent implements AfterViewInit {
         return;
       }
 
+      request.holeLookupKey.holeId = this.holeId;
+      if (this.holeId === 36821) {
+        request.holeLookupKey.fileConfigLookupKey.secondaryValue = 739;
+      }
+      else if (this.holeId === 3803) {
+        request.holeLookupKey.fileConfigLookupKey.secondaryValue = 96;
+      }
+        
+      request.queryParams.interval = request.queryParams.isDepthAxis ? 0.5 : 120;
+
+      
       //load data from daq-api
       this.dataService.reloadData(request);
     }
