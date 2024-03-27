@@ -19,10 +19,8 @@ export class PlotComponent implements AfterViewInit {
   zoomSelectionService = inject(ZoomSelectionService);
 
   adxQueryRequest: AdxQueryRequestModel | undefined;
-  @Input()  curveNames: string[][] = [];
   @Input() curveDatas: any = [];
   @Input() chartProps: ChartProp[][] = [];
-
   @Input() holeId: number = 3803;
   @Input() useDummy: boolean = false;
 
@@ -38,7 +36,7 @@ export class PlotComponent implements AfterViewInit {
         }
       },
       queryParams: {
-        interval: 10,
+        interval: 120,
         isDepthAxis: false,
         numOfPoints: 1000
       }
@@ -59,45 +57,31 @@ export class PlotComponent implements AfterViewInit {
         maxVs[i] = Math.ceil(maxVs[i]);
       }
 
-      let numOfCharts = this.dataService.numOfCharts;
+      const numOfCharts = this.dataService.numOfCharts + 1;
+
       // Clear arrays before populating them
-      this.chartProps = [];
-      this.curveNames = [];
-      this.curveDatas = [];
-
-      //set axis names and data
-      this.curveNames[0] = [];
-      this.curveDatas[0] = [];
-      this.curveNames[0].push('Time');
-      this.curveDatas[0].push(datas[0]);
-      this.curveNames[0].push('Depth');
-      this.curveDatas[0].push(datas[0]);
-
-
-      //set curve names and data
-      for (let index = 1; index <= numOfCharts; index++) {
-
-        // Initialize arrays for each index
-        this.curveNames[index] = [];
-        this.curveDatas[index] = [];
-        this.chartProps[index] = [];
-
-        // Populate with names and data for each pair of charts
-        this.curveNames[index].push(names[index - 1]);
-        this.curveDatas[index].push(datas[index - 1]);
-
-        // Push a ChartProp object
-        this.chartProps[index].push(new ChartProp({ title: names[index - 1], color: daqColors[index - 1], minValue: minVs[index-1], maxValue: maxVs[index-1] }));
-
-
-        if (index === 2 || index === 4) {
-          this.curveNames[index].push(names[index]);
-          this.curveDatas[index].push(datas[index]);
-
-          this.chartProps[index].push(new ChartProp({ title: names[index], color: daqColors[index], minValue: minVs[index ], maxValue: maxVs[index] }));
-        }
+      for (let i = 0; i < numOfCharts; i++) {
+        // Initialize arrays for each index if they don't exist yet
+        this.curveDatas[i] = []
+        this.chartProps[i] = []
       }
 
+      //set axis  with depth curve data (only one curve)
+      this.curveDatas[0] = [];
+      this.curveDatas[0].push(datas[0]);
+      this.curveDatas[0].push(datas[0]);
+
+      //set curve names and data
+      let numCurves : number = 10;// names.length;
+      for (let i = 1; i < numCurves; i++) {
+        const index = i < 6 ? i : (i % 6) + 1;
+
+        // Populate with names and data for each pair of charts
+        this.curveDatas[index].push(datas[i]);
+
+        // Push a ChartProp object
+        this.chartProps[index].push(new ChartProp({ title: names[i], color: daqColors[i], minValue: minVs[i], maxValue: maxVs[i] }));
+      }
     });
   }
 
@@ -140,7 +124,7 @@ export class PlotComponent implements AfterViewInit {
       this.adxQueryRequest.queryParams.interval = 0.5;
     }
     else{
-      this.adxQueryRequest.queryParams.interval = 10;
+      this.adxQueryRequest.queryParams.interval = 120;
     }
     this.reload_data();
   }
@@ -155,18 +139,6 @@ export class PlotComponent implements AfterViewInit {
       if (request === undefined) {
         return;
       }
-/*
-      request.holeLookupKey.holeId = this.holeId;
-      request.holeLookupKey.fileConfigLookupKey.secondaryValue = 96;
-      request.queryParams.numOfPoints = 1000;
-      request.queryParams.interval = 100;
-
-      //temp code to set interval
-      if (this.holeId === 36821) {
-        request.queryParams.interval = 0.5;
-        request.holeLookupKey.fileConfigLookupKey.secondaryValue = 739;
-      }
-*/
 
       //load data from daq-api
       this.dataService.reloadData(request);
