@@ -10,8 +10,14 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { CustomHttpInterceptor } from '../CustomHttpInterceptor';
 import { DaqchartHeaderComponent } from './daqchart-header/daqchart-header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 import {ButtonsModule} from "@progress/kendo-angular-buttons";
 import { InputsModule } from '@progress/kendo-angular-inputs';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { IconsModule } from "@progress/kendo-angular-icons";
+import { LabelModule } from "@progress/kendo-angular-label";
+import { LayoutModule } from "@progress/kendo-angular-layout";
+import { DropDownsModule } from "@progress/kendo-angular-dropdowns";
 
 @NgModule({
   declarations: [
@@ -31,6 +37,12 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
     FontAwesomeModule,
     ButtonsModule,
     InputsModule,
+    IconsModule,
+    LabelModule,
+    LayoutModule,
+    DropDownsModule,
+    BrowserAnimationsModule,
+
 
   ],
   providers: [

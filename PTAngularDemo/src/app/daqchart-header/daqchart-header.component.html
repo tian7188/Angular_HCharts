@@ -1,19 +1,23 @@
 
+
 <div class="header-container">
   <div class="daq-chart-header" *ngIf="chartProp">
-    <div class="title">{{ chartProp?.title }}</div>
-    <div class="track-line-style" [style.color]="chartProp?.color"></div>
+    <div class="title">{{ chartProp.title }}</div>
+    <!-- <kendo-label class="title">{{ chartProp?.title }}</kendo-label> -->
+    <div class="track-line-style" [style.color]="chartProp.color"></div>
 
     <div class="header-range-unit">
-      <div class="trackHeaderColumn min-tag">{{ chartProp?.minValue }}</div>
-      <div class="trackHeaderColumn unit-tag">{{ chartProp?.unit }}</div>
-      <div class="trackHeaderColumn max-tag">{{ chartProp?.maxValue }}</div>
+      <div class="trackHeaderColumn min-tag">{{ chartProp.minValue }}</div>
+      <div class="trackHeaderColumn unit-tag">{{ chartProp.unit }}</div>
+      <div class="trackHeaderColumn max-tag">{{ chartProp.maxValue }}</div>
+      <!-- <kendo-label class="trackHeaderColumn min-tag">{{ chartProp?.minValue }}</kendo-label>
+      <kendo-label class="trackHeaderColumn unit-tag">{{ chartProp?.unit }}</kendo-label>
+      <kendo-label class="trackHeaderColumn max-tag">{{ chartProp?.maxValue }}</kendo-label> -->
     </div>
   </div>
 
   <div class="daq-chart-header empty-header" *ngIf="!chartProp"></div>
 </div>
-
 
 <!--<div id=@id class="track-header">
   @Html.Partial("Tabs/TrackHeaderInput", @Model)
