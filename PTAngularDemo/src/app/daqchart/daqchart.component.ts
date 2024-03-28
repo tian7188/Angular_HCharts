@@ -294,6 +294,7 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
       });
   }
 
+  
   private updateChartOptions() {
     // Assuming chartOptions is an object with series array
     if (this.chart && this.chartOptions && this.chartOptions.series && this.chartOptions.series.length > 0) {
@@ -301,15 +302,16 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
       if (!this.isFirstChart()) {
         const series: Highcharts.SeriesOptionsType[] = this.chartDatas.map((data, index) => ({
           type: 'spline',
-          color: this.getColor(index),
+          color: ( this.chart 
+                && this.chartProps[index] 
+                 ? this.chartProps[index].color 
+                  : 'black'),
           visible: !!data,
           data: data || [],// Empty data for the first series
           yAxis: index === 0 ? 0 : 1, // Assign the first half of the series to the first y-axis and the second half to the second y-axis
         }));
 
-        this.chartOptions = {
-          series: series
-        };
+        this.chartOptions.series = series;
       }
       else { // for axis chart....
         const seriesData = this.chartDatas[0] as DataPoint[]; // Assuming data is defined within the component
@@ -322,64 +324,55 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
           xAxis: index === 0 ? 0 : 1, // Assign the first half of the series to the first x-axis and the second half to the second x-axis
         }));
 
-        this.chartOptions = {
-          chart: {
-            backgroundColor: '#ccc'
-          },
-          xAxis: [
-            {
-              zoomEnabled: true, // Enable zooming along the x-axis
-              visible: true,
-              labels: {
-                formatter: function () {
-                  return formatDateTime(this.value as string);
-                },
-                style: {
-                  fontSize: '12px',
-                  whiteSpace: 'nowrap'
-                }
-              },
-            },
-            {
-              zoomEnabled: true, // Enable zooming along the x-axis
-              visible: true,
-              labels: {
-                formatter: function () {
-                  return formatDepthLabel(this.value as string, seriesData);
-                },
-                style: {
-                  fontSize: '12px',
-                  whiteSpace: 'nowrap'
-                }
-              },
-              linkedTo: 0
-            },
-          ],
-
-          tooltip: {
-            enabled: true,
-            //show both xAxis values
-            formatter: function () {
-              let tooltip = '';
-              if (this.points && this.points.length > 0 && this.points[0].point) {
-                if(this.points[0].point.y){
-                  tooltip += '<b>' + 'Depth:     ' + this.points[0].point.y.toFixed(2)+ '</b><br/>';
-                }
-                tooltip += '<b>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.points[0].point.x) + '</b><br/>';
+        this,this.chartOptions.chart = {
+          backgroundColor: '#ccc'
+        };
+        this.chartOptions.series = series;
+        this.chartOptions.tooltip = {
+          enabled: true,
+          //show both xAxis values
+          formatter: function () {
+            let tooltip = '';
+            if (this.points && this.points.length > 0 && this.points[0].point) {
+              if(this.points[0].point.y){
+                tooltip += '<b>' + 'Depth:     ' + this.points[0].point.y.toFixed(2)+ '</b><br/>';
               }
-              return tooltip;
-            },
-
-
+              tooltip += '<b>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.points[0].point.x) + '</b><br/>';
+            }
+            return tooltip;
           },
-          series: series
         };
 
+        this.chartOptions.xAxis =[
+          {
+            zoomEnabled: true, // Enable zooming along the x-axis
+            visible: true,
+            labels: {
+              formatter: function () {
+                return formatDateTime(this.value as string);
+              },
+              style: {
+                fontSize: '12px',
+                whiteSpace: 'nowrap'
+              }
+            },
+          },
+          {
+            zoomEnabled: true, // Enable zooming along the x-axis
+            visible: true,
+            labels: {
+              formatter: function () {
+                return formatDepthLabel(this.value as string, seriesData);
+              },
+              style: {
+                fontSize: '12px',
+                whiteSpace: 'nowrap'
+              }
+            },
+            linkedTo: 0
+          },
+        ];
       }
-
-
-      //more...
-
 
       // Create a new object reference to trigger change detection
       this.chart.update(this.chartOptions, true);
@@ -391,18 +384,8 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
 
-  getAxisData(data: any): any {
-    //assign data.y to be 1
-    return data.map((d: any) => {
-      return {
-        x: d.x,
-        y: 0
-      };
-    });
-  }
 
-
-  zoom(factor: number, isUserAction: boolean = false): void {
+  zoom(factor: number): void {
     if (this.chart) {
       // Get the current minimum and maximum values of the visible range on the x-axis
       const min = this.chart.xAxis[0].getExtremes().min;
@@ -427,17 +410,17 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   zoomIn(): void {
-    this.zoom(1 - 0.5, true); // Zoom in by reducing the range to 50% of the current range
+    this.zoom(1 - 0.5); // Zoom in by reducing the range to 50% of the current range
   }
 
   zoomOut(): void {
-    this.zoom(1 + 0.5, true); // Zoom out by expanding the range to 150% of the current range
+    this.zoom(1 + 0.5); // Zoom out by expanding the range to 150% of the current range
   }
 
-  restoreOrignal() {
+  resetZoom() {
     if (this.chart) {
-      this.chart.xAxis[0].setExtremes(undefined, undefined);
-      this.zoom(1, true)
+      this.chart.xAxis[0].setExtremes(undefined, undefined); // Reset the zoom level
+      this.zoom(1)
     }
   }
 
@@ -449,12 +432,11 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
     return true;
   }
 
-  getColor(seriesIndex: number): string | Highcharts.GradientColorObject | Highcharts.PatternObject | undefined {
-    if (this.chart && this.chartProps[seriesIndex]) {
-      return this.chartProps[seriesIndex].color;
-    }
-    return 'black';
+  ngOnDestroy(): void {
+    this.elementRef.nativeElement.removeEventListener('mousemove', this.onChartMouseMove.bind(this));
   }
+
+
 
 }
 

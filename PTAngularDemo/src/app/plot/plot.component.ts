@@ -21,8 +21,10 @@ export class PlotComponent implements AfterViewInit {
   adxQueryRequest: AdxQueryRequestModel | undefined;
   @Input() curveDatas: any = [];
   @Input() chartProps: ChartProp[][] = [];
-  @Input() holeId: number = 3803;
+  @Input() holeId: number = 36821;
   @Input() useDummy: boolean = false;
+
+  holeChanged: boolean = false;
 
   constructor() {
 
@@ -111,6 +113,8 @@ export class PlotComponent implements AfterViewInit {
 
   onInputChange(value: string): void {
     this.holeId = parseInt(value, 10); // Parse the input value to a number
+
+    this.holeChanged = true;
   }
 
   onAxisToggle(selectValue: string) {
@@ -122,7 +126,11 @@ export class PlotComponent implements AfterViewInit {
     this.adxQueryRequest.queryParams.isDepthAxis = isDepthAxis;
    
     this.reload_data();
-  }
+
+    setTimeout(() => {
+    this.resetZoom();
+    }, 800);
+  } 
 
 
   reload_data() {
@@ -150,18 +158,13 @@ export class PlotComponent implements AfterViewInit {
       this.dataService.reloadData(request);
     }
 
-
+    if(this.holeChanged) {
+      this.resetZoom();
+      this.holeChanged = false;
+    }
   }
 
-  searchData() {
-    // Method to handle search functionality
 
-
-    // Perform your search logic here, such as filtering data based on the search query
-    // Once you have filtered data, you can update your chart data accordingly
-
-    this.reload_data();
-  }
 
   useLocalData() {
     this.reload_data();
@@ -181,9 +184,9 @@ export class PlotComponent implements AfterViewInit {
     }
   }
 
-  restoreOrignal() {
+  resetZoom() {
     if (this.firstDaqchartComponent) {
-      this.firstDaqchartComponent.restoreOrignal();
+      this.firstDaqchartComponent.resetZoom();
     }
   }
 }
