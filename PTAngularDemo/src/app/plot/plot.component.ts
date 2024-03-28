@@ -126,10 +126,7 @@ export class PlotComponent implements AfterViewInit {
     this.adxQueryRequest.queryParams.isDepthAxis = isDepthAxis;
    
     this.reload_data();
-
-    setTimeout(() => {
     this.resetZoom();
-    }, 800);
   } 
 
 
@@ -138,6 +135,7 @@ export class PlotComponent implements AfterViewInit {
       this.dataService.reloadData_local();
     }
     else {
+
       let request = this.adxQueryRequest;
       if (request === undefined) {
         return;
@@ -162,6 +160,7 @@ export class PlotComponent implements AfterViewInit {
       this.resetZoom();
       this.holeChanged = false;
     }
+
   }
 
 

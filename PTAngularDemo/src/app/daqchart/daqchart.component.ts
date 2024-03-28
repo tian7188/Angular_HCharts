@@ -406,6 +406,10 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
         xAxisMin: newMin,
         xAxisMax: newMax
       });
+
+      
+      // Redraw the chart with new data
+      this.chart.redraw();
     }
   }
 
@@ -419,8 +423,14 @@ export class DaqChartComponent implements OnInit, AfterViewInit, OnChanges {
 
   resetZoom() {
     if (this.chart) {
-      this.chart.xAxis[0].setExtremes(undefined, undefined); // Reset the zoom level
-      this.zoom(1)
+      // Clear the axis extremes
+      this.chart.xAxis[0].setExtremes(undefined, undefined);
+      this.chart.yAxis[0].setExtremes(undefined, undefined);
+  
+      // Reset the zoom level
+      setTimeout(() => {
+      this.zoom(1);
+      }, 1000);
     }
   }
 
